@@ -10,6 +10,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{D5EEDD
 		.nuget\packages.config = .nuget\packages.config
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fooidity.AutofacIntegration", "Fooidity.AutofacIntegration\Fooidity.AutofacIntegration.csproj", "{9A495BBF-D575-4C4E-BD7D-52E5926D180D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fooidity.ContainerTests", "Fooidity.ContainerTests\Fooidity.ContainerTests.csproj", "{5A83A994-64DE-4218-ACBC-7B64ADB6951A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,6 +28,14 @@ Global
 		{B3AB9EFD-3F3F-4778-AD78-BFDE5561E22F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3AB9EFD-3F3F-4778-AD78-BFDE5561E22F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B3AB9EFD-3F3F-4778-AD78-BFDE5561E22F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A495BBF-D575-4C4E-BD7D-52E5926D180D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A495BBF-D575-4C4E-BD7D-52E5926D180D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A495BBF-D575-4C4E-BD7D-52E5926D180D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A495BBF-D575-4C4E-BD7D-52E5926D180D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A83A994-64DE-4218-ACBC-7B64ADB6951A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A83A994-64DE-4218-ACBC-7B64ADB6951A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A83A994-64DE-4218-ACBC-7B64ADB6951A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A83A994-64DE-4218-ACBC-7B64ADB6951A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
