@@ -34,6 +34,8 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DisabledFooId.cs" />
+    <Compile Include="EnabledFooId.cs" />
     <Compile Include="EnabledForAuthenticatedIdentity.cs" />
     <Compile Include="FooIds.cs" />
     <Compile Include="FooId.cs" />

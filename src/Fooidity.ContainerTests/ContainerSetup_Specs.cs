@@ -12,7 +12,7 @@
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterEnabled<UseClassAV2>();
+            builder.Enabled<UseClassAV2>();
 
             builder.RegisterByFooId<UseClassAV2, A>(context => new ClassA_V2(), context => new ClassA())
                    .As<A>();
@@ -29,7 +29,7 @@
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterDisabled<UseClassAV2>();
+            builder.Disabled<UseClassAV2>();
 
             builder.RegisterByFooId<UseClassAV2, A, ClassA_V2, ClassA>();
 

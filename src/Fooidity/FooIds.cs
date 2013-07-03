@@ -10,7 +10,7 @@
         public static FooId<T> Disabled<T>()
             where T : FooId
         {
-            return DisabledCache<T>.CachedValue;
+            return Cache<T>.DisabledFooId;
         }
 
         /// <summary>
@@ -21,41 +21,15 @@
         public static FooId<T> Enabled<T>()
             where T : FooId
         {
-            return EnabledCache<T>.CachedValue;
+            return Cache<T>.EnabledFooId;
         }
 
 
-        static class DisabledCache<T>
+        static class Cache<T>
             where T : FooId
         {
-            internal static readonly FooId<T> CachedValue = new DisabledFooId();
-
-
-            class DisabledFooId :
-                FooId<T>
-            {
-                bool FooId<T>.Enabled
-                {
-                    get { return false; }
-                }
-            }
-        }
-
-
-        static class EnabledCache<T>
-            where T : FooId
-        {
-            internal static readonly FooId<T> CachedValue = new EnabledFooId();
-
-
-            class EnabledFooId :
-                FooId<T>
-            {
-                bool FooId<T>.Enabled
-                {
-                    get { return true; }
-                }
-            }
+            internal static readonly FooId<T> DisabledFooId = new DisabledFooId<T>();
+            internal static readonly FooId<T> EnabledFooId = new EnabledFooId<T>();
         }
     }
 }

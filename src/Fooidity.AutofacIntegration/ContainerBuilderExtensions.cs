@@ -7,16 +7,72 @@
 
     public static class ContainerBuilderExtensions
     {
-        public static void RegisterEnabled<TFoo>(this ContainerBuilder builder)
-            where TFoo : FooId
+        /// <summary>
+        /// Register all FooIds as disabled by default
+        /// </summary>
+        /// <param name="builder"></param>
+        public static void FooIdsDisabledByDefault(this ContainerBuilder builder)
         {
-            RegisterFooId(builder, context => FooIds.Enabled<TFoo>());
+            builder.RegisterGeneric(typeof(DisabledFooId<>))
+                   .As(typeof(FooId<>));
         }
 
-        public static void RegisterDisabled<TFoo>(this ContainerBuilder builder)
+        /// <summary>
+        /// Register the specified FooId as enabled in the container
+        /// </summary>
+        /// <typeparam name="TFoo">The FooId type</typeparam>
+        /// <param name="builder">The container builder to register</param>
+        public static void Enabled<TFoo>(this ContainerBuilder builder)
             where TFoo : FooId
         {
-            RegisterFooId(builder, context => FooIds.Disabled<TFoo>());
+            builder.RegisterType<EnabledFooId<TFoo>>()
+                   .As<FooId<TFoo>>()
+                   .SingleInstance();
+        }
+
+        /// <summary>
+        /// Enable the FooId in the container
+        /// </summary>
+        /// <typeparam name="TFoo">The FooId type</typeparam>
+        /// <param name="container">The container to update</param>
+        public static void Enable<TFoo>(this IContainer container)
+            where TFoo : FooId
+        {
+            var builder = new ContainerBuilder();
+            builder.RegisterType<EnabledFooId<TFoo>>()
+                   .As<FooId<TFoo>>()
+                   .SingleInstance();
+
+            builder.Update(container);
+        }
+
+        /// <summary>
+        /// Disable the FooId in the container
+        /// </summary>
+        /// <typeparam name="TFoo">The FooId type</typeparam>
+        /// <param name="container">The container to update</param>
+        public static void Disable<TFoo>(this IContainer container)
+            where TFoo : FooId
+        {
+            var builder = new ContainerBuilder();
+            builder.RegisterType<DisabledFooId<TFoo>>()
+                   .As<FooId<TFoo>>()
+                   .SingleInstance();
+
+            builder.Update(container);
+        }
+
+        /// <summary>
+        /// Register the specified FooId as disabled in the container
+        /// </summary>
+        /// <typeparam name="TFoo">The FooId type</typeparam>
+        /// <param name="builder">The container builder to register</param>
+        public static void Disabled<TFoo>(this ContainerBuilder builder)
+            where TFoo : FooId
+        {
+            builder.RegisterType<DisabledFooId<TFoo>>()
+                   .As<FooId<TFoo>>()
+                   .SingleInstance();
         }
 
         public static void RegisterFooId<TFoo>(this ContainerBuilder builder, Func<FooId<TFoo>> fooIdFactory)
