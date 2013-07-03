@@ -1,0 +1,128 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension="cs" #>
+<#@ assembly  name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+namespace Fooidity
+{
+    using System;
+
+    public static class IfExtensions
+    {
+        public static void If<TFoo>(this FooId<TFoo> fooId, Action enabledMethod)
+            where TFoo : FooId
+        {
+            if (fooId.Enabled)
+                enabledMethod();
+        }    
+
+        public static void Unless<TFoo>(this FooId<TFoo> fooId, Action disabledMethod)
+             where TFoo : FooId
+       {
+            if (!fooId.Enabled)
+                disabledMethod();
+        }    
+
+        public static void If<TFoo>(this FooId<TFoo> fooId, Action enabledMethod, Action disabledMethod)
+            where TFoo : FooId
+        {
+            if (fooId.Enabled)
+                enabledMethod();
+            else
+                disabledMethod();
+        }
+
+<# for(int i=1; i<=16; i++){
+    var tActionArgs = String.Join(",",Enumerable.Range(1,i).Select(it=>String.Format("T{0}",it)));
+    var tGenericArgs = String.Join(",",new[]{"TFoo"}.Concat(Enumerable.Range(1,i).Select(it=>String.Format("T{0}",it))));
+    var tMethodArgs = String.Concat(Enumerable.Range(1,i).Select(it=>String.Format(", T{0} arg{0}",it)));
+    var tCallArgs = String.Join(", ", Enumerable.Range(1,i).Select(it=>String.Format("arg{0}",it)));
+    var tOpen = (i > 1) ? "#if !NET35" : "";
+    var tClose = (i > 1) ? "#endif" : "";
+#>
+<#=tOpen#>
+        public static void If<<#=tGenericArgs#>>(this FooId<TFoo> fooId, Action<<#=tActionArgs#>> enabledMethod<#=tMethodArgs#>)
+            where TFoo : FooId
+        {
+            if (fooId.Enabled)
+                enabledMethod(<#=tCallArgs#>);
+        }    
+
+        public static void Unless<<#=tGenericArgs#>>(this FooId<TFoo> fooId, Action<<#=tActionArgs#>> disabledMethod<#=tMethodArgs#>)
+            where TFoo : FooId
+        {
+            if (!fooId.Enabled)
+                disabledMethod(<#=tCallArgs#>);
+        }    
+
+        public static void If<<#=tGenericArgs#>>(this FooId<TFoo> fooId, Action<<#=tActionArgs#>> enabledMethod, Action<<#=tActionArgs#>> disabledMethod<#=tMethodArgs#>)
+              where TFoo : FooId
+      {
+            if (fooId.Enabled)
+                enabledMethod(<#=tCallArgs#>);
+            else
+                disabledMethod(<#=tCallArgs#>);
+        }    
+<#=tClose#>
+<# 
+    }
+#>   
+
+        public static T Iff<TFoo, T>(this FooId<TFoo> fooId, Func<T> enabledFunction, Func<T> disabledFunction)
+            where TFoo : FooId
+        {
+            if (fooId.Enabled)
+                return enabledFunction();
+
+            return disabledFunction();
+        }    
+
+<# for(int i=1; i<=16; i++){
+    var tActionArgs = String.Concat(Enumerable.Range(1,i).Select(it=>String.Format("T{0}, ",it)));
+    var tMethodArgs = String.Concat(Enumerable.Range(1,i).Select(it=>String.Format(", T{0} arg{0}",it)));
+    var tCallArgs = String.Join(", ", Enumerable.Range(1,i).Select(it=>String.Format("arg{0}",it)));
+    var tOpen = (i > 1) ? "#if !NET35" : "";
+    var tClose = (i > 1) ? "#endif" : "";
+#>
+<#=tOpen#>
+        public static T Iff<TFoo, <#=tActionArgs#>T>(this FooId<TFoo> fooId, Func<<#=tActionArgs#>T> enabledFunction, Func<<#=tActionArgs#>T> disabledFunction<#=tMethodArgs#>)
+            where TFoo : FooId
+        {
+            if (fooId.Enabled)
+                return enabledFunction(<#=tCallArgs#>);
+
+            return disabledFunction(<#=tCallArgs#>);
+        }    
+<#=tClose#>
+<# 
+    }
+#>
+
+<# for(int i=1; i<=16; i++){
+    var tActionArgs = String.Concat(Enumerable.Range(1,i).Select(it=>String.Format("T{0}, ",it)));
+    var tInArgs = String.Concat(Enumerable.Range(1,i-1).Select(it=>String.Format("in T{0}, ",it)));
+    var tOutArg = String.Format("T{0}",i);
+    var tInMethodArgs = String.Concat(Enumerable.Range(1,i-1).Select(it=>String.Format("T{0} arg{0}, ",it)));
+    var tOutMethodArg = String.Format("out T{0} arg{0}",i);
+    var tInCallArgs = String.Concat(Enumerable.Range(1,i-1).Select(it=>String.Format("arg{0}, ",it)));
+    var tOutCallArg = String.Format("out arg{0}",i);
+#>
+#if !NET35
+        public delegate T OFunc<<#=tInArgs#><#=tOutArg#>, out T>(<#=tInMethodArgs#><#=tOutMethodArg#>);
+#else
+        public delegate T OFunc<<#=tInArgs.Replace("in ", "")#><#=tOutArg#>, T>(<#=tInMethodArgs#><#=tOutMethodArg#>);
+#endif
+
+        public static T Iff<TFoo, <#=tActionArgs#>T>(this FooId<TFoo> fooId, OFunc<<#=tActionArgs#>T> enabledFunction, OFunc<<#=tActionArgs#>T> disabledFunction, <#=tInMethodArgs#><#=tOutMethodArg#>)
+            where TFoo : FooId
+        {
+            if (fooId.Enabled)
+                return enabledFunction(<#=tInCallArgs#><#=tOutCallArg#>);
+
+            return disabledFunction(<#=tInCallArgs#><#=tOutCallArg#>);
+        }    
+        
+<# 
+    }
+#>
+    }
+}
