@@ -39,7 +39,7 @@
     }
 
 
-    public class UseNewMethod :
+    public struct UseNewMethod :
         FooId
     {
     }

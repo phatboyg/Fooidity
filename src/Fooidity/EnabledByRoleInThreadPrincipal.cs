@@ -6,7 +6,7 @@
 
     public class EnabledByRoleInThreadPrincipal<TFoo> :
         FooId<TFoo>
-        where TFoo : FooId
+        where TFoo : struct, FooId
     {
         readonly string _role;
 

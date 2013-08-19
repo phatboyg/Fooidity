@@ -9,21 +9,21 @@ namespace Fooidity
     public static class IfExtensions
     {
         public static void If<TFoo>(this FooId<TFoo> fooId, Action enabledMethod)
-            where TFoo : FooId
+            where TFoo : struct, FooId
         {
             if (fooId.Enabled)
                 enabledMethod();
         }    
 
         public static void Unless<TFoo>(this FooId<TFoo> fooId, Action disabledMethod)
-             where TFoo : FooId
+             where TFoo : struct, FooId
        {
             if (!fooId.Enabled)
                 disabledMethod();
         }    
 
         public static void If<TFoo>(this FooId<TFoo> fooId, Action enabledMethod, Action disabledMethod)
-            where TFoo : FooId
+            where TFoo : struct, FooId
         {
             if (fooId.Enabled)
                 enabledMethod();
@@ -41,21 +41,21 @@ namespace Fooidity
 #>
 <#=tOpen#>
         public static void If<<#=tGenericArgs#>>(this FooId<TFoo> fooId, Action<<#=tActionArgs#>> enabledMethod<#=tMethodArgs#>)
-            where TFoo : FooId
+            where TFoo : struct, FooId
         {
             if (fooId.Enabled)
                 enabledMethod(<#=tCallArgs#>);
         }    
 
         public static void Unless<<#=tGenericArgs#>>(this FooId<TFoo> fooId, Action<<#=tActionArgs#>> disabledMethod<#=tMethodArgs#>)
-            where TFoo : FooId
+            where TFoo : struct, FooId
         {
             if (!fooId.Enabled)
                 disabledMethod(<#=tCallArgs#>);
         }    
 
         public static void If<<#=tGenericArgs#>>(this FooId<TFoo> fooId, Action<<#=tActionArgs#>> enabledMethod, Action<<#=tActionArgs#>> disabledMethod<#=tMethodArgs#>)
-              where TFoo : FooId
+              where TFoo : struct, FooId
       {
             if (fooId.Enabled)
                 enabledMethod(<#=tCallArgs#>);
@@ -68,7 +68,7 @@ namespace Fooidity
 #>   
 
         public static T Iff<TFoo, T>(this FooId<TFoo> fooId, Func<T> enabledFunction, Func<T> disabledFunction)
-            where TFoo : FooId
+            where TFoo : struct, FooId
         {
             if (fooId.Enabled)
                 return enabledFunction();
@@ -85,7 +85,7 @@ namespace Fooidity
 #>
 <#=tOpen#>
         public static T Iff<TFoo, <#=tActionArgs#>T>(this FooId<TFoo> fooId, Func<<#=tActionArgs#>T> enabledFunction, Func<<#=tActionArgs#>T> disabledFunction<#=tMethodArgs#>)
-            where TFoo : FooId
+            where TFoo : struct, FooId
         {
             if (fooId.Enabled)
                 return enabledFunction(<#=tCallArgs#>);
@@ -113,7 +113,7 @@ namespace Fooidity
 #endif
 
         public static T Iff<TFoo, <#=tActionArgs#>T>(this FooId<TFoo> fooId, OFunc<<#=tActionArgs#>T> enabledFunction, OFunc<<#=tActionArgs#>T> disabledFunction, <#=tInMethodArgs#><#=tOutMethodArg#>)
-            where TFoo : FooId
+            where TFoo : struct, FooId
         {
             if (fooId.Enabled)
                 return enabledFunction(<#=tInCallArgs#><#=tOutCallArg#>);

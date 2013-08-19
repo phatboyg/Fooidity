@@ -12,9 +12,9 @@
         {
             var builder = new ContainerBuilder();
 
-            builder.Enabled<UseClassAV2>();
+            builder.Enabled<UseClassAv2>();
 
-            builder.RegisterByFooId<UseClassAV2, A>(context => new ClassA_V2(), context => new ClassA())
+            builder.RegisterByFooId<UseClassAv2, A>(context => new ClassA_V2(), context => new ClassA())
                    .As<A>();
 
             IContainer container = builder.Build();
@@ -29,9 +29,9 @@
         {
             var builder = new ContainerBuilder();
 
-            builder.Disabled<UseClassAV2>();
+            builder.Disabled<UseClassAv2>();
 
-            builder.RegisterByFooId<UseClassAV2, A, ClassA_V2, ClassA>();
+            builder.RegisterByFooId<UseClassAv2, A, ClassA_V2, ClassA>();
 
             IContainer container = builder.Build();
 
@@ -52,7 +52,7 @@
         }
 
 
-        class UseClassAV2 :
+        struct UseClassAv2 :
             FooId
         {
         }

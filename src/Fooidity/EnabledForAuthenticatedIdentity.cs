@@ -6,7 +6,7 @@
 
     public class EnabledForAuthenticatedIdentity<TFoo> :
         FooId<TFoo>
-        where TFoo : FooId
+        where TFoo : struct, FooId
     {
         public bool Enabled
         {

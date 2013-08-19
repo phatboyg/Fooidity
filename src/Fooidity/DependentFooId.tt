@@ -1,0 +1,38 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension="cs" #>
+<#@ assembly  name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+namespace Fooidity
+{
+<# for(int i=1; i<=16; i++){
+    var tActionArgs = String.Join(", ",Enumerable.Range(1,i).Select(it=>String.Format("T{0}",it)));
+#>
+
+    public class DependentFooId<T, <#=tActionArgs#>> :
+        FooId<T, <#=tActionArgs#>>
+        where T : struct, FooId
+        <#= String.Join(Environment.NewLine + "        ", Enumerable.Range(1, i).Select(x => String.Format("where T{0} : struct, FooId", x))) #>
+    {
+        <#= String.Join(Environment.NewLine + "        ", Enumerable.Range(1, i).Select(x => String.Format("readonly FooId<T{0}> _fooId{0};", x))) #>
+
+        public DependentFooId(<#= String.Join(", ", Enumerable.Range(1, i).Select(x => String.Format("FooId<T{0}> fooId{0}", x))) #>)
+        {
+            <#= String.Join(Environment.NewLine + "            ", Enumerable.Range(1, i).Select(x => String.Format("_fooId{0} = fooId{0};", x))) #>
+        }
+
+        public bool Enabled
+        {
+            get { return <#= String.Join(" && ", Enumerable.Range(1, i).Select(x => String.Format("_fooId{0}.Enabled", x))) #>; }
+        }
+        <# for(int j = 1; j <= i; j++) { 
+        #>
+
+        public FooId<T<#=j#>> FooId<#=j#>
+        {
+            get { return _fooId<#=j#>; }
+        }
+<# } #>
+    }
+<# } #>
+
+}

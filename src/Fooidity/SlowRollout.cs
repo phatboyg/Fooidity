@@ -6,7 +6,7 @@
     /// <typeparam name="TFoo"></typeparam>
     public class SlowRollout<TFoo> :
         FooId<TFoo>
-        where TFoo : FooId
+        where TFoo : struct, FooId
     {
         public bool Enabled
         {

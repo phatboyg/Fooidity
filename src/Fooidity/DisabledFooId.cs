@@ -2,7 +2,7 @@
 {
     public class DisabledFooId<T> :
         FooId<T>
-        where T : FooId
+        where T : struct, FooId
     {
         bool FooId<T>.Enabled
         {

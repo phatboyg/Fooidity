@@ -1,0 +1,23 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension="cs" #>
+<#@ assembly  name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+namespace Fooidity
+{
+    public static class DependentFactoryExtensions
+    {
+<# for(int i=1; i<=16; i++){
+    var tActionArgs = String.Join(", ",Enumerable.Range(1,i).Select(it=>String.Format("T{0}",it)));
+    var tPrevArgs = String.Join(", ",new[]{"T"}.Concat(Enumerable.Range(1,i-1).Select(it=>String.Format("T{0}",it))));
+#>
+
+        public static FooId<T, <#=tActionArgs#>> Dependent<T, <#=tActionArgs#>>(this T fooId, <#= String.Join(", ", Enumerable.Range(1, i).Select(x => String.Format("FooId<T{0}> fooId{0}", x))) #>)
+            where T : struct, FooId
+            <#= String.Join(Environment.NewLine + "            ", Enumerable.Range(1, i).Select(x => String.Format("where T{0} : struct, FooId", x))) #>
+        {
+            return new DependentFooId<T, <#=tActionArgs#>>(<#= String.Join(", ", Enumerable.Range(1, i).Select(x => String.Format("fooId{0}", x))) #>);
+        }
+
+<# } #>
+    }
+}

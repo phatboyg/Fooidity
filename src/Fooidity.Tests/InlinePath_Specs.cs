@@ -38,9 +38,42 @@
         }
 
 
-        class TestFeature :
+        struct TestFeature :
             FooId
         {
+        }
+
+        interface When<T>
+            where T : struct, FooId
+        {
+            FooId<T> FooId { get; }
+        }
+
+        struct Floo<T, T1> :
+            FooId<T>,
+            When<T1>
+            where T : struct, FooId
+            where T1 : struct, FooId
+        {
+            readonly FooId<T1> _fooId;
+            readonly bool _enabled;
+
+            public Floo(FooId<T1> fooId, bool enabled)
+                : this()
+            {
+                _fooId = fooId;
+                _enabled = enabled;
+            }
+
+            FooId<T1> When<T1>.FooId
+            {
+                get { return _fooId; }
+            }
+
+            public bool Enabled 
+            {
+                get { return _fooId.Enabled && _enabled; }
+            }
         }
     }
 }

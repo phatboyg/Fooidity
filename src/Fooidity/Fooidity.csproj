@@ -34,9 +34,24 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DependentFactoryExtensions.cs">
+      <DependentUpon>DependentFactoryExtensions.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="DependentFooId.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DependentFooId.tt</DependentUpon>
+    </Compile>
     <Compile Include="DisabledFooId.cs" />
     <Compile Include="EnabledFooId.cs" />
     <Compile Include="EnabledForAuthenticatedIdentity.cs" />
+    <Compile Include="FooIdOfT.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FooIdOfT.tt</DependentUpon>
+    </Compile>
     <Compile Include="FooIds.cs" />
     <Compile Include="FooId.cs" />
     <Compile Include="EnabledByRoleInThreadPrincipal.cs" />
@@ -46,9 +61,24 @@
       <DependentUpon>IfExtensions.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="When.cs" />
     <Compile Include="SlowRollout.cs" />
+    <Compile Include="Snapshot.cs" />
+    <Compile Include="SwitchableFooId.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="DependentFactoryExtensions.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>DependentFactoryExtensions.cs</LastGenOutput>
+    </None>
+    <None Include="DependentFooId.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>DependentFooId.cs</LastGenOutput>
+    </None>
+    <None Include="FooIdOfT.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>FooIdOfT.cs</LastGenOutput>
+    </None>
     <None Include="IfExtensions.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>IfExtensions.cs</LastGenOutput>

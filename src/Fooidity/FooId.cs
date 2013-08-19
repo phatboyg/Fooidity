@@ -7,13 +7,17 @@
     {
     }
 
+
     /// <summary>
     /// The selector instance used to determine if the code is enabled or disabled
     /// </summary>
-    /// <typeparam name="TFoo"></typeparam>
-    public interface FooId<TFoo>
-        where TFoo : FooId
+    /// <typeparam name="T"></typeparam>
+    public interface FooId<T>
+        where T : struct, FooId
     {
+        /// <summary>
+        /// Returns true if the FooId is enabled
+        /// </summary>
         bool Enabled { get; }
     }
 }
