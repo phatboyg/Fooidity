@@ -133,9 +133,6 @@ nuspec :create_nuspec do |nuspec|
   nuspec.language = "en-US"
   nuspec.licenseUrl = "http://www.apache.org/licenses/LICENSE-2.0"
   nuspec.requireLicenseAcceptance = "false"
-  nuspec.dependency "Magnum", "2.1.0"
-  nuspec.dependency "MassTransit", "2.8.0"
-  nuspec.dependency "Newtonsoft.Json", "5.0.6"
   nuspec.output_file = File.join(props[:artifacts], 'Fooidity.nuspec')
   add_files File.join(props[:output]), 'Fooidity.{dll,pdb,xml}', nuspec
   nuspec.file(File.join(props[:src], "Fooidity\\**\\*.cs").gsub("/","\\"), "src")
