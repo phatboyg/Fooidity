@@ -9,8 +9,9 @@
         [Test]
         public void Should_be_enabled_to_be_enabled()
         {
-            var level1 = default(Level1).Initial(false);
-            var level2 = default(Level2).Dependent(level1);
+            var level1 = FooIds.Toggle<Level1>();
+
+            var level2 = FooIds.Dependent<Level2>(x => x.Upon(level1));
 
             Assert.IsFalse(level2.Enabled);
 
@@ -25,7 +26,7 @@
         }
 
         struct Level2 :
-            When<Level1>
+            FooId
         {
         }
     }

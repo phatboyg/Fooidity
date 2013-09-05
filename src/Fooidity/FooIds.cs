@@ -1,5 +1,8 @@
 ﻿namespace Fooidity
 {
+    using System;
+
+
     public static class FooIds
     {
         /// <summary>
@@ -8,12 +11,6 @@
         /// <typeparam name="T">The FooId type</typeparam>
         /// <returns></returns>
         public static FooId<T> Enabled<T>()
-            where T : struct, FooId
-        {
-            return Cache<T>.EnabledFooId;
-        }
-
-        public static FooId<T> Enabled<T>(this T fooId)
             where T : struct, FooId
         {
             return Cache<T>.EnabledFooId;
@@ -30,16 +27,22 @@
             return Cache<T>.DisabledFooId;
         }
 
-        public static FooId<T> Disabled<T>(this T fooId)
+        /// <summary>
+        /// Creates a FooId that can be toggled from enabled to disabled (and back, of course)
+        /// </summary>
+        /// <typeparam name="T">The FooId atom</typeparam>
+        /// <param name="initial">The initial state of the FooId</param>
+        /// <returns></returns>
+        public static ToggleFooId<T> Toggle<T>(bool initial = false)
             where T : struct, FooId
         {
-            return Cache<T>.DisabledFooId;
+            return new ToggleFooId<T>(initial);
         }
 
-        public static SwitchableFooId<T> Initial<T>(this T fooId, bool initial)
+        public static FooId<T> Dependent<T>(Func<DependentFooIdFactory<T>, FooId<T>> factoryMethod)
             where T : struct, FooId
         {
-            return new SwitchableFooId<T>(initial);
+            return factoryMethod(Cache<T>.Factory);
         }
 
 
@@ -48,6 +51,7 @@
         {
             internal static readonly FooId<T> DisabledFooId = new DisabledFooId<T>();
             internal static readonly FooId<T> EnabledFooId = new EnabledFooId<T>();
+            internal static readonly DependentFooIdFactory<T> Factory = new DependentFooIdFactoryImpl<T>();
         }
     }
 }

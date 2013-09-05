@@ -34,8 +34,13 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DependentFactoryExtensions.cs">
-      <DependentUpon>DependentFactoryExtensions.tt</DependentUpon>
+    <Compile Include="DependentFooIdFactoryImpl.cs">
+      <DependentUpon>DependentFooIdFactoryImpl.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="DependentFooIdFactory.cs">
+      <DependentUpon>DependentFooIdFactory.tt</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
@@ -46,7 +51,6 @@
     </Compile>
     <Compile Include="DisabledFooId.cs" />
     <Compile Include="EnabledFooId.cs" />
-    <Compile Include="EnabledForAuthenticatedIdentity.cs" />
     <Compile Include="FooIdOfT.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -54,22 +58,25 @@
     </Compile>
     <Compile Include="FooIds.cs" />
     <Compile Include="FooId.cs" />
-    <Compile Include="EnabledByRoleInThreadPrincipal.cs" />
     <Compile Include="IfExtensions.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>IfExtensions.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="When.cs" />
-    <Compile Include="SlowRollout.cs" />
+    <Compile Include="Security\EnabledByRoleInThreadPrincipal.cs" />
+    <Compile Include="Security\EnabledForAuthenticatedIdentity.cs" />
     <Compile Include="Snapshot.cs" />
-    <Compile Include="SwitchableFooId.cs" />
+    <Compile Include="ToggleFooId.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="DependentFactoryExtensions.tt">
+    <None Include="DependentFooIdFactoryImpl.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>DependentFactoryExtensions.cs</LastGenOutput>
+      <LastGenOutput>DependentFooIdFactoryImpl.cs</LastGenOutput>
+    </None>
+    <None Include="DependentFooIdFactory.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>DependentFooIdFactory.cs</LastGenOutput>
     </None>
     <None Include="DependentFooId.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

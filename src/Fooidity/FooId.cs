@@ -11,7 +11,7 @@
     /// <summary>
     /// The selector instance used to determine if the code is enabled or disabled
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="T">The FooId struct that identifies the toggle</typeparam>
     public interface FooId<T>
         where T : struct, FooId
     {

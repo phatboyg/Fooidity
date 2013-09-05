@@ -11,10 +11,22 @@
         /// Register all FooIds as disabled by default
         /// </summary>
         /// <param name="builder"></param>
-        public static void FooIdsDisabledByDefault(this ContainerBuilder builder)
+        public static void RegisterDisabledByDefault(this ContainerBuilder builder)
         {
             builder.RegisterGeneric(typeof(DisabledFooId<>))
-                   .As(typeof(FooId<>));
+                   .As(typeof(FooId<>))
+                   .SingleInstance();
+        }
+
+        /// <summary>
+        /// Register all FooIds as enabled by default
+        /// </summary>
+        /// <param name="builder"></param>
+        public static void RegisterEnabledByDefault(this ContainerBuilder builder)
+        {
+            builder.RegisterGeneric(typeof(EnabledFooId<>))
+                   .As(typeof(FooId<>))
+                   .SingleInstance();
         }
 
         /// <summary>
@@ -22,10 +34,23 @@
         /// </summary>
         /// <typeparam name="TFoo">The FooId type</typeparam>
         /// <param name="builder">The container builder to register</param>
-        public static void Enabled<TFoo>(this ContainerBuilder builder)
+        public static void RegisterEnabled<TFoo>(this ContainerBuilder builder)
             where TFoo : struct, FooId
         {
             builder.RegisterType<EnabledFooId<TFoo>>()
+                   .As<FooId<TFoo>>()
+                   .SingleInstance();
+        }
+
+        /// <summary>
+        /// Register the specified FooId as disabled in the container
+        /// </summary>
+        /// <typeparam name="TFoo">The FooId type</typeparam>
+        /// <param name="builder">The container builder to register</param>
+        public static void RegisterDisabled<TFoo>(this ContainerBuilder builder)
+            where TFoo : struct, FooId
+        {
+            builder.RegisterType<DisabledFooId<TFoo>>()
                    .As<FooId<TFoo>>()
                    .SingleInstance();
         }
@@ -62,19 +87,6 @@
             builder.Update(container);
         }
 
-        /// <summary>
-        /// Register the specified FooId as disabled in the container
-        /// </summary>
-        /// <typeparam name="TFoo">The FooId type</typeparam>
-        /// <param name="builder">The container builder to register</param>
-        public static void Disabled<TFoo>(this ContainerBuilder builder)
-            where TFoo : struct, FooId
-        {
-            builder.RegisterType<DisabledFooId<TFoo>>()
-                   .As<FooId<TFoo>>()
-                   .SingleInstance();
-        }
-
         public static void RegisterFooId<TFoo>(this ContainerBuilder builder, Func<FooId<TFoo>> fooIdFactory)
             where TFoo : struct, FooId
         {
@@ -104,8 +116,17 @@
                 });
         }
 
-        public static IRegistrationBuilder<T, SimpleActivatorData, SingleRegistrationStyle>
-            RegisterByFooId<TFoo, T, TEnabled, TDisabled>(this ContainerBuilder builder)
+        /// <summary>
+        /// Register two types that are selectively resolved depending upon the state of the FooId
+        /// </summary>
+        /// <typeparam name="TFoo">The FooId type</typeparam>
+        /// <typeparam name="T">The registration type</typeparam>
+        /// <typeparam name="TEnabled">The enabled type</typeparam>
+        /// <typeparam name="TDisabled">The disable type</typeparam>
+        /// <param name="builder">The container builder</param>
+        /// <returns>The registration builder for the container, already configured for the specified types</returns>
+        public static IRegistrationBuilder<T, SimpleActivatorData, SingleRegistrationStyle> RegisterByFooId
+            <TFoo, T, TEnabled, TDisabled>(this ContainerBuilder builder)
             where TFoo : struct, FooId
             where TEnabled : T
             where TDisabled : T
@@ -114,13 +135,14 @@
             builder.RegisterType<TEnabled>();
             builder.RegisterType<TDisabled>();
 
-            return builder.Register(context =>
-                {
-                    var fooId = context.Resolve<FooId<TFoo>>();
-                    return fooId.Enabled
-                               ? context.Resolve<TEnabled>() as T
-                               : context.Resolve<TDisabled>() as T;
-                }).As<T>();
+            IRegistrationBuilder<T, SimpleActivatorData, SingleRegistrationStyle> registerByFooId =
+                builder.Register(context =>
+                    {
+                        var fooId = context.Resolve<FooId<TFoo>>();
+                        return fooId.Enabled ? (T)context.Resolve<TEnabled>() : (T)context.Resolve<TDisabled>();
+                    }).As<T>();
+
+            return registerByFooId;
         }
     }
 }

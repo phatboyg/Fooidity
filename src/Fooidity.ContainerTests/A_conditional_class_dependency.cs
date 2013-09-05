@@ -13,7 +13,7 @@
         {
             var builder = new ContainerBuilder();
 
-            builder.Enabled<UseNewMethod>();
+            builder.RegisterEnabled<UseNewMethod>();
 
             builder.RegisterType<ConditionalClass>();
 
@@ -29,7 +29,7 @@
         {
             var builder = new ContainerBuilder();
 
-            builder.Disabled<UseNewMethod>();
+            builder.RegisterDisabled<UseNewMethod>();
 
             builder.RegisterType<ConditionalClass>();
 
@@ -45,7 +45,7 @@
         {
             var builder = new ContainerBuilder();
 
-            builder.FooIdsDisabledByDefault();
+            builder.RegisterDisabledByDefault();
 
             builder.RegisterType<ConditionalClass>();
 
@@ -61,7 +61,7 @@
         {
             var builder = new ContainerBuilder();
 
-            builder.Disabled<UseNewMethod>();
+            builder.RegisterDisabled<UseNewMethod>();
 
             builder.RegisterType<ConditionalClass>();
 

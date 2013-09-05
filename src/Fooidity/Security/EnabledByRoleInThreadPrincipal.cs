@@ -1,13 +1,20 @@
-﻿namespace Fooidity
+namespace Fooidity.Security
 {
     using System.Security.Principal;
     using System.Threading;
 
 
-    public class EnabledForAuthenticatedIdentity<TFoo> :
+    public class EnabledByRoleInThreadPrincipal<TFoo> :
         FooId<TFoo>
         where TFoo : struct, FooId
     {
+        readonly string _role;
+
+        public EnabledByRoleInThreadPrincipal(string role)
+        {
+            _role = role;
+        }
+
         public bool Enabled
         {
             get
@@ -16,7 +23,7 @@
                 if (principal == null)
                     return false;
 
-                return principal.Identity.IsAuthenticated;
+                return principal.IsInRole(_role);
             }
         }
     }

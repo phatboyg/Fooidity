@@ -1,0 +1,21 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension="cs" #>
+<#@ assembly  name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+namespace Fooidity
+{
+    public interface DependentFooIdFactory<T>
+        where T : struct, FooId
+    {
+
+<# for(int i=1; i<=16; i++){
+    var tActionArgs = String.Join(", ",Enumerable.Range(1,i).Select(it=>String.Format("T{0}",it)));
+    var tPrevArgs = String.Join(", ",new[]{"T"}.Concat(Enumerable.Range(1,i-1).Select(it=>String.Format("T{0}",it))));
+#>
+
+        FooId<T, <#=tActionArgs#>> Upon<<#=tActionArgs#>>(<#= String.Join(", ", Enumerable.Range(1, i).Select(x => String.Format("FooId<T{0}> fooId{0}", x))) #>)
+            <#= String.Join(Environment.NewLine + "            ", Enumerable.Range(1, i).Select(x => String.Format("where T{0} : struct, FooId", x))) #>;
+<# } #>
+
+    }
+}
