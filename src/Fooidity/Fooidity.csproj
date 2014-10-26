@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Fooidity</RootNamespace>
     <AssemblyName>Fooidity</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -20,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -28,14 +30,42 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CodeFeatureCache.cs" />
+    <Compile Include="..\SolutionVersion.cs">
+      <Link>Properties\SolutionVersion.cs</Link>
+    </Compile>
+    <Compile Include="Caching\CacheItemAdded.cs" />
+    <Compile Include="Caching\CacheItemRemoved.cs" />
+    <Compile Include="Caching\CacheItemUpdated.cs" />
+    <Compile Include="Caching\CodeFeatureStateCache.cs" />
+    <Compile Include="Caching\CodeFeatureStateCacheInstance.cs" />
+    <Compile Include="Caching\Connectable.cs" />
+    <Compile Include="Caching\ConnectionHandle.cs" />
+    <Compile Include="Caching\ICache.cs" />
+    <Compile Include="Caching\ICacheIndex.cs" />
+    <Compile Include="Caching\ICodeFeatureStateCacheInstance.cs" />
+    <Compile Include="Caching\ICodeFeatureStateCacheProvider.cs" />
+    <Compile Include="Caching\InMemoryCache.cs" />
+    <Compile Include="Caching\InMemoryCacheIndex.cs" />
+    <Compile Include="Caching\IReadOnlyCache.cs" />
+    <Compile Include="Caching\IReloadCache.cs" />
+    <Compile Include="Caching\IUpdateCache.cs" />
+    <Compile Include="CodeFeatureMetadata.cs" />
+    <Compile Include="CodeFeatureStateCacheLoaded.cs" />
+    <Compile Include="CodeFeatureStateUpdated.cs" />
     <Compile Include="CodeSwitch.cs" />
+    <Compile Include="Configuration\ConfigurationCodeFeatureStateCacheProvider.cs" />
+    <Compile Include="Configuration\FeatureStateElement.cs" />
+    <Compile Include="Configuration\FeatureStateElementCollection.cs" />
+    <Compile Include="Configuration\FooidityConfigurationSection.cs" />
+    <Compile Include="DefaultCodeFeatureState.cs" />
     <Compile Include="DependentFooIdFactoryImpl.cs">
       <DependentUpon>DependentFooIdFactoryImpl.tt</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -52,6 +82,7 @@
       <DependentUpon>DependentFooId.tt</DependentUpon>
     </Compile>
     <Compile Include="DisabledCodeSwitch.cs" />
+    <Compile Include="DynamicCodeSwitch.cs" />
     <Compile Include="EnabledCodeSwitch.cs" />
     <Compile Include="FooIdOfT.cs">
       <AutoGen>True</AutoGen>
@@ -59,17 +90,18 @@
       <DependentUpon>FooIdOfT.tt</DependentUpon>
     </Compile>
     <Compile Include="CodeFeature.cs" />
-    <Compile Include="ICodeFeatureCache.cs" />
+    <Compile Include="ICodeFeatureMetadata.cs" />
+    <Compile Include="ICodeFeatureStateCache.cs" />
     <Compile Include="IfExtensions.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>IfExtensions.tt</DependentUpon>
     </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\EnabledByRoleInThreadPrincipal.cs" />
     <Compile Include="Security\EnabledForAuthenticatedIdentity.cs" />
     <Compile Include="Snapshot.cs" />
     <Compile Include="IToggleCodeSwitch.cs" />
+    <Compile Include="CodeFeatureState.cs" />
     <Compile Include="ToggleCodeSwitch.cs" />
   </ItemGroup>
   <ItemGroup>

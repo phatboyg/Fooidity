@@ -81,7 +81,7 @@ end
 
 desc "Runs unit tests"
 nunit :tests4 => [:build4] do |nunit|
-          nunit.command = File.join('src', 'packages','NUnit.Runners.2.6.2', 'tools', 'nunit-console.exe')
+          nunit.command = File.join('src', 'packages','NUnit.Runners.2.6.3', 'tools', 'nunit-console.exe')
           nunit.options = "/framework=#{CLR_TOOLS_VERSION}", '/nothread', '/exclude:Integration', '/nologo', '/labels', "\"/xml=#{File.join(props[:artifacts], 'nunit-test-results-net-4.0.xml')}\""
           nunit.assemblies = FileList[File.join(props[:src], "Fooidity.Tests/bin/Release", "Fooidity.Tests.dll")]
 end
@@ -150,7 +150,7 @@ nuspec :create_nuspec do |nuspec|
   nuspec.licenseUrl = "http://www.apache.org/licenses/LICENSE-2.0"
   nuspec.requireLicenseAcceptance = "false"
   nuspec.dependency "Fooidity", NUGET_VERSION
-  nuspec.dependency "Autofac", "3.0.2"
+  nuspec.dependency "Autofac", "3.5.2"
   nuspec.output_file = File.join(props[:artifacts], 'Fooidity.Autofac.nuspec')
   add_files File.join(props[:output]), 'Fooidity.AutofacIntegration.{dll,pdb,xml}', nuspec
   nuspec.file(File.join(props[:src], "Fooidity.AutofacIntegration\\**\\*.cs").gsub("/","\\"), "src")

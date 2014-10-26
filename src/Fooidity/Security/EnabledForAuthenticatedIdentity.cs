@@ -4,9 +4,9 @@ namespace Fooidity.Security
     using System.Threading;
 
 
-    public class EnabledForAuthenticatedIdentity<TFoo> :
-        CodeSwitch<TFoo>
-        where TFoo : struct, CodeFeature
+    public class EnabledForAuthenticatedIdentity<TFeature> :
+        CodeSwitch<TFeature>
+        where TFeature : struct, CodeFeature
     {
         public bool Enabled
         {

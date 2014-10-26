@@ -4,9 +4,9 @@ namespace Fooidity.Security
     using System.Threading;
 
 
-    public class EnabledByRoleInThreadPrincipal<TFoo> :
-        CodeSwitch<TFoo>
-        where TFoo : struct, CodeFeature
+    public class EnabledByRoleInThreadPrincipal<TFeature> :
+        CodeSwitch<TFeature>
+        where TFeature : struct, CodeFeature
     {
         readonly string _role;
 

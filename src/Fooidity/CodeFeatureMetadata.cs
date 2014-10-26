@@ -4,12 +4,12 @@
     using System.Threading;
 
 
-    public class CodeFeatureCache<TFeature> :
-        ICodeFeatureCache<TFeature>
+    public class CodeFeatureMetadata<TFeature> :
+        ICodeFeatureMetadata<TFeature>
     {
         readonly string _id;
 
-        CodeFeatureCache()
+        CodeFeatureMetadata()
         {
             Type type = typeof(TFeature);
 
@@ -22,7 +22,7 @@
         }
 
 
-        string ICodeFeatureCache<TFeature>.Id
+        string ICodeFeatureMetadata<TFeature>.Id
         {
             get { return _id; }
         }
@@ -30,8 +30,8 @@
 
         static class Cached
         {
-            internal static readonly Lazy<ICodeFeatureCache<TFeature>> Instance = new Lazy<ICodeFeatureCache<TFeature>>(
-                () => new CodeFeatureCache<TFeature>(), LazyThreadSafetyMode.PublicationOnly);
+            internal static readonly Lazy<ICodeFeatureMetadata<TFeature>> Instance = new Lazy<ICodeFeatureMetadata<TFeature>>(
+                () => new CodeFeatureMetadata<TFeature>(), LazyThreadSafetyMode.PublicationOnly);
         }
     }
 }

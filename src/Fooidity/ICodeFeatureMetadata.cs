@@ -1,6 +1,6 @@
 namespace Fooidity
 {
-    public interface ICodeFeatureCache<TFeature>
+    public interface ICodeFeatureMetadata<TFeature>
     {
         string Id { get; }
     }

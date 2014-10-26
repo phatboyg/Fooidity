@@ -18,7 +18,7 @@
             public void Should_form_a_proper_urn()
             {
                 Assert.AreEqual("urn:feature:SampleCodeFeature:Fooidity.Tests.CodeFeatureName",
-                    CodeFeatureCache<SampleCodeFeature>.Id);
+                    CodeFeatureMetadata<SampleCodeFeature>.Id);
             }
         }
     }
