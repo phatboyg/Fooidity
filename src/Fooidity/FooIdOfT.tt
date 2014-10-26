@@ -8,13 +8,13 @@ namespace Fooidity
     var tActionArgs = String.Join(", ",Enumerable.Range(1,i).Select(it=>String.Format("T{0}",it)));
 #>
 
-    public interface FooId<T, <#=tActionArgs#>> :
-        FooId<T>
-        where T  : struct, FooId
-        <#= String.Join(Environment.NewLine + "        ", Enumerable.Range(1, i).Select(x => String.Format("where T{0} : struct, FooId", x))) #>
+    public interface CodeSwitch<T, <#=tActionArgs#>> :
+        CodeSwitch<T>
+        where T  : struct, CodeFeature
+        <#= String.Join(Environment.NewLine + "        ", Enumerable.Range(1, i).Select(x => String.Format("where T{0} : struct, CodeFeature", x))) #>
     {
 <# for(int j = 1; j <= i; j++) { #>
-        FooId<T<#=j#>> FooId<#=j#> { get; }
+        CodeSwitch<T<#=j#>> Switch<#=j#> { get; }
 <# } #>
     }
 <# } #>

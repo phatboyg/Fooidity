@@ -12,11 +12,11 @@
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterDisabledByDefault();
+            builder.CodeSwitchesDisabledByDefault();
 
             IContainer container = builder.Build();
 
-            var fooId = container.Resolve<FooId<Active>>();
+            var fooId = container.Resolve<CodeSwitch<Active>>();
 
             Assert.IsFalse(fooId.Enabled);
         }
@@ -26,13 +26,13 @@
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterDisabledByDefault();
+            builder.CodeSwitchesDisabledByDefault();
 
             builder.RegisterEnabled<Active>();
 
             IContainer container = builder.Build();
 
-            var fooId = container.Resolve<FooId<Active>>();
+            var fooId = container.Resolve<CodeSwitch<Active>>();
 
             Assert.IsTrue(fooId.Enabled);
         }
@@ -42,24 +42,24 @@
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterDisabledByDefault();
+            builder.CodeSwitchesDisabledByDefault();
 
             IContainer container = builder.Build();
 
-            var fooId = container.Resolve<FooId<Active>>();
+            var fooId = container.Resolve<CodeSwitch<Active>>();
 
             Assert.IsFalse(fooId.Enabled);
 
             container.Enable<Active>();
 
-            fooId = container.Resolve<FooId<Active>>();
+            fooId = container.Resolve<CodeSwitch<Active>>();
 
             Assert.IsTrue(fooId.Enabled);
         }
 
 
         struct Active :
-            FooId
+            CodeFeature
         {
         }
     }

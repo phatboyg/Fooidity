@@ -4,75 +4,77 @@
 
 
     [TestFixture]
-    public class Using_a_fooid_inline
+    public class Using_a_code_switch_inline
     {
         [Test]
         public void Should_provide_a_clear_syntax_for_method_selection()
         {
-            FooId<TestFeature> fooId = FooIds.Enabled<TestFeature>();
+            CodeSwitch<TestFeature> codeSwitch = CodeSwitch.Enabled<TestFeature>();
 
-            fooId.If(() =>
-                {
-                    // run if it is enabled
-                });
+            bool called = false;
+            codeSwitch.If(() =>
+            {
+                called = true;
+            });
+            Assert.IsTrue(called);
 
-            fooId.Unless(() =>
-                {
-                    // run if disabled
-                });
+            codeSwitch.Unless(() =>
+            {
+                Assert.Fail("Should not be called");
+            });
 
-            fooId.If(() =>
-                {
-                    /* enabled */
-                }, () =>
-                    {
-                        /* disabled */
-                    });
+            called = false;
+            codeSwitch.If(() =>
+            {
+                called = true;
+            }, () =>
+            {
+                Assert.Fail("Should not be called");
+            });
 
-
-            var result = fooId.Iff(() => 27, () => 42);
+            var result = codeSwitch.Iff(() => 27, () => 42);
             Assert.AreEqual(27, result);
 
-            var value = fooId.Iff((a, b) => a, (a, b) => b, 27, 42);
+            var value = codeSwitch.Iff((a, b) => a, (a, b) => b, 27, 42);
             Assert.AreEqual(27, value);
         }
 
 
         struct TestFeature :
-            FooId
+            CodeFeature
         {
         }
 
         interface When<T>
-            where T : struct, FooId
+            where T : struct, CodeFeature
         {
-            FooId<T> FooId { get; }
+            CodeSwitch<T> ICodeSwitch { get; }
         }
 
         struct Floo<T, T1> :
-            FooId<T>,
+            CodeSwitch<T>,
             When<T1>
-            where T : struct, FooId
-            where T1 : struct, FooId
+            where T : struct, CodeFeature
+            where T1 : struct, CodeFeature
         {
-            readonly FooId<T1> _fooId;
+            readonly CodeSwitch<T1> _codeSwitch;
             readonly bool _enabled;
 
-            public Floo(FooId<T1> fooId, bool enabled)
+            public Floo(CodeSwitch<T1> codeSwitch, bool enabled)
                 : this()
             {
-                _fooId = fooId;
+                _codeSwitch = codeSwitch;
                 _enabled = enabled;
             }
 
-            FooId<T1> When<T1>.FooId
+            CodeSwitch<T1> When<T1>.ICodeSwitch
             {
-                get { return _fooId; }
+                get { return _codeSwitch; }
             }
 
             public bool Enabled 
             {
-                get { return _fooId.Enabled && _enabled; }
+                get { return _codeSwitch.Enabled && _enabled; }
             }
         }
     }

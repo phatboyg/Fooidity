@@ -5,8 +5,8 @@ namespace Fooidity.Security
 
 
     public class EnabledForAuthenticatedIdentity<TFoo> :
-        FooId<TFoo>
-        where TFoo : struct, FooId
+        CodeSwitch<TFoo>
+        where TFoo : struct, CodeFeature
     {
         public bool Enabled
         {

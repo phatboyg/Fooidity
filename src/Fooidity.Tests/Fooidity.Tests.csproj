@@ -40,9 +40,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CodeFeatureName_Specs.cs" />
     <Compile Include="Dependent_Specs.cs" />
     <Compile Include="InlinePath_Specs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ToggleSwitch_Specs.cs" />
     <Compile Include="Usage_Specs.cs" />
   </ItemGroup>
   <ItemGroup>

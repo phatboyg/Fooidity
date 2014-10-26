@@ -4,408 +4,408 @@
 
     public static class IfExtensions
     {
-        public static void If<TFoo>(this FooId<TFoo> fooId, Action enabledMethod)
-            where TFoo : struct, FooId
+        public static void If<TFeature>(this CodeSwitch<TFeature> codeSwitch, Action enabledMethod)
+            where TFeature : struct, CodeFeature
         {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 enabledMethod();
         }    
 
-        public static void Unless<TFoo>(this FooId<TFoo> fooId, Action disabledMethod)
-             where TFoo : struct, FooId
+        public static void Unless<TFeature>(this CodeSwitch<TFeature> codeSwitch, Action disabledMethod)
+             where TFeature : struct, CodeFeature
        {
-            if (!fooId.Enabled)
+            if (!codeSwitch.Enabled)
                 disabledMethod();
         }    
 
-        public static void If<TFoo>(this FooId<TFoo> fooId, Action enabledMethod, Action disabledMethod)
-            where TFoo : struct, FooId
+        public static void If<TFeature>(this CodeSwitch<TFeature> codeSwitch, Action enabledMethod, Action disabledMethod)
+            where TFeature : struct, CodeFeature
         {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 enabledMethod();
             else
                 disabledMethod();
         }
 
 
-        public static void If<TFoo,T1>(this FooId<TFoo> fooId, Action<T1> enabledMethod, T1 arg1)
-            where TFoo : struct, FooId
+        public static void If<TFeature,T1>(this CodeSwitch<TFeature> codeSwitch, Action<T1> enabledMethod, T1 arg1)
+            where TFeature : struct, CodeFeature
         {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 enabledMethod(arg1);
         }    
 
-        public static void Unless<TFoo,T1>(this FooId<TFoo> fooId, Action<T1> disabledMethod, T1 arg1)
-            where TFoo : struct, FooId
+        public static void Unless<TFeature,T1>(this CodeSwitch<TFeature> codeSwitch, Action<T1> disabledMethod, T1 arg1)
+            where TFeature : struct, CodeFeature
         {
-            if (!fooId.Enabled)
+            if (!codeSwitch.Enabled)
                 disabledMethod(arg1);
         }    
 
-        public static void If<TFoo,T1>(this FooId<TFoo> fooId, Action<T1> enabledMethod, Action<T1> disabledMethod, T1 arg1)
-              where TFoo : struct, FooId
+        public static void If<TFeature,T1>(this CodeSwitch<TFeature> codeSwitch, Action<T1> enabledMethod, Action<T1> disabledMethod, T1 arg1)
+              where TFeature : struct, CodeFeature
       {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 enabledMethod(arg1);
             else
                 disabledMethod(arg1);
         }    
 
 #if !NET35
-        public static void If<TFoo,T1,T2>(this FooId<TFoo> fooId, Action<T1,T2> enabledMethod, T1 arg1, T2 arg2)
-            where TFoo : struct, FooId
+        public static void If<TFeature,T1,T2>(this CodeSwitch<TFeature> codeSwitch, Action<T1,T2> enabledMethod, T1 arg1, T2 arg2)
+            where TFeature : struct, CodeFeature
         {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 enabledMethod(arg1, arg2);
         }    
 
-        public static void Unless<TFoo,T1,T2>(this FooId<TFoo> fooId, Action<T1,T2> disabledMethod, T1 arg1, T2 arg2)
-            where TFoo : struct, FooId
+        public static void Unless<TFeature,T1,T2>(this CodeSwitch<TFeature> codeSwitch, Action<T1,T2> disabledMethod, T1 arg1, T2 arg2)
+            where TFeature : struct, CodeFeature
         {
-            if (!fooId.Enabled)
+            if (!codeSwitch.Enabled)
                 disabledMethod(arg1, arg2);
         }    
 
-        public static void If<TFoo,T1,T2>(this FooId<TFoo> fooId, Action<T1,T2> enabledMethod, Action<T1,T2> disabledMethod, T1 arg1, T2 arg2)
-              where TFoo : struct, FooId
+        public static void If<TFeature,T1,T2>(this CodeSwitch<TFeature> codeSwitch, Action<T1,T2> enabledMethod, Action<T1,T2> disabledMethod, T1 arg1, T2 arg2)
+              where TFeature : struct, CodeFeature
       {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 enabledMethod(arg1, arg2);
             else
                 disabledMethod(arg1, arg2);
         }    
 #endif
 #if !NET35
-        public static void If<TFoo,T1,T2,T3>(this FooId<TFoo> fooId, Action<T1,T2,T3> enabledMethod, T1 arg1, T2 arg2, T3 arg3)
-            where TFoo : struct, FooId
+        public static void If<TFeature,T1,T2,T3>(this CodeSwitch<TFeature> codeSwitch, Action<T1,T2,T3> enabledMethod, T1 arg1, T2 arg2, T3 arg3)
+            where TFeature : struct, CodeFeature
         {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 enabledMethod(arg1, arg2, arg3);
         }    
 
-        public static void Unless<TFoo,T1,T2,T3>(this FooId<TFoo> fooId, Action<T1,T2,T3> disabledMethod, T1 arg1, T2 arg2, T3 arg3)
-            where TFoo : struct, FooId
+        public static void Unless<TFeature,T1,T2,T3>(this CodeSwitch<TFeature> codeSwitch, Action<T1,T2,T3> disabledMethod, T1 arg1, T2 arg2, T3 arg3)
+            where TFeature : struct, CodeFeature
         {
-            if (!fooId.Enabled)
+            if (!codeSwitch.Enabled)
                 disabledMethod(arg1, arg2, arg3);
         }    
 
-        public static void If<TFoo,T1,T2,T3>(this FooId<TFoo> fooId, Action<T1,T2,T3> enabledMethod, Action<T1,T2,T3> disabledMethod, T1 arg1, T2 arg2, T3 arg3)
-              where TFoo : struct, FooId
+        public static void If<TFeature,T1,T2,T3>(this CodeSwitch<TFeature> codeSwitch, Action<T1,T2,T3> enabledMethod, Action<T1,T2,T3> disabledMethod, T1 arg1, T2 arg2, T3 arg3)
+              where TFeature : struct, CodeFeature
       {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 enabledMethod(arg1, arg2, arg3);
             else
                 disabledMethod(arg1, arg2, arg3);
         }    
 #endif
 #if !NET35
-        public static void If<TFoo,T1,T2,T3,T4>(this FooId<TFoo> fooId, Action<T1,T2,T3,T4> enabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4)
-            where TFoo : struct, FooId
+        public static void If<TFeature,T1,T2,T3,T4>(this CodeSwitch<TFeature> codeSwitch, Action<T1,T2,T3,T4> enabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4)
+            where TFeature : struct, CodeFeature
         {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 enabledMethod(arg1, arg2, arg3, arg4);
         }    
 
-        public static void Unless<TFoo,T1,T2,T3,T4>(this FooId<TFoo> fooId, Action<T1,T2,T3,T4> disabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4)
-            where TFoo : struct, FooId
+        public static void Unless<TFeature,T1,T2,T3,T4>(this CodeSwitch<TFeature> codeSwitch, Action<T1,T2,T3,T4> disabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4)
+            where TFeature : struct, CodeFeature
         {
-            if (!fooId.Enabled)
+            if (!codeSwitch.Enabled)
                 disabledMethod(arg1, arg2, arg3, arg4);
         }    
 
-        public static void If<TFoo,T1,T2,T3,T4>(this FooId<TFoo> fooId, Action<T1,T2,T3,T4> enabledMethod, Action<T1,T2,T3,T4> disabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4)
-              where TFoo : struct, FooId
+        public static void If<TFeature,T1,T2,T3,T4>(this CodeSwitch<TFeature> codeSwitch, Action<T1,T2,T3,T4> enabledMethod, Action<T1,T2,T3,T4> disabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4)
+              where TFeature : struct, CodeFeature
       {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 enabledMethod(arg1, arg2, arg3, arg4);
             else
                 disabledMethod(arg1, arg2, arg3, arg4);
         }    
 #endif
 #if !NET35
-        public static void If<TFoo,T1,T2,T3,T4,T5>(this FooId<TFoo> fooId, Action<T1,T2,T3,T4,T5> enabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5)
-            where TFoo : struct, FooId
+        public static void If<TFeature,T1,T2,T3,T4,T5>(this CodeSwitch<TFeature> codeSwitch, Action<T1,T2,T3,T4,T5> enabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5)
+            where TFeature : struct, CodeFeature
         {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 enabledMethod(arg1, arg2, arg3, arg4, arg5);
         }    
 
-        public static void Unless<TFoo,T1,T2,T3,T4,T5>(this FooId<TFoo> fooId, Action<T1,T2,T3,T4,T5> disabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5)
-            where TFoo : struct, FooId
+        public static void Unless<TFeature,T1,T2,T3,T4,T5>(this CodeSwitch<TFeature> codeSwitch, Action<T1,T2,T3,T4,T5> disabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5)
+            where TFeature : struct, CodeFeature
         {
-            if (!fooId.Enabled)
+            if (!codeSwitch.Enabled)
                 disabledMethod(arg1, arg2, arg3, arg4, arg5);
         }    
 
-        public static void If<TFoo,T1,T2,T3,T4,T5>(this FooId<TFoo> fooId, Action<T1,T2,T3,T4,T5> enabledMethod, Action<T1,T2,T3,T4,T5> disabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5)
-              where TFoo : struct, FooId
+        public static void If<TFeature,T1,T2,T3,T4,T5>(this CodeSwitch<TFeature> codeSwitch, Action<T1,T2,T3,T4,T5> enabledMethod, Action<T1,T2,T3,T4,T5> disabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5)
+              where TFeature : struct, CodeFeature
       {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 enabledMethod(arg1, arg2, arg3, arg4, arg5);
             else
                 disabledMethod(arg1, arg2, arg3, arg4, arg5);
         }    
 #endif
 #if !NET35
-        public static void If<TFoo,T1,T2,T3,T4,T5,T6>(this FooId<TFoo> fooId, Action<T1,T2,T3,T4,T5,T6> enabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6)
-            where TFoo : struct, FooId
+        public static void If<TFeature,T1,T2,T3,T4,T5,T6>(this CodeSwitch<TFeature> codeSwitch, Action<T1,T2,T3,T4,T5,T6> enabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6)
+            where TFeature : struct, CodeFeature
         {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 enabledMethod(arg1, arg2, arg3, arg4, arg5, arg6);
         }    
 
-        public static void Unless<TFoo,T1,T2,T3,T4,T5,T6>(this FooId<TFoo> fooId, Action<T1,T2,T3,T4,T5,T6> disabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6)
-            where TFoo : struct, FooId
+        public static void Unless<TFeature,T1,T2,T3,T4,T5,T6>(this CodeSwitch<TFeature> codeSwitch, Action<T1,T2,T3,T4,T5,T6> disabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6)
+            where TFeature : struct, CodeFeature
         {
-            if (!fooId.Enabled)
+            if (!codeSwitch.Enabled)
                 disabledMethod(arg1, arg2, arg3, arg4, arg5, arg6);
         }    
 
-        public static void If<TFoo,T1,T2,T3,T4,T5,T6>(this FooId<TFoo> fooId, Action<T1,T2,T3,T4,T5,T6> enabledMethod, Action<T1,T2,T3,T4,T5,T6> disabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6)
-              where TFoo : struct, FooId
+        public static void If<TFeature,T1,T2,T3,T4,T5,T6>(this CodeSwitch<TFeature> codeSwitch, Action<T1,T2,T3,T4,T5,T6> enabledMethod, Action<T1,T2,T3,T4,T5,T6> disabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6)
+              where TFeature : struct, CodeFeature
       {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 enabledMethod(arg1, arg2, arg3, arg4, arg5, arg6);
             else
                 disabledMethod(arg1, arg2, arg3, arg4, arg5, arg6);
         }    
 #endif
 #if !NET35
-        public static void If<TFoo,T1,T2,T3,T4,T5,T6,T7>(this FooId<TFoo> fooId, Action<T1,T2,T3,T4,T5,T6,T7> enabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7)
-            where TFoo : struct, FooId
+        public static void If<TFeature,T1,T2,T3,T4,T5,T6,T7>(this CodeSwitch<TFeature> codeSwitch, Action<T1,T2,T3,T4,T5,T6,T7> enabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7)
+            where TFeature : struct, CodeFeature
         {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 enabledMethod(arg1, arg2, arg3, arg4, arg5, arg6, arg7);
         }    
 
-        public static void Unless<TFoo,T1,T2,T3,T4,T5,T6,T7>(this FooId<TFoo> fooId, Action<T1,T2,T3,T4,T5,T6,T7> disabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7)
-            where TFoo : struct, FooId
+        public static void Unless<TFeature,T1,T2,T3,T4,T5,T6,T7>(this CodeSwitch<TFeature> codeSwitch, Action<T1,T2,T3,T4,T5,T6,T7> disabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7)
+            where TFeature : struct, CodeFeature
         {
-            if (!fooId.Enabled)
+            if (!codeSwitch.Enabled)
                 disabledMethod(arg1, arg2, arg3, arg4, arg5, arg6, arg7);
         }    
 
-        public static void If<TFoo,T1,T2,T3,T4,T5,T6,T7>(this FooId<TFoo> fooId, Action<T1,T2,T3,T4,T5,T6,T7> enabledMethod, Action<T1,T2,T3,T4,T5,T6,T7> disabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7)
-              where TFoo : struct, FooId
+        public static void If<TFeature,T1,T2,T3,T4,T5,T6,T7>(this CodeSwitch<TFeature> codeSwitch, Action<T1,T2,T3,T4,T5,T6,T7> enabledMethod, Action<T1,T2,T3,T4,T5,T6,T7> disabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7)
+              where TFeature : struct, CodeFeature
       {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 enabledMethod(arg1, arg2, arg3, arg4, arg5, arg6, arg7);
             else
                 disabledMethod(arg1, arg2, arg3, arg4, arg5, arg6, arg7);
         }    
 #endif
 #if !NET35
-        public static void If<TFoo,T1,T2,T3,T4,T5,T6,T7,T8>(this FooId<TFoo> fooId, Action<T1,T2,T3,T4,T5,T6,T7,T8> enabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8)
-            where TFoo : struct, FooId
+        public static void If<TFeature,T1,T2,T3,T4,T5,T6,T7,T8>(this CodeSwitch<TFeature> codeSwitch, Action<T1,T2,T3,T4,T5,T6,T7,T8> enabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8)
+            where TFeature : struct, CodeFeature
         {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 enabledMethod(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
         }    
 
-        public static void Unless<TFoo,T1,T2,T3,T4,T5,T6,T7,T8>(this FooId<TFoo> fooId, Action<T1,T2,T3,T4,T5,T6,T7,T8> disabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8)
-            where TFoo : struct, FooId
+        public static void Unless<TFeature,T1,T2,T3,T4,T5,T6,T7,T8>(this CodeSwitch<TFeature> codeSwitch, Action<T1,T2,T3,T4,T5,T6,T7,T8> disabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8)
+            where TFeature : struct, CodeFeature
         {
-            if (!fooId.Enabled)
+            if (!codeSwitch.Enabled)
                 disabledMethod(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
         }    
 
-        public static void If<TFoo,T1,T2,T3,T4,T5,T6,T7,T8>(this FooId<TFoo> fooId, Action<T1,T2,T3,T4,T5,T6,T7,T8> enabledMethod, Action<T1,T2,T3,T4,T5,T6,T7,T8> disabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8)
-              where TFoo : struct, FooId
+        public static void If<TFeature,T1,T2,T3,T4,T5,T6,T7,T8>(this CodeSwitch<TFeature> codeSwitch, Action<T1,T2,T3,T4,T5,T6,T7,T8> enabledMethod, Action<T1,T2,T3,T4,T5,T6,T7,T8> disabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8)
+              where TFeature : struct, CodeFeature
       {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 enabledMethod(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
             else
                 disabledMethod(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
         }    
 #endif
 #if !NET35
-        public static void If<TFoo,T1,T2,T3,T4,T5,T6,T7,T8,T9>(this FooId<TFoo> fooId, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9> enabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9)
-            where TFoo : struct, FooId
+        public static void If<TFeature,T1,T2,T3,T4,T5,T6,T7,T8,T9>(this CodeSwitch<TFeature> codeSwitch, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9> enabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9)
+            where TFeature : struct, CodeFeature
         {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 enabledMethod(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
         }    
 
-        public static void Unless<TFoo,T1,T2,T3,T4,T5,T6,T7,T8,T9>(this FooId<TFoo> fooId, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9> disabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9)
-            where TFoo : struct, FooId
+        public static void Unless<TFeature,T1,T2,T3,T4,T5,T6,T7,T8,T9>(this CodeSwitch<TFeature> codeSwitch, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9> disabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9)
+            where TFeature : struct, CodeFeature
         {
-            if (!fooId.Enabled)
+            if (!codeSwitch.Enabled)
                 disabledMethod(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
         }    
 
-        public static void If<TFoo,T1,T2,T3,T4,T5,T6,T7,T8,T9>(this FooId<TFoo> fooId, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9> enabledMethod, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9> disabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9)
-              where TFoo : struct, FooId
+        public static void If<TFeature,T1,T2,T3,T4,T5,T6,T7,T8,T9>(this CodeSwitch<TFeature> codeSwitch, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9> enabledMethod, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9> disabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9)
+              where TFeature : struct, CodeFeature
       {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 enabledMethod(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
             else
                 disabledMethod(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
         }    
 #endif
 #if !NET35
-        public static void If<TFoo,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10>(this FooId<TFoo> fooId, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10> enabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10)
-            where TFoo : struct, FooId
+        public static void If<TFeature,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10>(this CodeSwitch<TFeature> codeSwitch, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10> enabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10)
+            where TFeature : struct, CodeFeature
         {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 enabledMethod(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
         }    
 
-        public static void Unless<TFoo,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10>(this FooId<TFoo> fooId, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10> disabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10)
-            where TFoo : struct, FooId
+        public static void Unless<TFeature,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10>(this CodeSwitch<TFeature> codeSwitch, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10> disabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10)
+            where TFeature : struct, CodeFeature
         {
-            if (!fooId.Enabled)
+            if (!codeSwitch.Enabled)
                 disabledMethod(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
         }    
 
-        public static void If<TFoo,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10>(this FooId<TFoo> fooId, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10> enabledMethod, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10> disabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10)
-              where TFoo : struct, FooId
+        public static void If<TFeature,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10>(this CodeSwitch<TFeature> codeSwitch, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10> enabledMethod, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10> disabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10)
+              where TFeature : struct, CodeFeature
       {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 enabledMethod(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
             else
                 disabledMethod(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
         }    
 #endif
 #if !NET35
-        public static void If<TFoo,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11>(this FooId<TFoo> fooId, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11> enabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11)
-            where TFoo : struct, FooId
+        public static void If<TFeature,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11>(this CodeSwitch<TFeature> codeSwitch, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11> enabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11)
+            where TFeature : struct, CodeFeature
         {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 enabledMethod(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11);
         }    
 
-        public static void Unless<TFoo,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11>(this FooId<TFoo> fooId, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11> disabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11)
-            where TFoo : struct, FooId
+        public static void Unless<TFeature,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11>(this CodeSwitch<TFeature> codeSwitch, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11> disabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11)
+            where TFeature : struct, CodeFeature
         {
-            if (!fooId.Enabled)
+            if (!codeSwitch.Enabled)
                 disabledMethod(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11);
         }    
 
-        public static void If<TFoo,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11>(this FooId<TFoo> fooId, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11> enabledMethod, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11> disabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11)
-              where TFoo : struct, FooId
+        public static void If<TFeature,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11>(this CodeSwitch<TFeature> codeSwitch, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11> enabledMethod, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11> disabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11)
+              where TFeature : struct, CodeFeature
       {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 enabledMethod(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11);
             else
                 disabledMethod(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11);
         }    
 #endif
 #if !NET35
-        public static void If<TFoo,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12>(this FooId<TFoo> fooId, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12> enabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12)
-            where TFoo : struct, FooId
+        public static void If<TFeature,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12>(this CodeSwitch<TFeature> codeSwitch, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12> enabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12)
+            where TFeature : struct, CodeFeature
         {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 enabledMethod(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12);
         }    
 
-        public static void Unless<TFoo,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12>(this FooId<TFoo> fooId, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12> disabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12)
-            where TFoo : struct, FooId
+        public static void Unless<TFeature,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12>(this CodeSwitch<TFeature> codeSwitch, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12> disabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12)
+            where TFeature : struct, CodeFeature
         {
-            if (!fooId.Enabled)
+            if (!codeSwitch.Enabled)
                 disabledMethod(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12);
         }    
 
-        public static void If<TFoo,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12>(this FooId<TFoo> fooId, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12> enabledMethod, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12> disabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12)
-              where TFoo : struct, FooId
+        public static void If<TFeature,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12>(this CodeSwitch<TFeature> codeSwitch, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12> enabledMethod, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12> disabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12)
+              where TFeature : struct, CodeFeature
       {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 enabledMethod(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12);
             else
                 disabledMethod(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12);
         }    
 #endif
 #if !NET35
-        public static void If<TFoo,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13>(this FooId<TFoo> fooId, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13> enabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13)
-            where TFoo : struct, FooId
+        public static void If<TFeature,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13>(this CodeSwitch<TFeature> codeSwitch, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13> enabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13)
+            where TFeature : struct, CodeFeature
         {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 enabledMethod(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13);
         }    
 
-        public static void Unless<TFoo,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13>(this FooId<TFoo> fooId, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13> disabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13)
-            where TFoo : struct, FooId
+        public static void Unless<TFeature,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13>(this CodeSwitch<TFeature> codeSwitch, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13> disabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13)
+            where TFeature : struct, CodeFeature
         {
-            if (!fooId.Enabled)
+            if (!codeSwitch.Enabled)
                 disabledMethod(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13);
         }    
 
-        public static void If<TFoo,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13>(this FooId<TFoo> fooId, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13> enabledMethod, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13> disabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13)
-              where TFoo : struct, FooId
+        public static void If<TFeature,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13>(this CodeSwitch<TFeature> codeSwitch, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13> enabledMethod, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13> disabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13)
+              where TFeature : struct, CodeFeature
       {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 enabledMethod(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13);
             else
                 disabledMethod(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13);
         }    
 #endif
 #if !NET35
-        public static void If<TFoo,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14>(this FooId<TFoo> fooId, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14> enabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14)
-            where TFoo : struct, FooId
+        public static void If<TFeature,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14>(this CodeSwitch<TFeature> codeSwitch, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14> enabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14)
+            where TFeature : struct, CodeFeature
         {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 enabledMethod(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14);
         }    
 
-        public static void Unless<TFoo,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14>(this FooId<TFoo> fooId, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14> disabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14)
-            where TFoo : struct, FooId
+        public static void Unless<TFeature,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14>(this CodeSwitch<TFeature> codeSwitch, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14> disabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14)
+            where TFeature : struct, CodeFeature
         {
-            if (!fooId.Enabled)
+            if (!codeSwitch.Enabled)
                 disabledMethod(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14);
         }    
 
-        public static void If<TFoo,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14>(this FooId<TFoo> fooId, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14> enabledMethod, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14> disabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14)
-              where TFoo : struct, FooId
+        public static void If<TFeature,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14>(this CodeSwitch<TFeature> codeSwitch, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14> enabledMethod, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14> disabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14)
+              where TFeature : struct, CodeFeature
       {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 enabledMethod(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14);
             else
                 disabledMethod(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14);
         }    
 #endif
 #if !NET35
-        public static void If<TFoo,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15>(this FooId<TFoo> fooId, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15> enabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14, T15 arg15)
-            where TFoo : struct, FooId
+        public static void If<TFeature,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15>(this CodeSwitch<TFeature> codeSwitch, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15> enabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14, T15 arg15)
+            where TFeature : struct, CodeFeature
         {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 enabledMethod(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15);
         }    
 
-        public static void Unless<TFoo,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15>(this FooId<TFoo> fooId, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15> disabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14, T15 arg15)
-            where TFoo : struct, FooId
+        public static void Unless<TFeature,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15>(this CodeSwitch<TFeature> codeSwitch, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15> disabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14, T15 arg15)
+            where TFeature : struct, CodeFeature
         {
-            if (!fooId.Enabled)
+            if (!codeSwitch.Enabled)
                 disabledMethod(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15);
         }    
 
-        public static void If<TFoo,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15>(this FooId<TFoo> fooId, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15> enabledMethod, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15> disabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14, T15 arg15)
-              where TFoo : struct, FooId
+        public static void If<TFeature,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15>(this CodeSwitch<TFeature> codeSwitch, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15> enabledMethod, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15> disabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14, T15 arg15)
+              where TFeature : struct, CodeFeature
       {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 enabledMethod(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15);
             else
                 disabledMethod(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15);
         }    
 #endif
 #if !NET35
-        public static void If<TFoo,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15,T16>(this FooId<TFoo> fooId, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15,T16> enabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14, T15 arg15, T16 arg16)
-            where TFoo : struct, FooId
+        public static void If<TFeature,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15,T16>(this CodeSwitch<TFeature> codeSwitch, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15,T16> enabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14, T15 arg15, T16 arg16)
+            where TFeature : struct, CodeFeature
         {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 enabledMethod(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16);
         }    
 
-        public static void Unless<TFoo,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15,T16>(this FooId<TFoo> fooId, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15,T16> disabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14, T15 arg15, T16 arg16)
-            where TFoo : struct, FooId
+        public static void Unless<TFeature,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15,T16>(this CodeSwitch<TFeature> codeSwitch, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15,T16> disabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14, T15 arg15, T16 arg16)
+            where TFeature : struct, CodeFeature
         {
-            if (!fooId.Enabled)
+            if (!codeSwitch.Enabled)
                 disabledMethod(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16);
         }    
 
-        public static void If<TFoo,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15,T16>(this FooId<TFoo> fooId, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15,T16> enabledMethod, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15,T16> disabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14, T15 arg15, T16 arg16)
-              where TFoo : struct, FooId
+        public static void If<TFeature,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15,T16>(this CodeSwitch<TFeature> codeSwitch, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15,T16> enabledMethod, Action<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15,T16> disabledMethod, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14, T15 arg15, T16 arg16)
+              where TFeature : struct, CodeFeature
       {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 enabledMethod(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16);
             else
                 disabledMethod(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16);
@@ -413,170 +413,170 @@
 #endif
    
 
-        public static T Iff<TFoo, T>(this FooId<TFoo> fooId, Func<T> enabledFunction, Func<T> disabledFunction)
-            where TFoo : struct, FooId
+        public static T Iff<TFeature, T>(this CodeSwitch<TFeature> codeSwitch, Func<T> enabledFunction, Func<T> disabledFunction)
+            where TFeature : struct, CodeFeature
         {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 return enabledFunction();
 
             return disabledFunction();
         }    
 
 
-        public static T Iff<TFoo, T1, T>(this FooId<TFoo> fooId, Func<T1, T> enabledFunction, Func<T1, T> disabledFunction, T1 arg1)
-            where TFoo : struct, FooId
+        public static T Iff<TFeature, T1, T>(this CodeSwitch<TFeature> codeSwitch, Func<T1, T> enabledFunction, Func<T1, T> disabledFunction, T1 arg1)
+            where TFeature : struct, CodeFeature
         {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 return enabledFunction(arg1);
 
             return disabledFunction(arg1);
         }    
 
 #if !NET35
-        public static T Iff<TFoo, T1, T2, T>(this FooId<TFoo> fooId, Func<T1, T2, T> enabledFunction, Func<T1, T2, T> disabledFunction, T1 arg1, T2 arg2)
-            where TFoo : struct, FooId
+        public static T Iff<TFeature, T1, T2, T>(this CodeSwitch<TFeature> codeSwitch, Func<T1, T2, T> enabledFunction, Func<T1, T2, T> disabledFunction, T1 arg1, T2 arg2)
+            where TFeature : struct, CodeFeature
         {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 return enabledFunction(arg1, arg2);
 
             return disabledFunction(arg1, arg2);
         }    
 #endif
 #if !NET35
-        public static T Iff<TFoo, T1, T2, T3, T>(this FooId<TFoo> fooId, Func<T1, T2, T3, T> enabledFunction, Func<T1, T2, T3, T> disabledFunction, T1 arg1, T2 arg2, T3 arg3)
-            where TFoo : struct, FooId
+        public static T Iff<TFeature, T1, T2, T3, T>(this CodeSwitch<TFeature> codeSwitch, Func<T1, T2, T3, T> enabledFunction, Func<T1, T2, T3, T> disabledFunction, T1 arg1, T2 arg2, T3 arg3)
+            where TFeature : struct, CodeFeature
         {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 return enabledFunction(arg1, arg2, arg3);
 
             return disabledFunction(arg1, arg2, arg3);
         }    
 #endif
 #if !NET35
-        public static T Iff<TFoo, T1, T2, T3, T4, T>(this FooId<TFoo> fooId, Func<T1, T2, T3, T4, T> enabledFunction, Func<T1, T2, T3, T4, T> disabledFunction, T1 arg1, T2 arg2, T3 arg3, T4 arg4)
-            where TFoo : struct, FooId
+        public static T Iff<TFeature, T1, T2, T3, T4, T>(this CodeSwitch<TFeature> codeSwitch, Func<T1, T2, T3, T4, T> enabledFunction, Func<T1, T2, T3, T4, T> disabledFunction, T1 arg1, T2 arg2, T3 arg3, T4 arg4)
+            where TFeature : struct, CodeFeature
         {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 return enabledFunction(arg1, arg2, arg3, arg4);
 
             return disabledFunction(arg1, arg2, arg3, arg4);
         }    
 #endif
 #if !NET35
-        public static T Iff<TFoo, T1, T2, T3, T4, T5, T>(this FooId<TFoo> fooId, Func<T1, T2, T3, T4, T5, T> enabledFunction, Func<T1, T2, T3, T4, T5, T> disabledFunction, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5)
-            where TFoo : struct, FooId
+        public static T Iff<TFeature, T1, T2, T3, T4, T5, T>(this CodeSwitch<TFeature> codeSwitch, Func<T1, T2, T3, T4, T5, T> enabledFunction, Func<T1, T2, T3, T4, T5, T> disabledFunction, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5)
+            where TFeature : struct, CodeFeature
         {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 return enabledFunction(arg1, arg2, arg3, arg4, arg5);
 
             return disabledFunction(arg1, arg2, arg3, arg4, arg5);
         }    
 #endif
 #if !NET35
-        public static T Iff<TFoo, T1, T2, T3, T4, T5, T6, T>(this FooId<TFoo> fooId, Func<T1, T2, T3, T4, T5, T6, T> enabledFunction, Func<T1, T2, T3, T4, T5, T6, T> disabledFunction, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6)
-            where TFoo : struct, FooId
+        public static T Iff<TFeature, T1, T2, T3, T4, T5, T6, T>(this CodeSwitch<TFeature> codeSwitch, Func<T1, T2, T3, T4, T5, T6, T> enabledFunction, Func<T1, T2, T3, T4, T5, T6, T> disabledFunction, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6)
+            where TFeature : struct, CodeFeature
         {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 return enabledFunction(arg1, arg2, arg3, arg4, arg5, arg6);
 
             return disabledFunction(arg1, arg2, arg3, arg4, arg5, arg6);
         }    
 #endif
 #if !NET35
-        public static T Iff<TFoo, T1, T2, T3, T4, T5, T6, T7, T>(this FooId<TFoo> fooId, Func<T1, T2, T3, T4, T5, T6, T7, T> enabledFunction, Func<T1, T2, T3, T4, T5, T6, T7, T> disabledFunction, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7)
-            where TFoo : struct, FooId
+        public static T Iff<TFeature, T1, T2, T3, T4, T5, T6, T7, T>(this CodeSwitch<TFeature> codeSwitch, Func<T1, T2, T3, T4, T5, T6, T7, T> enabledFunction, Func<T1, T2, T3, T4, T5, T6, T7, T> disabledFunction, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7)
+            where TFeature : struct, CodeFeature
         {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 return enabledFunction(arg1, arg2, arg3, arg4, arg5, arg6, arg7);
 
             return disabledFunction(arg1, arg2, arg3, arg4, arg5, arg6, arg7);
         }    
 #endif
 #if !NET35
-        public static T Iff<TFoo, T1, T2, T3, T4, T5, T6, T7, T8, T>(this FooId<TFoo> fooId, Func<T1, T2, T3, T4, T5, T6, T7, T8, T> enabledFunction, Func<T1, T2, T3, T4, T5, T6, T7, T8, T> disabledFunction, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8)
-            where TFoo : struct, FooId
+        public static T Iff<TFeature, T1, T2, T3, T4, T5, T6, T7, T8, T>(this CodeSwitch<TFeature> codeSwitch, Func<T1, T2, T3, T4, T5, T6, T7, T8, T> enabledFunction, Func<T1, T2, T3, T4, T5, T6, T7, T8, T> disabledFunction, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8)
+            where TFeature : struct, CodeFeature
         {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 return enabledFunction(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
 
             return disabledFunction(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
         }    
 #endif
 #if !NET35
-        public static T Iff<TFoo, T1, T2, T3, T4, T5, T6, T7, T8, T9, T>(this FooId<TFoo> fooId, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T> enabledFunction, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T> disabledFunction, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9)
-            where TFoo : struct, FooId
+        public static T Iff<TFeature, T1, T2, T3, T4, T5, T6, T7, T8, T9, T>(this CodeSwitch<TFeature> codeSwitch, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T> enabledFunction, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T> disabledFunction, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9)
+            where TFeature : struct, CodeFeature
         {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 return enabledFunction(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
 
             return disabledFunction(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
         }    
 #endif
 #if !NET35
-        public static T Iff<TFoo, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T>(this FooId<TFoo> fooId, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T> enabledFunction, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T> disabledFunction, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10)
-            where TFoo : struct, FooId
+        public static T Iff<TFeature, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T>(this CodeSwitch<TFeature> codeSwitch, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T> enabledFunction, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T> disabledFunction, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10)
+            where TFeature : struct, CodeFeature
         {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 return enabledFunction(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
 
             return disabledFunction(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
         }    
 #endif
 #if !NET35
-        public static T Iff<TFoo, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T>(this FooId<TFoo> fooId, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T> enabledFunction, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T> disabledFunction, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11)
-            where TFoo : struct, FooId
+        public static T Iff<TFeature, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T>(this CodeSwitch<TFeature> codeSwitch, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T> enabledFunction, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T> disabledFunction, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11)
+            where TFeature : struct, CodeFeature
         {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 return enabledFunction(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11);
 
             return disabledFunction(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11);
         }    
 #endif
 #if !NET35
-        public static T Iff<TFoo, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T>(this FooId<TFoo> fooId, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T> enabledFunction, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T> disabledFunction, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12)
-            where TFoo : struct, FooId
+        public static T Iff<TFeature, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T>(this CodeSwitch<TFeature> codeSwitch, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T> enabledFunction, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T> disabledFunction, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12)
+            where TFeature : struct, CodeFeature
         {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 return enabledFunction(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12);
 
             return disabledFunction(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12);
         }    
 #endif
 #if !NET35
-        public static T Iff<TFoo, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T>(this FooId<TFoo> fooId, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T> enabledFunction, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T> disabledFunction, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13)
-            where TFoo : struct, FooId
+        public static T Iff<TFeature, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T>(this CodeSwitch<TFeature> codeSwitch, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T> enabledFunction, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T> disabledFunction, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13)
+            where TFeature : struct, CodeFeature
         {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 return enabledFunction(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13);
 
             return disabledFunction(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13);
         }    
 #endif
 #if !NET35
-        public static T Iff<TFoo, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T>(this FooId<TFoo> fooId, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T> enabledFunction, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T> disabledFunction, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14)
-            where TFoo : struct, FooId
+        public static T Iff<TFeature, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T>(this CodeSwitch<TFeature> codeSwitch, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T> enabledFunction, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T> disabledFunction, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14)
+            where TFeature : struct, CodeFeature
         {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 return enabledFunction(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14);
 
             return disabledFunction(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14);
         }    
 #endif
 #if !NET35
-        public static T Iff<TFoo, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T>(this FooId<TFoo> fooId, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T> enabledFunction, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T> disabledFunction, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14, T15 arg15)
-            where TFoo : struct, FooId
+        public static T Iff<TFeature, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T>(this CodeSwitch<TFeature> codeSwitch, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T> enabledFunction, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T> disabledFunction, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14, T15 arg15)
+            where TFeature : struct, CodeFeature
         {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 return enabledFunction(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15);
 
             return disabledFunction(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15);
         }    
 #endif
 #if !NET35
-        public static T Iff<TFoo, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T>(this FooId<TFoo> fooId, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T> enabledFunction, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T> disabledFunction, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14, T15 arg15, T16 arg16)
-            where TFoo : struct, FooId
+        public static T Iff<TFeature, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T>(this CodeSwitch<TFeature> codeSwitch, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T> enabledFunction, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T> disabledFunction, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14, T15 arg15, T16 arg16)
+            where TFeature : struct, CodeFeature
         {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 return enabledFunction(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16);
 
             return disabledFunction(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16);
@@ -589,10 +589,10 @@
         public delegate T OFunc<T1, T>(out T1 arg1);
 #endif
 
-        public static T Iff<TFoo, T1, T>(this FooId<TFoo> fooId, OFunc<T1, T> enabledFunction, OFunc<T1, T> disabledFunction, out T1 arg1)
-            where TFoo : struct, FooId
+        public static T Iff<TFeature, T1, T>(this CodeSwitch<TFeature> codeSwitch, OFunc<T1, T> enabledFunction, OFunc<T1, T> disabledFunction, out T1 arg1)
+            where TFeature : struct, CodeFeature
         {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 return enabledFunction(out arg1);
 
             return disabledFunction(out arg1);
@@ -604,10 +604,10 @@
         public delegate T OFunc<T1, T2, T>(T1 arg1, out T2 arg2);
 #endif
 
-        public static T Iff<TFoo, T1, T2, T>(this FooId<TFoo> fooId, OFunc<T1, T2, T> enabledFunction, OFunc<T1, T2, T> disabledFunction, T1 arg1, out T2 arg2)
-            where TFoo : struct, FooId
+        public static T Iff<TFeature, T1, T2, T>(this CodeSwitch<TFeature> codeSwitch, OFunc<T1, T2, T> enabledFunction, OFunc<T1, T2, T> disabledFunction, T1 arg1, out T2 arg2)
+            where TFeature : struct, CodeFeature
         {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 return enabledFunction(arg1, out arg2);
 
             return disabledFunction(arg1, out arg2);
@@ -619,10 +619,10 @@
         public delegate T OFunc<T1, T2, T3, T>(T1 arg1, T2 arg2, out T3 arg3);
 #endif
 
-        public static T Iff<TFoo, T1, T2, T3, T>(this FooId<TFoo> fooId, OFunc<T1, T2, T3, T> enabledFunction, OFunc<T1, T2, T3, T> disabledFunction, T1 arg1, T2 arg2, out T3 arg3)
-            where TFoo : struct, FooId
+        public static T Iff<TFeature, T1, T2, T3, T>(this CodeSwitch<TFeature> codeSwitch, OFunc<T1, T2, T3, T> enabledFunction, OFunc<T1, T2, T3, T> disabledFunction, T1 arg1, T2 arg2, out T3 arg3)
+            where TFeature : struct, CodeFeature
         {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 return enabledFunction(arg1, arg2, out arg3);
 
             return disabledFunction(arg1, arg2, out arg3);
@@ -634,10 +634,10 @@
         public delegate T OFunc<T1, T2, T3, T4, T>(T1 arg1, T2 arg2, T3 arg3, out T4 arg4);
 #endif
 
-        public static T Iff<TFoo, T1, T2, T3, T4, T>(this FooId<TFoo> fooId, OFunc<T1, T2, T3, T4, T> enabledFunction, OFunc<T1, T2, T3, T4, T> disabledFunction, T1 arg1, T2 arg2, T3 arg3, out T4 arg4)
-            where TFoo : struct, FooId
+        public static T Iff<TFeature, T1, T2, T3, T4, T>(this CodeSwitch<TFeature> codeSwitch, OFunc<T1, T2, T3, T4, T> enabledFunction, OFunc<T1, T2, T3, T4, T> disabledFunction, T1 arg1, T2 arg2, T3 arg3, out T4 arg4)
+            where TFeature : struct, CodeFeature
         {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 return enabledFunction(arg1, arg2, arg3, out arg4);
 
             return disabledFunction(arg1, arg2, arg3, out arg4);
@@ -649,10 +649,10 @@
         public delegate T OFunc<T1, T2, T3, T4, T5, T>(T1 arg1, T2 arg2, T3 arg3, T4 arg4, out T5 arg5);
 #endif
 
-        public static T Iff<TFoo, T1, T2, T3, T4, T5, T>(this FooId<TFoo> fooId, OFunc<T1, T2, T3, T4, T5, T> enabledFunction, OFunc<T1, T2, T3, T4, T5, T> disabledFunction, T1 arg1, T2 arg2, T3 arg3, T4 arg4, out T5 arg5)
-            where TFoo : struct, FooId
+        public static T Iff<TFeature, T1, T2, T3, T4, T5, T>(this CodeSwitch<TFeature> codeSwitch, OFunc<T1, T2, T3, T4, T5, T> enabledFunction, OFunc<T1, T2, T3, T4, T5, T> disabledFunction, T1 arg1, T2 arg2, T3 arg3, T4 arg4, out T5 arg5)
+            where TFeature : struct, CodeFeature
         {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 return enabledFunction(arg1, arg2, arg3, arg4, out arg5);
 
             return disabledFunction(arg1, arg2, arg3, arg4, out arg5);
@@ -664,10 +664,10 @@
         public delegate T OFunc<T1, T2, T3, T4, T5, T6, T>(T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, out T6 arg6);
 #endif
 
-        public static T Iff<TFoo, T1, T2, T3, T4, T5, T6, T>(this FooId<TFoo> fooId, OFunc<T1, T2, T3, T4, T5, T6, T> enabledFunction, OFunc<T1, T2, T3, T4, T5, T6, T> disabledFunction, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, out T6 arg6)
-            where TFoo : struct, FooId
+        public static T Iff<TFeature, T1, T2, T3, T4, T5, T6, T>(this CodeSwitch<TFeature> codeSwitch, OFunc<T1, T2, T3, T4, T5, T6, T> enabledFunction, OFunc<T1, T2, T3, T4, T5, T6, T> disabledFunction, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, out T6 arg6)
+            where TFeature : struct, CodeFeature
         {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 return enabledFunction(arg1, arg2, arg3, arg4, arg5, out arg6);
 
             return disabledFunction(arg1, arg2, arg3, arg4, arg5, out arg6);
@@ -679,10 +679,10 @@
         public delegate T OFunc<T1, T2, T3, T4, T5, T6, T7, T>(T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, out T7 arg7);
 #endif
 
-        public static T Iff<TFoo, T1, T2, T3, T4, T5, T6, T7, T>(this FooId<TFoo> fooId, OFunc<T1, T2, T3, T4, T5, T6, T7, T> enabledFunction, OFunc<T1, T2, T3, T4, T5, T6, T7, T> disabledFunction, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, out T7 arg7)
-            where TFoo : struct, FooId
+        public static T Iff<TFeature, T1, T2, T3, T4, T5, T6, T7, T>(this CodeSwitch<TFeature> codeSwitch, OFunc<T1, T2, T3, T4, T5, T6, T7, T> enabledFunction, OFunc<T1, T2, T3, T4, T5, T6, T7, T> disabledFunction, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, out T7 arg7)
+            where TFeature : struct, CodeFeature
         {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 return enabledFunction(arg1, arg2, arg3, arg4, arg5, arg6, out arg7);
 
             return disabledFunction(arg1, arg2, arg3, arg4, arg5, arg6, out arg7);
@@ -694,10 +694,10 @@
         public delegate T OFunc<T1, T2, T3, T4, T5, T6, T7, T8, T>(T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, out T8 arg8);
 #endif
 
-        public static T Iff<TFoo, T1, T2, T3, T4, T5, T6, T7, T8, T>(this FooId<TFoo> fooId, OFunc<T1, T2, T3, T4, T5, T6, T7, T8, T> enabledFunction, OFunc<T1, T2, T3, T4, T5, T6, T7, T8, T> disabledFunction, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, out T8 arg8)
-            where TFoo : struct, FooId
+        public static T Iff<TFeature, T1, T2, T3, T4, T5, T6, T7, T8, T>(this CodeSwitch<TFeature> codeSwitch, OFunc<T1, T2, T3, T4, T5, T6, T7, T8, T> enabledFunction, OFunc<T1, T2, T3, T4, T5, T6, T7, T8, T> disabledFunction, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, out T8 arg8)
+            where TFeature : struct, CodeFeature
         {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 return enabledFunction(arg1, arg2, arg3, arg4, arg5, arg6, arg7, out arg8);
 
             return disabledFunction(arg1, arg2, arg3, arg4, arg5, arg6, arg7, out arg8);
@@ -709,10 +709,10 @@
         public delegate T OFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T>(T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, out T9 arg9);
 #endif
 
-        public static T Iff<TFoo, T1, T2, T3, T4, T5, T6, T7, T8, T9, T>(this FooId<TFoo> fooId, OFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T> enabledFunction, OFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T> disabledFunction, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, out T9 arg9)
-            where TFoo : struct, FooId
+        public static T Iff<TFeature, T1, T2, T3, T4, T5, T6, T7, T8, T9, T>(this CodeSwitch<TFeature> codeSwitch, OFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T> enabledFunction, OFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T> disabledFunction, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, out T9 arg9)
+            where TFeature : struct, CodeFeature
         {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 return enabledFunction(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, out arg9);
 
             return disabledFunction(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, out arg9);
@@ -724,10 +724,10 @@
         public delegate T OFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T>(T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, out T10 arg10);
 #endif
 
-        public static T Iff<TFoo, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T>(this FooId<TFoo> fooId, OFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T> enabledFunction, OFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T> disabledFunction, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, out T10 arg10)
-            where TFoo : struct, FooId
+        public static T Iff<TFeature, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T>(this CodeSwitch<TFeature> codeSwitch, OFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T> enabledFunction, OFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T> disabledFunction, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, out T10 arg10)
+            where TFeature : struct, CodeFeature
         {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 return enabledFunction(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, out arg10);
 
             return disabledFunction(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, out arg10);
@@ -739,10 +739,10 @@
         public delegate T OFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T>(T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, out T11 arg11);
 #endif
 
-        public static T Iff<TFoo, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T>(this FooId<TFoo> fooId, OFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T> enabledFunction, OFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T> disabledFunction, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, out T11 arg11)
-            where TFoo : struct, FooId
+        public static T Iff<TFeature, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T>(this CodeSwitch<TFeature> codeSwitch, OFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T> enabledFunction, OFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T> disabledFunction, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, out T11 arg11)
+            where TFeature : struct, CodeFeature
         {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 return enabledFunction(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, out arg11);
 
             return disabledFunction(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, out arg11);
@@ -754,10 +754,10 @@
         public delegate T OFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T>(T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, out T12 arg12);
 #endif
 
-        public static T Iff<TFoo, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T>(this FooId<TFoo> fooId, OFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T> enabledFunction, OFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T> disabledFunction, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, out T12 arg12)
-            where TFoo : struct, FooId
+        public static T Iff<TFeature, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T>(this CodeSwitch<TFeature> codeSwitch, OFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T> enabledFunction, OFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T> disabledFunction, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, out T12 arg12)
+            where TFeature : struct, CodeFeature
         {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 return enabledFunction(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, out arg12);
 
             return disabledFunction(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, out arg12);
@@ -769,10 +769,10 @@
         public delegate T OFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T>(T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, out T13 arg13);
 #endif
 
-        public static T Iff<TFoo, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T>(this FooId<TFoo> fooId, OFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T> enabledFunction, OFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T> disabledFunction, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, out T13 arg13)
-            where TFoo : struct, FooId
+        public static T Iff<TFeature, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T>(this CodeSwitch<TFeature> codeSwitch, OFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T> enabledFunction, OFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T> disabledFunction, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, out T13 arg13)
+            where TFeature : struct, CodeFeature
         {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 return enabledFunction(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, out arg13);
 
             return disabledFunction(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, out arg13);
@@ -784,10 +784,10 @@
         public delegate T OFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T>(T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, out T14 arg14);
 #endif
 
-        public static T Iff<TFoo, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T>(this FooId<TFoo> fooId, OFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T> enabledFunction, OFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T> disabledFunction, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, out T14 arg14)
-            where TFoo : struct, FooId
+        public static T Iff<TFeature, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T>(this CodeSwitch<TFeature> codeSwitch, OFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T> enabledFunction, OFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T> disabledFunction, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, out T14 arg14)
+            where TFeature : struct, CodeFeature
         {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 return enabledFunction(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, out arg14);
 
             return disabledFunction(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, out arg14);
@@ -799,10 +799,10 @@
         public delegate T OFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T>(T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14, out T15 arg15);
 #endif
 
-        public static T Iff<TFoo, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T>(this FooId<TFoo> fooId, OFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T> enabledFunction, OFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T> disabledFunction, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14, out T15 arg15)
-            where TFoo : struct, FooId
+        public static T Iff<TFeature, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T>(this CodeSwitch<TFeature> codeSwitch, OFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T> enabledFunction, OFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T> disabledFunction, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14, out T15 arg15)
+            where TFeature : struct, CodeFeature
         {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 return enabledFunction(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, out arg15);
 
             return disabledFunction(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, out arg15);
@@ -814,10 +814,10 @@
         public delegate T OFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T>(T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14, T15 arg15, out T16 arg16);
 #endif
 
-        public static T Iff<TFoo, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T>(this FooId<TFoo> fooId, OFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T> enabledFunction, OFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T> disabledFunction, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14, T15 arg15, out T16 arg16)
-            where TFoo : struct, FooId
+        public static T Iff<TFeature, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T>(this CodeSwitch<TFeature> codeSwitch, OFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T> enabledFunction, OFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T> disabledFunction, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14, T15 arg15, out T16 arg16)
+            where TFeature : struct, CodeFeature
         {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 return enabledFunction(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, out arg16);
 
             return disabledFunction(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, out arg16);

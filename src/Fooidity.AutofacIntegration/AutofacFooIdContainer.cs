@@ -12,7 +12,7 @@
 
     public class AutofacFooIdContainer<TFoo> :
         FooIdContainer<TFoo>
-        where TFoo : struct, FooId
+        where TFoo : struct, CodeFeature
     {
         readonly Lazy<ILifetimeScope> _disabled;
         readonly Lazy<ILifetimeScope> _enabled;
@@ -165,7 +165,7 @@
 
         ILifetimeScope GetCurrentSwitchScope()
         {
-            var fooId = _parent.Resolve<FooId<TFoo>>();
+            var fooId = _parent.Resolve<CodeSwitch<TFoo>>();
 
             return fooId.Enabled ? EnabledLifetimeScope : DisabledLifetimeScope;
         }

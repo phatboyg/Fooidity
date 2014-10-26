@@ -6,8 +6,8 @@
     /// </summary>
     /// <typeparam name="TFoo"></typeparam>
     public interface Snapshot<TFoo> :
-        FooId<TFoo>
-        where TFoo : struct, FooId
+        CodeSwitch<TFoo>
+        where TFoo : struct, CodeFeature
     {
         EvaluationType EvaluationType { get; }
     }

@@ -4,18 +4,18 @@
 <#@ import namespace="System.Linq" #>
 namespace Fooidity
 {
-    public class DependentFooIdFactoryImpl<T> :
-        DependentFooIdFactory<T>
-        where T : struct, FooId
+    public class DependentCodeSwitchFactory<T> :
+        IDependentCodeSwitchFactory<T>
+        where T : struct, CodeFeature
     {
 <# for(int i=1; i<=16; i++){
     var tActionArgs = String.Join(", ",Enumerable.Range(1,i).Select(it=>String.Format("T{0}",it)));
     var tPrevArgs = String.Join(", ",new[]{"T"}.Concat(Enumerable.Range(1,i-1).Select(it=>String.Format("T{0}",it))));
 #>
-        public FooId<T, <#=tActionArgs#>> Upon<<#=tActionArgs#>>(<#= String.Join(", ", Enumerable.Range(1, i).Select(x => String.Format("FooId<T{0}> fooId{0}", x))) #>)
-            <#= String.Join(Environment.NewLine + "            ", Enumerable.Range(1, i).Select(x => String.Format("where T{0} : struct, FooId", x))) #>
+        public CodeSwitch<T, <#=tActionArgs#>> Upon<<#=tActionArgs#>>(<#= String.Join(", ", Enumerable.Range(1, i).Select(x => String.Format("CodeSwitch<T{0}> codeSwitch{0}", x))) #>)
+            <#= String.Join(Environment.NewLine + "            ", Enumerable.Range(1, i).Select(x => String.Format("where T{0} : struct, CodeFeature", x))) #>
         {
-            return new DependentFooId<T, <#=tActionArgs#>>(<#= String.Join(", ", Enumerable.Range(1, i).Select(x => String.Format("fooId{0}", x))) #>);
+            return new DependentCodeSwitch<T, <#=tActionArgs#>>(<#= String.Join(", ", Enumerable.Range(1, i).Select(x => String.Format("codeSwitch{0}", x))) #>);
         }
 
 <# } #>

@@ -9,11 +9,11 @@
         [Test]
         public void Should_allow_simple_creation_of_dependent_fooids()
         {
-            FooId<A> a = FooIds.Enabled<A>();
-            FooId<B> b = FooIds.Enabled<B>();
-            ToggleFooId<C> c = FooIds.Toggle<C>();
+            CodeSwitch<A> a = CodeSwitch.Enabled<A>();
+            CodeSwitch<B> b = CodeSwitch.Enabled<B>();
+            ToggleCodeSwitch<C> c = CodeSwitch.Toggle<C>();
 
-            FooId<ABC> abc = FooIds.Dependent<ABC>(x => x.Upon(a, b, c));
+            CodeSwitch<ABC> abc = CodeSwitch.Dependent<ABC>(x => x.Upon(a, b, c));
             Assert.IsFalse(abc.Enabled);
 
             c.Enable();
@@ -22,25 +22,25 @@
 
 
         struct A :
-            FooId
+            CodeFeature
         {
         }
 
 
         struct B :
-            FooId
+            CodeFeature
         {
         }
 
 
         struct C :
-            FooId
+            CodeFeature
         {
         }
 
 
         struct ABC :
-            FooId
+            CodeFeature
         {
         }
     }

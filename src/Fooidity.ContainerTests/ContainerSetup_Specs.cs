@@ -53,7 +53,7 @@
 
 
         struct UseClassAv2 :
-            FooId
+            CodeFeature
         {
         }
 

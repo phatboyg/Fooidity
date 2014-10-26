@@ -8,24 +8,24 @@ namespace Fooidity
 
     public static class IfExtensions
     {
-        public static void If<TFoo>(this FooId<TFoo> fooId, Action enabledMethod)
-            where TFoo : struct, FooId
+        public static void If<TFeature>(this CodeSwitch<TFeature> codeSwitch, Action enabledMethod)
+            where TFeature : struct, CodeFeature
         {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 enabledMethod();
         }    
 
-        public static void Unless<TFoo>(this FooId<TFoo> fooId, Action disabledMethod)
-             where TFoo : struct, FooId
+        public static void Unless<TFeature>(this CodeSwitch<TFeature> codeSwitch, Action disabledMethod)
+             where TFeature : struct, CodeFeature
        {
-            if (!fooId.Enabled)
+            if (!codeSwitch.Enabled)
                 disabledMethod();
         }    
 
-        public static void If<TFoo>(this FooId<TFoo> fooId, Action enabledMethod, Action disabledMethod)
-            where TFoo : struct, FooId
+        public static void If<TFeature>(this CodeSwitch<TFeature> codeSwitch, Action enabledMethod, Action disabledMethod)
+            where TFeature : struct, CodeFeature
         {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 enabledMethod();
             else
                 disabledMethod();
@@ -33,31 +33,31 @@ namespace Fooidity
 
 <# for(int i=1; i<=16; i++){
     var tActionArgs = String.Join(",",Enumerable.Range(1,i).Select(it=>String.Format("T{0}",it)));
-    var tGenericArgs = String.Join(",",new[]{"TFoo"}.Concat(Enumerable.Range(1,i).Select(it=>String.Format("T{0}",it))));
+    var tGenericArgs = String.Join(",",new[]{"TFeature"}.Concat(Enumerable.Range(1,i).Select(it=>String.Format("T{0}",it))));
     var tMethodArgs = String.Concat(Enumerable.Range(1,i).Select(it=>String.Format(", T{0} arg{0}",it)));
     var tCallArgs = String.Join(", ", Enumerable.Range(1,i).Select(it=>String.Format("arg{0}",it)));
     var tOpen = (i > 1) ? "#if !NET35" : "";
     var tClose = (i > 1) ? "#endif" : "";
 #>
 <#=tOpen#>
-        public static void If<<#=tGenericArgs#>>(this FooId<TFoo> fooId, Action<<#=tActionArgs#>> enabledMethod<#=tMethodArgs#>)
-            where TFoo : struct, FooId
+        public static void If<<#=tGenericArgs#>>(this CodeSwitch<TFeature> codeSwitch, Action<<#=tActionArgs#>> enabledMethod<#=tMethodArgs#>)
+            where TFeature : struct, CodeFeature
         {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 enabledMethod(<#=tCallArgs#>);
         }    
 
-        public static void Unless<<#=tGenericArgs#>>(this FooId<TFoo> fooId, Action<<#=tActionArgs#>> disabledMethod<#=tMethodArgs#>)
-            where TFoo : struct, FooId
+        public static void Unless<<#=tGenericArgs#>>(this CodeSwitch<TFeature> codeSwitch, Action<<#=tActionArgs#>> disabledMethod<#=tMethodArgs#>)
+            where TFeature : struct, CodeFeature
         {
-            if (!fooId.Enabled)
+            if (!codeSwitch.Enabled)
                 disabledMethod(<#=tCallArgs#>);
         }    
 
-        public static void If<<#=tGenericArgs#>>(this FooId<TFoo> fooId, Action<<#=tActionArgs#>> enabledMethod, Action<<#=tActionArgs#>> disabledMethod<#=tMethodArgs#>)
-              where TFoo : struct, FooId
+        public static void If<<#=tGenericArgs#>>(this CodeSwitch<TFeature> codeSwitch, Action<<#=tActionArgs#>> enabledMethod, Action<<#=tActionArgs#>> disabledMethod<#=tMethodArgs#>)
+              where TFeature : struct, CodeFeature
       {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 enabledMethod(<#=tCallArgs#>);
             else
                 disabledMethod(<#=tCallArgs#>);
@@ -67,10 +67,10 @@ namespace Fooidity
     }
 #>   
 
-        public static T Iff<TFoo, T>(this FooId<TFoo> fooId, Func<T> enabledFunction, Func<T> disabledFunction)
-            where TFoo : struct, FooId
+        public static T Iff<TFeature, T>(this CodeSwitch<TFeature> codeSwitch, Func<T> enabledFunction, Func<T> disabledFunction)
+            where TFeature : struct, CodeFeature
         {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 return enabledFunction();
 
             return disabledFunction();
@@ -84,10 +84,10 @@ namespace Fooidity
     var tClose = (i > 1) ? "#endif" : "";
 #>
 <#=tOpen#>
-        public static T Iff<TFoo, <#=tActionArgs#>T>(this FooId<TFoo> fooId, Func<<#=tActionArgs#>T> enabledFunction, Func<<#=tActionArgs#>T> disabledFunction<#=tMethodArgs#>)
-            where TFoo : struct, FooId
+        public static T Iff<TFeature, <#=tActionArgs#>T>(this CodeSwitch<TFeature> codeSwitch, Func<<#=tActionArgs#>T> enabledFunction, Func<<#=tActionArgs#>T> disabledFunction<#=tMethodArgs#>)
+            where TFeature : struct, CodeFeature
         {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 return enabledFunction(<#=tCallArgs#>);
 
             return disabledFunction(<#=tCallArgs#>);
@@ -112,10 +112,10 @@ namespace Fooidity
         public delegate T OFunc<<#=tInArgs.Replace("in ", "")#><#=tOutArg#>, T>(<#=tInMethodArgs#><#=tOutMethodArg#>);
 #endif
 
-        public static T Iff<TFoo, <#=tActionArgs#>T>(this FooId<TFoo> fooId, OFunc<<#=tActionArgs#>T> enabledFunction, OFunc<<#=tActionArgs#>T> disabledFunction, <#=tInMethodArgs#><#=tOutMethodArg#>)
-            where TFoo : struct, FooId
+        public static T Iff<TFeature, <#=tActionArgs#>T>(this CodeSwitch<TFeature> codeSwitch, OFunc<<#=tActionArgs#>T> enabledFunction, OFunc<<#=tActionArgs#>T> disabledFunction, <#=tInMethodArgs#><#=tOutMethodArg#>)
+            where TFeature : struct, CodeFeature
         {
-            if (fooId.Enabled)
+            if (codeSwitch.Enabled)
                 return enabledFunction(<#=tInCallArgs#><#=tOutCallArg#>);
 
             return disabledFunction(<#=tInCallArgs#><#=tOutCallArg#>);

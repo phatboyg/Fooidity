@@ -8,28 +8,28 @@ namespace Fooidity
     var tActionArgs = String.Join(", ",Enumerable.Range(1,i).Select(it=>String.Format("T{0}",it)));
 #>
 
-    public class DependentFooId<T, <#=tActionArgs#>> :
-        FooId<T, <#=tActionArgs#>>
-        where T : struct, FooId
-        <#= String.Join(Environment.NewLine + "        ", Enumerable.Range(1, i).Select(x => String.Format("where T{0} : struct, FooId", x))) #>
+    public class DependentCodeSwitch<T, <#=tActionArgs#>> :
+        CodeSwitch<T, <#=tActionArgs#>>
+        where T : struct, CodeFeature
+        <#= String.Join(Environment.NewLine + "        ", Enumerable.Range(1, i).Select(x => String.Format("where T{0} : struct, CodeFeature", x))) #>
     {
-        <#= String.Join(Environment.NewLine + "        ", Enumerable.Range(1, i).Select(x => String.Format("readonly FooId<T{0}> _fooId{0};", x))) #>
+        <#= String.Join(Environment.NewLine + "        ", Enumerable.Range(1, i).Select(x => String.Format("readonly CodeSwitch<T{0}> _codeSwitch{0};", x))) #>
 
-        public DependentFooId(<#= String.Join(", ", Enumerable.Range(1, i).Select(x => String.Format("FooId<T{0}> fooId{0}", x))) #>)
+        public DependentCodeSwitch(<#= String.Join(", ", Enumerable.Range(1, i).Select(x => String.Format("CodeSwitch<T{0}> codeSwitch{0}", x))) #>)
         {
-            <#= String.Join(Environment.NewLine + "            ", Enumerable.Range(1, i).Select(x => String.Format("_fooId{0} = fooId{0};", x))) #>
+            <#= String.Join(Environment.NewLine + "            ", Enumerable.Range(1, i).Select(x => String.Format("_codeSwitch{0} = codeSwitch{0};", x))) #>
         }
 
         public bool Enabled
         {
-            get { return <#= String.Join(" && ", Enumerable.Range(1, i).Select(x => String.Format("_fooId{0}.Enabled", x))) #>; }
+            get { return <#= String.Join(" && ", Enumerable.Range(1, i).Select(x => String.Format("_codeSwitch{0}.Enabled", x))) #>; }
         }
         <# for(int j = 1; j <= i; j++) { 
         #>
 
-        public FooId<T<#=j#>> FooId<#=j#>
+        public CodeSwitch<T<#=j#>> Switch<#=j#>
         {
-            get { return _fooId<#=j#>; }
+            get { return _codeSwitch<#=j#>; }
         }
 <# } #>
     }

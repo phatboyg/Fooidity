@@ -2,9 +2,9 @@
 {
     public class ConditionalClass
     {
-        readonly FooId<UseNewMethod> _useNewMethod;
+        readonly CodeSwitch<UseNewMethod> _useNewMethod;
 
-        public ConditionalClass(FooId<UseNewMethod> useNewMethod)
+        public ConditionalClass(CodeSwitch<UseNewMethod> useNewMethod)
         {
             _useNewMethod = useNewMethod;
         }
@@ -40,7 +40,7 @@
 
 
     public struct UseNewMethod :
-        FooId
+        CodeFeature
     {
     }
 }

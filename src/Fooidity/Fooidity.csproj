@@ -34,6 +34,8 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CodeFeatureCache.cs" />
+    <Compile Include="CodeSwitch.cs" />
     <Compile Include="DependentFooIdFactoryImpl.cs">
       <DependentUpon>DependentFooIdFactoryImpl.tt</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -49,15 +51,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DependentFooId.tt</DependentUpon>
     </Compile>
-    <Compile Include="DisabledFooId.cs" />
-    <Compile Include="EnabledFooId.cs" />
+    <Compile Include="DisabledCodeSwitch.cs" />
+    <Compile Include="EnabledCodeSwitch.cs" />
     <Compile Include="FooIdOfT.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>FooIdOfT.tt</DependentUpon>
     </Compile>
-    <Compile Include="FooIds.cs" />
-    <Compile Include="FooId.cs" />
+    <Compile Include="CodeFeature.cs" />
+    <Compile Include="ICodeFeatureCache.cs" />
     <Compile Include="IfExtensions.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -67,7 +69,8 @@
     <Compile Include="Security\EnabledByRoleInThreadPrincipal.cs" />
     <Compile Include="Security\EnabledForAuthenticatedIdentity.cs" />
     <Compile Include="Snapshot.cs" />
-    <Compile Include="ToggleFooId.cs" />
+    <Compile Include="IToggleCodeSwitch.cs" />
+    <Compile Include="ToggleCodeSwitch.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DependentFooIdFactoryImpl.tt">
