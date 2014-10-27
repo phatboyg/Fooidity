@@ -47,6 +47,7 @@
       <Link>Properties\SolutionVersion.cs</Link>
     </Compile>
     <Compile Include="AutofacFooIdContainer.cs" />
+    <Compile Include="CodeSwitchStateTrackingModule.cs" />
     <Compile Include="ContainerBuilderExtensions.cs" />
     <Compile Include="FooIdContainer.cs" />
   </ItemGroup>

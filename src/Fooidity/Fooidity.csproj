@@ -63,6 +63,7 @@
     <Compile Include="Caching\IReloadCache.cs" />
     <Compile Include="Caching\IUpdateCache.cs" />
     <Compile Include="CodeSwitch.cs" />
+    <Compile Include="CodeSwitchStateTracker.cs" />
     <Compile Include="Configuration\CodeFeatureState.cs" />
     <Compile Include="Configuration\ConfigurationCodeFeatureStateCacheProvider.cs" />
     <Compile Include="Configuration\ConfigurationContextFeatureStateCacheProvider.cs" />
@@ -104,6 +105,7 @@
       <DependentUpon>CodeSwitchOfT.tt</DependentUpon>
     </Compile>
     <Compile Include="CodeFeature.cs" />
+    <Compile Include="Events\CodeSwitchEvaluated.cs" />
     <Compile Include="ICodeFeatureStateCache.cs" />
     <Compile Include="IContextFeatureStateCache.cs" />
     <Compile Include="IfExtensions.cs">

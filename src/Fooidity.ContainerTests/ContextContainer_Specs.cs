@@ -1,5 +1,6 @@
 ﻿namespace Fooidity.ContainerTests
 {
+    using System;
     using Autofac;
     using Caching;
     using Configuration;
@@ -21,6 +22,13 @@
                 var codeSwitch = scope.Resolve<CodeSwitch<UseNewCodePath>>();
 
                 Assert.IsTrue(codeSwitch.Enabled);
+
+                var tracker = scope.Resolve<CodeSwitchStateTracker>();
+
+                foreach (var evaluated in tracker)
+                {
+                    Console.WriteLine("{0}: {1}", evaluated.Id, evaluated.Enabled);
+                }
             }
         }
 
@@ -34,6 +42,13 @@
                 var codeSwitch = scope.Resolve<CodeSwitch<UseNewCodePath>>();
 
                 Assert.IsFalse(codeSwitch.Enabled);
+
+                var tracker = scope.Resolve<CodeSwitchStateTracker>();
+
+                foreach (var evaluated in tracker)
+                {
+                    Console.WriteLine("{0}: {1}", evaluated.Id, evaluated.Enabled);
+                }
             }
         }
 
@@ -53,6 +68,8 @@
             builder.RegisterModule<ConfigurationCodeFeatureCacheModule>();
 
             builder.RegisterContextSwitch<UseNewCodePath, UserContext>();
+
+            builder.EnableCodeSwitchTracker();
 
             _container = builder.Build();
         }

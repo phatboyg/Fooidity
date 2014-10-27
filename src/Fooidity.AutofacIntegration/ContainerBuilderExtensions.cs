@@ -115,13 +115,19 @@
                 .As<CodeSwitch<TFeature>>();
         }
 
+        public static void EnableCodeSwitchTracker(this ContainerBuilder builder)
+        {
+            builder.RegisterType<CodeSwitchStateTracker>()
+                .InstancePerLifetimeScope();
+        }
+
         public static void RegisterContextSwitch<TFeature, TContext>(this ContainerBuilder builder)
             where TFeature : struct, CodeFeature
         {
             builder.Register(context =>
             {
                 TContext switchContext;
-                if (!context.TryResolve<TContext>(out switchContext))
+                if (!context.TryResolve(out switchContext))
                     throw new ArgumentException("The context type was not found: " + typeof(TContext).Name);
 
                 var cache = context.Resolve<ICodeFeatureStateCache>();
@@ -129,7 +135,13 @@
 
                 return new ContextFeatureStateCodeSwitch<TFeature, TContext>(cache, contextCache, switchContext);
             })
-                .As<CodeSwitch<TFeature>>();
+                .As<CodeSwitch<TFeature>>()
+                .OnActivated(x =>
+                {
+                    CodeSwitchStateTracker tracker;
+                    if (x.Context.TryResolve(out tracker))
+                        x.Instance.Subscribe(tracker);
+                });
         }
 
         public static IRegistrationBuilder<T, SimpleActivatorData, SingleRegistrationStyle> RegisterByFooId<TFeature, T>
