@@ -3,7 +3,6 @@
     using System;
     using Autofac;
     using Autofac.Builder;
-    using Autofac.Core;
     using CodeSwitches;
     using Events;
 
@@ -19,7 +18,7 @@
         {
             builder.RegisterGeneric(typeof(DisabledCodeSwitch<>))
                 .As(typeof(CodeSwitch<>))
-                .SingleInstance();
+                .OnActivated(x => OnCodeSwitchActivation(x.Context, (IObservable<CodeSwitchEvaluated>)x.Instance));
         }
 
         /// <summary>
@@ -31,7 +30,7 @@
         {
             builder.RegisterGeneric(typeof(EnabledCodeSwitch<>))
                 .As(typeof(CodeSwitch<>))
-                .SingleInstance();
+                .OnActivated(x => OnCodeSwitchActivation(x.Context, (IObservable<CodeSwitchEvaluated>)x.Instance));
         }
 
         /// <summary>
@@ -44,7 +43,7 @@
         {
             builder.RegisterType<EnabledCodeSwitch<TFeature>>()
                 .As<CodeSwitch<TFeature>>()
-                .SingleInstance();
+                .OnActivated(x => OnCodeSwitchActivation(x.Context, x.Instance));
         }
 
         /// <summary>
@@ -57,16 +56,26 @@
         {
             builder.RegisterType<DisabledCodeSwitch<TFeature>>()
                 .As<CodeSwitch<TFeature>>()
-                .SingleInstance();
+                .OnActivated(x => OnCodeSwitchActivation(x.Context, x.Instance));
         }
 
+        /// <summary>
+        /// Registers a toggle switch with a shared toggle state 
+        /// </summary>
+        /// <typeparam name="TFeature">The code feature</typeparam>
+        /// <param name="builder">The container builder</param>
+        /// <param name="enabled">True if the toggle should be enabled initially</param>
         public static void RegisterToggle<TFeature>(this ContainerBuilder builder, bool enabled = false)
             where TFeature : struct, CodeFeature
         {
+            builder.Register(context => new ToggleSwitchState<TFeature>(enabled))
+                .As<IToggleSwitchState<TFeature>>()
+                .SingleInstance();
+
             builder.RegisterType<ToggleCodeSwitch<TFeature>>()
                 .As<CodeSwitch<TFeature>>()
                 .As<IToggleCodeSwitch<TFeature>>()
-                .SingleInstance();
+                .OnActivated(x => OnCodeSwitchActivation(x.Context, x.Instance));
         }
 
         /// <summary>
@@ -80,6 +89,7 @@
             var builder = new ContainerBuilder();
             builder.RegisterType<EnabledCodeSwitch<TFeature>>()
                 .As<CodeSwitch<TFeature>>()
+                .OnActivated(x => OnCodeSwitchActivation(x.Context, x.Instance))
                 .SingleInstance();
 
             builder.Update(container);
@@ -96,32 +106,28 @@
             var builder = new ContainerBuilder();
             builder.RegisterType<DisabledCodeSwitch<TFeature>>()
                 .As<CodeSwitch<TFeature>>()
+                .OnActivated(x => OnCodeSwitchActivation(x.Context, x.Instance))
                 .SingleInstance();
 
             builder.Update(container);
         }
 
-        public static void RegisterFooId<TFeature>(this ContainerBuilder builder,
-            Func<CodeSwitch<TFeature>> fooIdFactory)
-            where TFeature : struct, CodeFeature
+        public static void EnableCodeSwitchTracking(this ContainerBuilder builder)
         {
-            builder.Register(context => fooIdFactory())
-                .As<CodeSwitch<TFeature>>();
-        }
-
-
-        public static void RegisterFooId<TFeature>(this ContainerBuilder builder,
-            Func<IComponentContext, CodeSwitch<TFeature>> fooIdFactory)
-            where TFeature : struct, CodeFeature
-        {
-            builder.Register(context => fooIdFactory(context))
-                .As<CodeSwitch<TFeature>>();
-        }
-
-        public static void EnableCodeSwitchTracker(this ContainerBuilder builder)
-        {
-            builder.RegisterType<CodeSwitchStateTracker>()
+            builder.RegisterType<CodeSwitchEvaluationObserver>()
+                .As<IObserver<CodeSwitchEvaluated>>()
+                .As<ICodeSwitchesEvaluated>()
                 .InstancePerLifetimeScope();
+        }
+
+        public static ICodeSwitchesEvaluated GetCodeSwitchesEvaluated(this ILifetimeScope scope)
+        {
+            ICodeSwitchesEvaluated result;
+            if (scope.TryResolve(out result))
+                return result;
+
+            throw new FooidityException(
+                "Code switch tracking is not enabled. Enable it while building the container using EnableCodeSwitchTracking");
         }
 
         public static void RegisterCodeSwitch<TFeature>(this ContainerBuilder builder)
@@ -132,14 +138,22 @@
                 .OnActivated(x => OnCodeSwitchActivation(x.Context, x.Instance));
         }
 
+        /// <summary>
+        /// Register a context switch for the feature that uses the context to determine if the switch
+        /// is enabled for that particular context.
+        /// </summary>
+        /// <typeparam name="TFeature">The code feature</typeparam>
+        /// <typeparam name="TContext">The switch context</typeparam>
+        /// <param name="builder"></param>
         public static void RegisterContextSwitch<TFeature, TContext>(this ContainerBuilder builder)
             where TFeature : struct, CodeFeature
         {
             builder.Register(context =>
             {
+                // this gives a cleaner error message than a container exception
                 TContext switchContext;
                 if (!context.TryResolve(out switchContext))
-                    throw new ArgumentException("The context type was not found: " + typeof(TContext).Name);
+                    throw new ContextSwitchException("The context type was not found: " + typeof(TContext).Name);
 
                 var cache = context.Resolve<ICodeFeatureStateCache>();
                 var contextCache = context.Resolve<IContextFeatureStateCache<TContext>>();
@@ -152,9 +166,9 @@
 
         static void OnCodeSwitchActivation(IComponentContext context, IObservable<CodeSwitchEvaluated> observable)
         {
-            CodeSwitchStateTracker tracker;
-            if (context.TryResolve(out tracker))
-                observable.Subscribe(tracker);
+            IObserver<CodeSwitchEvaluated> observer;
+            if (context.TryResolve(out observer))
+                observable.Subscribe(observer);
         }
 
         public static IRegistrationBuilder<T, SimpleActivatorData, SingleRegistrationStyle> RegisterByFooId<TFeature, T>
@@ -184,9 +198,9 @@
         public static IRegistrationBuilder<T, SimpleActivatorData, SingleRegistrationStyle> RegisterByFooId
             <TFeature, T, TEnabled, TDisabled>(this ContainerBuilder builder)
             where TFeature : struct, CodeFeature
+            where T : class
             where TEnabled : T
             where TDisabled : T
-            where T : class
         {
             builder.RegisterType<TEnabled>();
             builder.RegisterType<TDisabled>();

@@ -15,8 +15,16 @@
 
             CodeSwitch<ABC> abc = CodeSwitch.Factory.Dependent<ABC>(x => x.Upon(a, b, c));
             Assert.IsFalse(abc.Enabled);
+        }
 
-            c.Enable();
+        [Test]
+        public void Should_allow_simple_creation_of_dependent_fooids_enabled()
+        {
+            CodeSwitch<A> a = CodeSwitch.Factory.Enabled<A>();
+            CodeSwitch<B> b = CodeSwitch.Factory.Enabled<B>();
+            IToggleCodeSwitch<C> c = CodeSwitch.Factory.Toggle<C>(true);
+
+            CodeSwitch<ABC> abc = CodeSwitch.Factory.Dependent<ABC>(x => x.Upon(a, b, c));
             Assert.IsTrue(abc.Enabled);
         }
 

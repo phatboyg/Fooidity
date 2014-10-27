@@ -2,9 +2,7 @@
 {
     using System;
     using Autofac;
-    using Caching;
-    using CodeSwitches;
-    using Configuration;
+    using AutofacIntegration;
     using Contexts;
     using Events;
     using Features;
@@ -29,9 +27,9 @@
 
                 Assert.AreEqual("No", repository.IsDbEnabled);
 
-                var tracker = scope.Resolve<CodeSwitchStateTracker>();
+                var codeSwitchesEvaluated = scope.GetCodeSwitchesEvaluated();
 
-                foreach (CodeSwitchEvaluated evaluated in tracker)
+                foreach (CodeSwitchEvaluated evaluated in codeSwitchesEvaluated)
                     Console.WriteLine("{0}: {1}", evaluated.Id, evaluated.Enabled);
             }
         }
@@ -47,9 +45,9 @@
 
                 Assert.IsFalse(codeSwitch.Enabled);
 
-                var tracker = scope.Resolve<CodeSwitchStateTracker>();
+                var codeSwitchesEvaluated = scope.GetCodeSwitchesEvaluated();
 
-                foreach (CodeSwitchEvaluated evaluated in tracker)
+                foreach (CodeSwitchEvaluated evaluated in codeSwitchesEvaluated)
                     Console.WriteLine("{0}: {1}", evaluated.Id, evaluated.Enabled);
             }
         }
@@ -68,11 +66,12 @@
             var builder = new ContainerBuilder();
 
             builder.RegisterModule<ConfigurationCodeFeatureCacheModule>();
+            builder.RegisterModule<ConfigurationContextFeatureCacheModule<UserContext, UserContextKeyProvider>>();
 
             builder.RegisterCodeSwitch<DbEnabled>();
             builder.RegisterContextSwitch<UseNewCodePath, UserContext>();
 
-            builder.EnableCodeSwitchTracker();
+            builder.EnableCodeSwitchTracking();
 
             builder.RegisterType<Repository>();
 
@@ -92,55 +91,6 @@
             public string IsDbEnabled
             {
                 get { return _dbEnabled.Enabled ? "Yes" : "No"; }
-            }
-        }
-
-
-        class UserContextKeyProvider :
-            ContextKeyProvider<UserContext>
-        {
-            public string GetKey(UserContext context)
-            {
-                return context.Name;
-            }
-        }
-
-
-        class UseNewCodePathSwitch :
-            ContextFeatureStateCodeSwitch<UseNewCodePath, UserContext>
-        {
-            public UseNewCodePathSwitch(ICodeFeatureStateCache cache,
-                IContextFeatureStateCache<UserContext> contextCache, UserContext context)
-                : base(cache, contextCache, context)
-            {
-            }
-        }
-
-
-        class ConfigurationCodeFeatureCacheModule :
-            Module
-        {
-            protected override void Load(ContainerBuilder builder)
-            {
-                builder.RegisterType<CodeFeatureStateCache>()
-                    .As<ICodeFeatureStateCache>()
-                    .Named<IReloadCache>("codeFeatureCache")
-                    .SingleInstance();
-
-                builder.RegisterType<ConfigurationCodeFeatureStateCacheProvider>()
-                    .As<ICodeFeatureStateCacheProvider>();
-
-                builder.RegisterType<UserContextKeyProvider>()
-                    .As<ContextKeyProvider<UserContext>>();
-
-
-                builder.RegisterType<ContextFeatureStateCache<UserContext>>()
-                    .As<IContextFeatureStateCache<UserContext>>()
-                    .Named<IReloadCache>("contextFeatureCache")
-                    .SingleInstance();
-
-                builder.RegisterType<ConfigurationContextFeatureStateCacheProvider<UserContext>>()
-                    .As<IContextFeatureStateCacheProvider<UserContext>>();
             }
         }
     }

@@ -32,7 +32,7 @@ namespace Fooidity
         /// <typeparam name="T">The CodeSwitch atom</typeparam>
         /// <param name="initial">The initial state of the CodeSwitch</param>
         /// <returns></returns>
-        ToggleCodeSwitch<T> Toggle<T>(bool initial = false)
+        IToggleCodeSwitch<T> Toggle<T>(bool initial = false)
             where T : struct, CodeFeature;
 
         /// <summary>

@@ -1,5 +1,8 @@
 ﻿namespace Fooidity.ContainerTests.Subjects
 {
+    using Features;
+
+
     public class ConditionalClass
     {
         readonly CodeSwitch<UseNewMethod> _useNewMethod;
@@ -36,11 +39,5 @@
         {
             return string.Format("V2: {0}, {1}", value, text);
         }
-    }
-
-
-    public struct UseNewMethod :
-        CodeFeature
-    {
     }
 }

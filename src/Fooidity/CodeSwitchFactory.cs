@@ -36,10 +36,11 @@
         /// <typeparam name="T">The CodeSwitch atom</typeparam>
         /// <param name="initial">The initial state of the CodeSwitch</param>
         /// <returns></returns>
-        public ToggleCodeSwitch<T> Toggle<T>(bool initial = false)
+        public IToggleCodeSwitch<T> Toggle<T>(bool initial = false)
             where T : struct, CodeFeature
         {
-            return new ToggleCodeSwitch<T>(initial);
+            var state = new ToggleSwitchState<T>(initial);
+            return new ToggleCodeSwitch<T>(state);
         }
 
         /// <summary>

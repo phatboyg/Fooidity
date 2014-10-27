@@ -8,14 +8,13 @@
     public class Setting_up_a_container
     {
         [Test]
-        public void Should_support_delegate_registration()
+        public void Should_return_new_registration_by_type()
         {
             var builder = new ContainerBuilder();
 
             builder.RegisterEnabled<UseClassAv2>();
 
-            builder.RegisterByFooId<UseClassAv2, A>(context => new ClassA_V2(), context => new ClassA())
-                   .As<A>();
+            builder.RegisterByFooId<UseClassAv2, A, ClassA_V2, ClassA>();
 
             IContainer container = builder.Build();
 
@@ -25,7 +24,7 @@
         }
 
         [Test]
-        public void Should_support_type_registration()
+        public void Should_return_original_registration_by_type()
         {
             var builder = new ContainerBuilder();
 
@@ -38,6 +37,23 @@
             var a = container.Resolve<A>();
 
             Assert.IsInstanceOf<ClassA>(a);
+        }
+
+        [Test]
+        public void Should_support_delegate_registration()
+        {
+            var builder = new ContainerBuilder();
+
+            builder.RegisterEnabled<UseClassAv2>();
+
+            builder.RegisterByFooId<UseClassAv2, A>(context => new ClassA_V2(), context => new ClassA())
+                .As<A>();
+
+            IContainer container = builder.Build();
+
+            var a = container.Resolve<A>();
+
+            Assert.IsInstanceOf<ClassA_V2>(a);
         }
 
 

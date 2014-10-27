@@ -1,6 +1,6 @@
 ﻿namespace Fooidity.ContainerTests.Features
 {
-    public struct UseNewCodePath :
+    public struct UseNewMethod :
         CodeFeature
     {
     }

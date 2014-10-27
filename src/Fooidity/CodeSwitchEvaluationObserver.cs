@@ -7,16 +7,17 @@
     using System.Linq;
     using Events;
 
+
     /// <summary>
     /// Tracks the state of evaluated switches
     /// </summary>
-    public class CodeSwitchStateTracker :
+    public class CodeSwitchEvaluationObserver :
         IObserver<CodeSwitchEvaluated>,
-        IEnumerable<CodeSwitchEvaluated>
+        ICodeSwitchesEvaluated
     {
         readonly ConcurrentBag<CodeSwitchEvaluated> _events;
 
-        public CodeSwitchStateTracker()
+        public CodeSwitchEvaluationObserver()
         {
             _events = new ConcurrentBag<CodeSwitchEvaluated>();
         }

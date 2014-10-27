@@ -15,11 +15,11 @@
     {
         readonly Lazy<bool> _enabled;
         readonly CodeSwitchEvaluatedObservable<TFeature> _evaluated;
-        bool _toggleEnabled;
+        readonly IToggleSwitchState<TFeature> _toggleSwitchState;
 
-        public ToggleCodeSwitch(bool enabled)
+        public ToggleCodeSwitch(IToggleSwitchState<TFeature> toggleSwitchState)
         {
-            _toggleEnabled = enabled;
+            _toggleSwitchState = toggleSwitchState;
             _evaluated = new CodeSwitchEvaluatedObservable<TFeature>();
             _enabled = new Lazy<bool>(Evaluate);
         }
@@ -36,17 +36,17 @@
 
         public void Enable()
         {
-            _toggleEnabled = true;
+            _toggleSwitchState.Enabled = true;
         }
 
         public void Disable()
         {
-            _toggleEnabled = false;
+            _toggleSwitchState.Enabled = false;
         }
 
         bool Evaluate()
         {
-            bool enabled = _toggleEnabled;
+            bool enabled = _toggleSwitchState.Enabled;
 
             _evaluated.Evaluated(enabled);
 

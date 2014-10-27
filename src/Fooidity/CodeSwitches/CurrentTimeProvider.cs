@@ -1,4 +1,4 @@
-﻿namespace Fooidity
+namespace Fooidity.CodeSwitches
 {
     using System;
 

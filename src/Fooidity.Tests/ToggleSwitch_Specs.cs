@@ -2,7 +2,6 @@
 {
     namespace ToggleSwitch_Specs
     {
-        using CodeSwitches;
         using NUnit.Framework;
 
 
@@ -18,13 +17,18 @@
             [Test]
             public void Should_change_state()
             {
-                ToggleCodeSwitch<A> toggle = CodeSwitch.Factory.Toggle<A>();
-
-                Assert.IsFalse(toggle.Enabled);
+                IToggleCodeSwitch<A> toggle = CodeSwitch.Factory.Toggle<A>();
 
                 toggle.Enable();
 
                 Assert.IsTrue(toggle.Enabled);
+            }
+
+            [Test]
+            public void Should_change_state_to_disabled()
+            {
+                IToggleCodeSwitch<A> toggle = CodeSwitch.Factory.Toggle<A>(true);
+
 
                 toggle.Disable();
 

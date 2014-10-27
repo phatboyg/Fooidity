@@ -47,6 +47,8 @@
       <Link>Properties\SolutionVersion.cs</Link>
     </Compile>
     <Compile Include="AutofacFooIdContainer.cs" />
+    <Compile Include="ConfigurationCodeFeatureCacheModule.cs" />
+    <Compile Include="ConfigurationContextFeatureCacheModule.cs" />
     <Compile Include="ContainerBuilderExtensions.cs" />
     <Compile Include="FooIdContainer.cs" />
   </ItemGroup>
