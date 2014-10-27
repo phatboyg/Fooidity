@@ -111,7 +111,7 @@
             {
                 Assert.IsFalse(scope.Resolve<CodeSwitch<UseNewMethod>>().Enabled);
 
-                Assert.AreEqual(1, container.GetCodeSwitchesEvaluated().Count());
+                Assert.AreEqual(1, scope.GetCodeSwitchesEvaluated().Count());
             }
 
             container.Resolve<IToggleCodeSwitch<UseNewMethod>>().Enable();
@@ -119,8 +119,8 @@
             using (var scope = container.BeginLifetimeScope())
             {
                 Assert.IsTrue(scope.Resolve<CodeSwitch<UseNewMethod>>().Enabled);
-            
-                Assert.AreEqual(1, container.GetCodeSwitchesEvaluated().Count());
+
+                Assert.AreEqual(1, scope.GetCodeSwitchesEvaluated().Count());
             }
 
         }
