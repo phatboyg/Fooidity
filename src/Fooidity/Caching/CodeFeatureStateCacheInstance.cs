@@ -8,11 +8,11 @@
     class CodeFeatureStateCacheInstance :
         ICodeFeatureStateCacheInstance
     {
-        readonly IReadOnlyCache<string, CodeFeatureState> _cache;
+        readonly ICache<string, CodeFeatureState> _cache;
         readonly bool _defaultState;
         readonly ICacheIndex<Type, CodeFeatureState> _typeIndex;
 
-        public CodeFeatureStateCacheInstance(IReadOnlyCache<string, CodeFeatureState> cache,
+        public CodeFeatureStateCacheInstance(ICache<string, CodeFeatureState> cache,
             ICacheIndex<Type, CodeFeatureState> typeIndex, bool defaultState)
         {
             _cache = cache;
@@ -33,6 +33,11 @@
         public bool TryGetState(string id, out CodeFeatureState featureState)
         {
             return _cache.TryGet(id, out featureState);
+        }
+
+        public bool TryUpdate(string id, CodeFeatureState featureState, CodeFeatureState previousFeatureState)
+        {
+            return _cache.TryUpdate(id, featureState, previousFeatureState);
         }
     }
 }

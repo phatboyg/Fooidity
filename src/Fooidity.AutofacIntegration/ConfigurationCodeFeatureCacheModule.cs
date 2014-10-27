@@ -3,6 +3,7 @@
     using Autofac;
     using Caching;
     using Configuration;
+    using Events;
 
 
     /// <summary>
@@ -16,6 +17,7 @@
             builder.RegisterType<CodeFeatureStateCache>()
                 .As<ICodeFeatureStateCache>()
                 .Named<IReloadCache>("codeFeatureCache")
+                .As<IUpdateCache<CodeFeatureStateUpdated>>()
                 .SingleInstance();
 
             builder.RegisterType<ConfigurationCodeFeatureStateCacheProvider>()

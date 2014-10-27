@@ -107,6 +107,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Events\CodeFeatureStateCacheLoaded.cs" />
+    <Compile Include="Events\CodeFeatureStateCacheUpdated.cs" />
     <Compile Include="Events\CodeFeatureStateUpdated.cs" />
     <Compile Include="CodeSwitchOfT.cs">
       <AutoGen>True</AutoGen>

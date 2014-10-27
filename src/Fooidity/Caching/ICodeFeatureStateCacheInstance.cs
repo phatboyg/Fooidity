@@ -22,5 +22,13 @@
         /// <param name="featureState"></param>
         /// <returns></returns>
         bool TryGetState(string id, out CodeFeatureState featureState);
+
+        /// <summary>
+        /// Add/Update an existing feature state to the specified value
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="featureState"></param>
+        /// <param name="previousFeatureState"></param>
+        bool TryUpdate(string id, CodeFeatureState featureState, CodeFeatureState previousFeatureState);
     }
 }
