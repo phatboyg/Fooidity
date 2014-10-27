@@ -20,5 +20,13 @@
             get { return (FeatureStateElementCollection)this["features"]; }
             set { this["features"] = value; }
         }
+
+        [ConfigurationProperty("contexts", IsDefaultCollection = false, IsRequired = false),
+         ConfigurationCollection(typeof(ContextElementCollection))]
+        public ContextElementCollection Contexts
+        {
+            get { return (ContextElementCollection)this["contexts"]; }
+            set { this["contexts"] = value; }
+        }
     }
 }

@@ -48,10 +48,15 @@
     <Compile Include="Caching\CodeFeatureStateCacheInstance.cs" />
     <Compile Include="Caching\Connectable.cs" />
     <Compile Include="Caching\ConnectionHandle.cs" />
+    <Compile Include="Caching\ContextFeatureStateCache.cs" />
+    <Compile Include="Caching\ContextFeatureStateCacheInstance.cs" />
+    <Compile Include="Caching\ContextKeyProvider.cs" />
     <Compile Include="Caching\ICache.cs" />
     <Compile Include="Caching\ICacheIndex.cs" />
     <Compile Include="Caching\ICodeFeatureStateCacheInstance.cs" />
     <Compile Include="Caching\ICodeFeatureStateCacheProvider.cs" />
+    <Compile Include="Caching\IContextFeatureStateCacheInstance.cs" />
+    <Compile Include="Caching\IContextFeatureStateCacheProvider.cs" />
     <Compile Include="Caching\InMemoryCache.cs" />
     <Compile Include="Caching\InMemoryCacheIndex.cs" />
     <Compile Include="Caching\IReadOnlyCache.cs" />
@@ -60,10 +65,17 @@
     <Compile Include="CodeSwitch.cs" />
     <Compile Include="Configuration\CodeFeatureState.cs" />
     <Compile Include="Configuration\ConfigurationCodeFeatureStateCacheProvider.cs" />
+    <Compile Include="Configuration\ConfigurationContextFeatureStateCacheProvider.cs" />
+    <Compile Include="Configuration\ContextElement.cs" />
+    <Compile Include="Configuration\ContextElementCollection.cs" />
+    <Compile Include="Configuration\ContextFeatureState.cs" />
+    <Compile Include="Configuration\ContextInstanceElement.cs" />
+    <Compile Include="Configuration\ContextInstanceElementCollection.cs" />
     <Compile Include="Configuration\DefaultCodeFeatureState.cs" />
     <Compile Include="Configuration\FeatureStateElement.cs" />
     <Compile Include="Configuration\FeatureStateElementCollection.cs" />
     <Compile Include="Configuration\FooidityConfigurationSection.cs" />
+    <Compile Include="ContextFeatureStateCodeSwitch.cs" />
     <Compile Include="Dependents\DependentFooId.cs">
       <DependentUpon>DependentFooId.tt</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -80,7 +92,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="DisabledCodeSwitch.cs" />
-    <Compile Include="FeatureStateCodeSwitch.cs" />
+    <Compile Include="CodeFeatureStateCodeSwitch.cs" />
     <Compile Include="EnabledCodeSwitch.cs" />
     <Compile Include="Events\CodeFeatureStateCacheLoaded.cs" />
     <Compile Include="Events\CodeFeatureStateUpdated.cs" />
@@ -91,6 +103,7 @@
     </Compile>
     <Compile Include="CodeFeature.cs" />
     <Compile Include="ICodeFeatureStateCache.cs" />
+    <Compile Include="IContextFeatureStateCache.cs" />
     <Compile Include="IfExtensions.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -100,7 +113,6 @@
     <Compile Include="Metadata\ICodeFeatureMetadata.cs" />
     <Compile Include="Security\EnabledByRoleInThreadPrincipal.cs" />
     <Compile Include="Security\EnabledForAuthenticatedIdentity.cs" />
-    <Compile Include="Snapshot.cs" />
     <Compile Include="IToggleCodeSwitch.cs" />
     <Compile Include="ToggleCodeSwitch.cs" />
   </ItemGroup>

@@ -7,13 +7,13 @@
     /// A dynamic code switch that uses the feature state cache to determine the switch state
     /// </summary>
     /// <typeparam name="TFeature"></typeparam>
-    public class FeatureStateCodeSwitch<TFeature> :
+    public class CodeFeatureStateCodeSwitch<TFeature> :
         CodeSwitch<TFeature>
         where TFeature : struct, CodeFeature
     {
         readonly ICodeFeatureStateCache _cache;
 
-        public FeatureStateCodeSwitch(ICodeFeatureStateCache cache)
+        public CodeFeatureStateCodeSwitch(ICodeFeatureStateCache cache)
         {
             _cache = cache;
         }
