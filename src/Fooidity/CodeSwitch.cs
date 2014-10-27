@@ -59,6 +59,30 @@
         }
 
         /// <summary>
+        /// Enable the code feature after the specified date/time
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="dateTime"></param>
+        /// <returns></returns>
+        public static CodeSwitch<T> EnableAfter<T>(DateTime dateTime) 
+            where T : struct, CodeFeature
+        {
+            return new DateRangeCodeSwitch<T>(true, dateTime, null, () => DateTime.UtcNow);
+        }
+
+        /// <summary>
+        /// Enable the code feature until the specified date/time
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="dateTime"></param>
+        /// <returns></returns>
+        public static CodeSwitch<T> EnableUntil<T>(DateTime dateTime) 
+            where T : struct, CodeFeature
+        {
+            return new DateRangeCodeSwitch<T>(true, null, dateTime, () => DateTime.UtcNow);
+        }
+
+        /// <summary>
         /// Returns the dependent code switch build by the factory
         /// </summary>
         /// <typeparam name="T"></typeparam>

@@ -35,7 +35,7 @@
                 if (_enabledFromDate.HasValue && (now < _enabledFromDate.Value))
                     return false;
 
-                if (_enabledToDate.HasValue && (now > _enabledToDate.Value))
+                if (_enabledToDate.HasValue && (now >= _enabledToDate.Value))
                     return false;
 
                 return true;
