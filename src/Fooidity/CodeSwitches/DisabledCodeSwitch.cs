@@ -1,4 +1,4 @@
-﻿namespace Fooidity
+﻿namespace Fooidity.CodeSwitches
 {
     /// <summary>
     /// A disabled code switch is always disabled

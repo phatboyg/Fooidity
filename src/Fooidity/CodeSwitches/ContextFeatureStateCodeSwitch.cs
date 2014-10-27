@@ -1,7 +1,6 @@
-﻿namespace Fooidity
+﻿namespace Fooidity.CodeSwitches
 {
     using System;
-    using Caching;
     using Caching.Internals;
     using Configuration;
     using Events;
@@ -9,21 +8,27 @@
 
 
     /// <summary>
-    /// A dynamic code switch that uses the feature state cache to determine the switch state
+    /// A dynamic code switch that uses the contextual feature state cache to determine the switch state
     /// </summary>
-    /// <typeparam name="TFeature"></typeparam>
-    public class CodeFeatureStateCodeSwitch<TFeature> :
-        CodeSwitch<TFeature>,
+    /// <typeparam name="TFeature">The feature</typeparam>
+    /// <typeparam name="TContext">The context type for this code switch</typeparam>
+    public class ContextFeatureStateCodeSwitch<TFeature, TContext> :
+        ContextCodeSwitch<TFeature, TContext>,
         IObservable<CodeSwitchEvaluated>
         where TFeature : struct, CodeFeature
     {
         readonly ICodeFeatureStateCache _cache;
+        readonly TContext _context;
+        readonly IContextFeatureStateCache<TContext> _contextCache;
         readonly Lazy<bool> _enabled;
         readonly Connectable<IObserver<CodeSwitchEvaluated>> _evaluated;
 
-        public CodeFeatureStateCodeSwitch(ICodeFeatureStateCache cache)
+        public ContextFeatureStateCodeSwitch(ICodeFeatureStateCache cache,
+            IContextFeatureStateCache<TContext> contextCache, TContext context)
         {
             _cache = cache;
+            _contextCache = contextCache;
+            _context = context;
 
             _evaluated = new Connectable<IObserver<CodeSwitchEvaluated>>();
             _enabled = new Lazy<bool>(Evaluate);
@@ -39,7 +44,6 @@
             return _evaluated.Connect(observer);
         }
 
-
         bool Evaluate()
         {
             bool enabled = GetEnabled();
@@ -52,8 +56,15 @@
 
         bool GetEnabled()
         {
-            CodeFeatureState featureState;
-            return _cache.TryGetState<TFeature>(out featureState) && featureState.Enabled;
+            CodeFeatureState codeFeatureState;
+            ContextFeatureState contextFeatureState;
+            if (_contextCache.TryGetContextFeatureState(_context, out contextFeatureState))
+            {
+                if (contextFeatureState.TryGetCodeFeatureState<TFeature>(out codeFeatureState))
+                    return codeFeatureState.Enabled;
+            }
+
+            return _cache.TryGetState<TFeature>(out codeFeatureState) && codeFeatureState.Enabled;
         }
 
 

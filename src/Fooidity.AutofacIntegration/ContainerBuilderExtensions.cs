@@ -4,6 +4,7 @@
     using Autofac;
     using Autofac.Builder;
     using Autofac.Core;
+    using CodeSwitches;
     using Events;
 
 

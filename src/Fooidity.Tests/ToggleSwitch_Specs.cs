@@ -2,6 +2,7 @@
 {
     namespace ToggleSwitch_Specs
     {
+        using CodeSwitches;
         using NUnit.Framework;
 
 

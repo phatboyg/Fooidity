@@ -1,16 +1,16 @@
-namespace Fooidity.Security
+namespace Fooidity.CodeSwitches
 {
     using System.Security.Principal;
     using System.Threading;
 
 
-    public class EnabledByRoleInThreadPrincipal<TFeature> :
+    public class EnabledThreadPrincipalInRoleCodeSwitch<TFeature> :
         CodeSwitch<TFeature>
         where TFeature : struct, CodeFeature
     {
         readonly string _role;
 
-        public EnabledByRoleInThreadPrincipal(string role)
+        public EnabledThreadPrincipalInRoleCodeSwitch(string role)
         {
             _role = role;
         }

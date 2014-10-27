@@ -1,6 +1,7 @@
 ﻿namespace Fooidity.Tests
 {
     using System;
+    using CodeSwitches;
     using NUnit.Framework;
     using Shouldly;
 

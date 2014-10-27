@@ -1,4 +1,4 @@
-﻿namespace Fooidity
+﻿namespace Fooidity.CodeSwitches
 {
     /// <summary>
     /// A code switch that is always on

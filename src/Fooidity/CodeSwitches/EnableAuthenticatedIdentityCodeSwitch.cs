@@ -1,10 +1,10 @@
-namespace Fooidity.Security
+namespace Fooidity.CodeSwitches
 {
     using System.Security.Principal;
     using System.Threading;
 
 
-    public class EnabledForAuthenticatedIdentity<TFeature> :
+    public class EnableAuthenticatedIdentityCodeSwitch<TFeature> :
         CodeSwitch<TFeature>
         where TFeature : struct, CodeFeature
     {

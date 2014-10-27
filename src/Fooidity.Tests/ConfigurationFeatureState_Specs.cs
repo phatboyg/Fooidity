@@ -4,6 +4,7 @@
     {
         using System;
         using Caching;
+        using CodeSwitches;
         using Configuration;
         using NUnit.Framework;
 

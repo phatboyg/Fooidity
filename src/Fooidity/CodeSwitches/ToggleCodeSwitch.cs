@@ -1,4 +1,4 @@
-﻿namespace Fooidity
+﻿namespace Fooidity.CodeSwitches
 {
     /// <summary>
     /// A CodeSwitch that can be changed by calling the appropriate method

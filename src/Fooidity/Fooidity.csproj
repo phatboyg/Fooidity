@@ -62,6 +62,15 @@
     <Compile Include="Caching\IReloadCache.cs" />
     <Compile Include="Caching\IUpdateCache.cs" />
     <Compile Include="CodeSwitch.cs" />
+    <Compile Include="CodeSwitches\CodeFeatureStateCodeSwitch.cs" />
+    <Compile Include="CodeSwitches\ContextCodeSwitch.cs" />
+    <Compile Include="CodeSwitches\ContextFeatureStateCodeSwitch.cs" />
+    <Compile Include="CodeSwitches\DateRangeCodeSwitch.cs" />
+    <Compile Include="CodeSwitches\DisabledCodeSwitch.cs" />
+    <Compile Include="CodeSwitches\EnableAuthenticatedIdentityCodeSwitch.cs" />
+    <Compile Include="CodeSwitches\EnabledCodeSwitch.cs" />
+    <Compile Include="CodeSwitches\EnabledThreadPrincipalInRoleCodeSwitch.cs" />
+    <Compile Include="CodeSwitches\ToggleCodeSwitch.cs" />
     <Compile Include="CodeSwitchFactory.cs" />
     <Compile Include="CodeSwitchStateTracker.cs" />
     <Compile Include="Configuration\CodeFeatureState.cs" />
@@ -76,10 +85,7 @@
     <Compile Include="Configuration\FeatureStateElement.cs" />
     <Compile Include="Configuration\FeatureStateElementCollection.cs" />
     <Compile Include="Configuration\FooidityConfigurationSection.cs" />
-    <Compile Include="ContextCodeSwitch.cs" />
-    <Compile Include="ContextFeatureStateCodeSwitch.cs" />
     <Compile Include="ContextKeyProvider.cs" />
-    <Compile Include="DateRangeCodeSwitch.cs" />
     <Compile Include="DateTimeSwitchExtensions.cs" />
     <Compile Include="Dependents\DependentFooId.cs">
       <DependentUpon>DependentFooId.tt</DependentUpon>
@@ -96,9 +102,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="DisabledCodeSwitch.cs" />
-    <Compile Include="CodeFeatureStateCodeSwitch.cs" />
-    <Compile Include="EnabledCodeSwitch.cs" />
     <Compile Include="Events\CodeFeatureStateCacheLoaded.cs" />
     <Compile Include="Events\CodeFeatureStateUpdated.cs" />
     <Compile Include="CodeSwitchOfT.cs">
@@ -118,10 +121,8 @@
     </Compile>
     <Compile Include="Metadata\CodeFeatureMetadata.cs" />
     <Compile Include="Metadata\ICodeFeatureMetadata.cs" />
-    <Compile Include="Security\EnabledByRoleInThreadPrincipal.cs" />
-    <Compile Include="Security\EnabledForAuthenticatedIdentity.cs" />
+    <Compile Include="SecurityCodeSwitchFactoryExtensions.cs" />
     <Compile Include="IToggleCodeSwitch.cs" />
-    <Compile Include="ToggleCodeSwitch.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Dependents\DependentFooId.tt">

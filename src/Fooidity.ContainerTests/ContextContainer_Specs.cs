@@ -3,6 +3,7 @@
     using System;
     using Autofac;
     using Caching;
+    using CodeSwitches;
     using Configuration;
     using Contexts;
     using Events;
