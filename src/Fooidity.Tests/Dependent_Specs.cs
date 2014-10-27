@@ -9,9 +9,9 @@
         [Test]
         public void Should_be_enabled_to_be_enabled()
         {
-            var level1 = CodeSwitch.Toggle<Level1>();
+            var level1 = CodeSwitch.Factory.Toggle<Level1>();
 
-            var level2 = CodeSwitch.Dependent<Level2>(x => x.Upon(level1));
+            var level2 = CodeSwitch.Factory.Dependent<Level2>(x => x.Upon(level1));
 
             Assert.IsFalse(level2.Enabled);
 

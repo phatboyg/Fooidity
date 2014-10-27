@@ -9,11 +9,11 @@
         [Test]
         public void Should_allow_simple_creation_of_dependent_fooids()
         {
-            CodeSwitch<A> a = CodeSwitch.Enabled<A>();
-            CodeSwitch<B> b = CodeSwitch.Enabled<B>();
-            IToggleCodeSwitch<C> c = CodeSwitch.Toggle<C>();
+            CodeSwitch<A> a = CodeSwitch.Factory.Enabled<A>();
+            CodeSwitch<B> b = CodeSwitch.Factory.Enabled<B>();
+            IToggleCodeSwitch<C> c = CodeSwitch.Factory.Toggle<C>();
 
-            CodeSwitch<ABC> abc = CodeSwitch.Dependent<ABC>(x => x.Upon(a, b, c));
+            CodeSwitch<ABC> abc = CodeSwitch.Factory.Dependent<ABC>(x => x.Upon(a, b, c));
             Assert.IsFalse(abc.Enabled);
 
             c.Enable();

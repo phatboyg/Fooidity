@@ -9,7 +9,7 @@
         [Test]
         public void Should_provide_a_clear_syntax_for_method_selection()
         {
-            CodeSwitch<TestFeature> codeSwitch = CodeSwitch.Enabled<TestFeature>();
+            CodeSwitch<TestFeature> codeSwitch = CodeSwitch.Factory.Enabled<TestFeature>();
 
             bool called = false;
             codeSwitch.If(() => { called = true; });

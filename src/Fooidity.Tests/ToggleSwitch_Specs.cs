@@ -17,7 +17,7 @@
             [Test]
             public void Should_change_state()
             {
-                ToggleCodeSwitch<A> toggle = CodeSwitch.Toggle<A>();
+                ToggleCodeSwitch<A> toggle = CodeSwitch.Factory.Toggle<A>();
 
                 Assert.IsFalse(toggle.Enabled);
 

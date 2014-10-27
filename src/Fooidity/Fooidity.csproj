@@ -62,6 +62,7 @@
     <Compile Include="Caching\IReloadCache.cs" />
     <Compile Include="Caching\IUpdateCache.cs" />
     <Compile Include="CodeSwitch.cs" />
+    <Compile Include="CodeSwitchFactory.cs" />
     <Compile Include="CodeSwitchStateTracker.cs" />
     <Compile Include="Configuration\CodeFeatureState.cs" />
     <Compile Include="Configuration\ConfigurationCodeFeatureStateCacheProvider.cs" />
@@ -79,6 +80,7 @@
     <Compile Include="ContextFeatureStateCodeSwitch.cs" />
     <Compile Include="ContextKeyProvider.cs" />
     <Compile Include="DateRangeCodeSwitch.cs" />
+    <Compile Include="DateTimeSwitchExtensions.cs" />
     <Compile Include="Dependents\DependentFooId.cs">
       <DependentUpon>DependentFooId.tt</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -107,6 +109,7 @@
     <Compile Include="CodeFeature.cs" />
     <Compile Include="Events\CodeSwitchEvaluated.cs" />
     <Compile Include="ICodeFeatureStateCache.cs" />
+    <Compile Include="ICodeSwitchFactory.cs" />
     <Compile Include="IContextFeatureStateCache.cs" />
     <Compile Include="IfExtensions.cs">
       <AutoGen>True</AutoGen>
