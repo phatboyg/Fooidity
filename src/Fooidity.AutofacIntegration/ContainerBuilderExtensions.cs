@@ -15,8 +15,8 @@
         public static void CodeSwitchesDisabledByDefault(this ContainerBuilder builder)
         {
             builder.RegisterGeneric(typeof(DisabledCodeSwitch<>))
-                   .As(typeof(CodeSwitch<>))
-                   .SingleInstance();
+                .As(typeof(CodeSwitch<>))
+                .SingleInstance();
         }
 
         /// <summary>
@@ -27,8 +27,8 @@
         public static void CodeSwitchesEnabledByDefault(this ContainerBuilder builder)
         {
             builder.RegisterGeneric(typeof(EnabledCodeSwitch<>))
-                   .As(typeof(CodeSwitch<>))
-                   .SingleInstance();
+                .As(typeof(CodeSwitch<>))
+                .SingleInstance();
         }
 
         /// <summary>
@@ -40,8 +40,8 @@
             where TFeature : struct, CodeFeature
         {
             builder.RegisterType<EnabledCodeSwitch<TFeature>>()
-                   .As<CodeSwitch<TFeature>>()
-                   .SingleInstance();
+                .As<CodeSwitch<TFeature>>()
+                .SingleInstance();
         }
 
         /// <summary>
@@ -53,17 +53,17 @@
             where TFeature : struct, CodeFeature
         {
             builder.RegisterType<DisabledCodeSwitch<TFeature>>()
-                   .As<CodeSwitch<TFeature>>()
-                   .SingleInstance();
+                .As<CodeSwitch<TFeature>>()
+                .SingleInstance();
         }
 
         public static void RegisterToggle<TFeature>(this ContainerBuilder builder, bool enabled = false)
             where TFeature : struct, CodeFeature
         {
             builder.RegisterType<ToggleCodeSwitch<TFeature>>()
-                   .As<CodeSwitch<TFeature>>()
-                   .As<IToggleCodeSwitch<TFeature>>()
-                   .SingleInstance();
+                .As<CodeSwitch<TFeature>>()
+                .As<IToggleCodeSwitch<TFeature>>()
+                .SingleInstance();
         }
 
         /// <summary>
@@ -76,8 +76,8 @@
         {
             var builder = new ContainerBuilder();
             builder.RegisterType<EnabledCodeSwitch<TFeature>>()
-                   .As<CodeSwitch<TFeature>>()
-                   .SingleInstance();
+                .As<CodeSwitch<TFeature>>()
+                .SingleInstance();
 
             builder.Update(container);
         }
@@ -92,39 +92,59 @@
         {
             var builder = new ContainerBuilder();
             builder.RegisterType<DisabledCodeSwitch<TFeature>>()
-                   .As<CodeSwitch<TFeature>>()
-                   .SingleInstance();
+                .As<CodeSwitch<TFeature>>()
+                .SingleInstance();
 
             builder.Update(container);
         }
 
-        public static void RegisterFooId<TFeature>(this ContainerBuilder builder, Func<CodeSwitch<TFeature>> fooIdFactory)
+        public static void RegisterFooId<TFeature>(this ContainerBuilder builder,
+            Func<CodeSwitch<TFeature>> fooIdFactory)
             where TFeature : struct, CodeFeature
         {
             builder.Register(context => fooIdFactory())
-                   .As<CodeSwitch<TFeature>>();
+                .As<CodeSwitch<TFeature>>();
         }
+
 
         public static void RegisterFooId<TFeature>(this ContainerBuilder builder,
             Func<IComponentContext, CodeSwitch<TFeature>> fooIdFactory)
             where TFeature : struct, CodeFeature
         {
             builder.Register(context => fooIdFactory(context))
-                   .As<CodeSwitch<TFeature>>();
+                .As<CodeSwitch<TFeature>>();
         }
 
-        public static IRegistrationBuilder<T, SimpleActivatorData, SingleRegistrationStyle> RegisterByFooId<TFeature, T>(
+        public static void RegisterContextSwitch<TFeature, TContext>(this ContainerBuilder builder)
+            where TFeature : struct, CodeFeature
+        {
+            builder.Register(context =>
+            {
+                TContext switchContext;
+                if (!context.TryResolve<TContext>(out switchContext))
+                    throw new ArgumentException("The context type was not found: " + typeof(TContext).Name);
+
+                var cache = context.Resolve<ICodeFeatureStateCache>();
+                var contextCache = context.Resolve<IContextFeatureStateCache<TContext>>();
+
+                return new ContextFeatureStateCodeSwitch<TFeature, TContext>(cache, contextCache, switchContext);
+            })
+                .As<CodeSwitch<TFeature>>();
+        }
+
+        public static IRegistrationBuilder<T, SimpleActivatorData, SingleRegistrationStyle> RegisterByFooId<TFeature, T>
+            (
             this ContainerBuilder builder,
             Func<IComponentContext, T> enabledFactory, Func<IComponentContext, T> disabledFactory)
             where TFeature : struct, CodeFeature
         {
             return builder.Register(context =>
-                {
-                    var codeSwitch = context.Resolve<CodeSwitch<TFeature>>();
-                    return codeSwitch.Enabled
-                               ? enabledFactory(context)
-                               : disabledFactory(context);
-                });
+            {
+                var codeSwitch = context.Resolve<CodeSwitch<TFeature>>();
+                return codeSwitch.Enabled
+                    ? enabledFactory(context)
+                    : disabledFactory(context);
+            });
         }
 
         /// <summary>
@@ -148,10 +168,10 @@
 
             IRegistrationBuilder<T, SimpleActivatorData, SingleRegistrationStyle> registerByFooId =
                 builder.Register(context =>
-                    {
-                        var codeSwitch = context.Resolve<CodeSwitch<TFeature>>();
-                        return codeSwitch.Enabled ? (T)context.Resolve<TEnabled>() : (T)context.Resolve<TDisabled>();
-                    }).As<T>();
+                {
+                    var codeSwitch = context.Resolve<CodeSwitch<TFeature>>();
+                    return codeSwitch.Enabled ? (T)context.Resolve<TEnabled>() : (T)context.Resolve<TDisabled>();
+                }).As<T>();
 
             return registerByFooId;
         }

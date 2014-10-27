@@ -75,6 +75,7 @@
     <Compile Include="Configuration\FeatureStateElement.cs" />
     <Compile Include="Configuration\FeatureStateElementCollection.cs" />
     <Compile Include="Configuration\FooidityConfigurationSection.cs" />
+    <Compile Include="ContextCodeSwitch.cs" />
     <Compile Include="ContextFeatureStateCodeSwitch.cs" />
     <Compile Include="Dependents\DependentFooId.cs">
       <DependentUpon>DependentFooId.tt</DependentUpon>

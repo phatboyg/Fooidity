@@ -52,8 +52,11 @@
     </Compile>
     <Compile Include="A_conditional_class_dependency.cs" />
     <Compile Include="ContainerSetup_Specs.cs" />
+    <Compile Include="ContextContainer_Specs.cs" />
+    <Compile Include="Contexts\UserContext.cs" />
     <Compile Include="Defaults\FooIdContainer_Specs.cs" />
     <Compile Include="Defaults\RegisterGeneric_Specs.cs" />
+    <Compile Include="Features\UseNewCodePath.cs" />
     <Compile Include="Subjects\ConditionalClass.cs" />
   </ItemGroup>
   <ItemGroup>
