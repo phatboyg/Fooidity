@@ -2,6 +2,9 @@
 {
     using System;
     using System.Threading;
+    using Configuration;
+    using Events;
+    using Metadata;
 
 
     /// <summary>

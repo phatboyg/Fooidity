@@ -1,10 +1,10 @@
-﻿namespace Fooidity
+﻿namespace Fooidity.Configuration
 {
     using System;
 
 
     /// <summary>
-    /// The state of a switch in the switch cache
+    /// The state of a code feature, typically loaded from a configuration source
     /// </summary>
     public interface CodeFeatureState
     {
@@ -14,12 +14,12 @@
         string Id { get; }
 
         /// <summary>
-        /// The feature Type
+        /// The feature type
         /// </summary>
         Type FeatureType { get; }
 
         /// <summary>
-        /// The current state of the switch
+        /// The state of the switch
         /// </summary>
         bool Enabled { get; }
     }

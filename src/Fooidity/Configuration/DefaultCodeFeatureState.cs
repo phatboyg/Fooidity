@@ -1,6 +1,7 @@
-﻿namespace Fooidity
+﻿namespace Fooidity.Configuration
 {
     using System;
+    using Metadata;
 
 
     public class DefaultCodeFeatureState<TFeature> :

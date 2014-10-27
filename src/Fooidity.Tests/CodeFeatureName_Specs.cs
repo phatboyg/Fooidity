@@ -2,6 +2,7 @@
 {
     namespace CodeFeatureName
     {
+        using Metadata;
         using NUnit.Framework;
 
 

@@ -1,5 +1,8 @@
 ﻿namespace Fooidity
 {
+    using Configuration;
+
+
     /// <summary>
     /// A cache of switches and their states
     /// </summary>

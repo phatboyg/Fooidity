@@ -1,4 +1,4 @@
-﻿namespace Fooidity
+﻿namespace Fooidity.Dependents
 {
     public interface IDependentCodeSwitchFactory<T>
         where T : struct, CodeFeature

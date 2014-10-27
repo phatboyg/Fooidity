@@ -1,6 +1,7 @@
 ﻿namespace Fooidity
 {
     using System;
+    using Dependents;
 
 
     /// <summary>

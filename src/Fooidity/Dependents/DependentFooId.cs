@@ -1,4 +1,4 @@
-﻿namespace Fooidity
+﻿namespace Fooidity.Dependents
 {
 
     public class DependentCodeSwitch<T, T1> :

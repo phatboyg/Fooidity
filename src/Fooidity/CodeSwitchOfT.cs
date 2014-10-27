@@ -1,6 +1,5 @@
 ﻿namespace Fooidity
 {
-
     public interface CodeSwitch<T, T1> :
         CodeSwitch<T>
         where T  : struct, CodeFeature
@@ -368,5 +367,4 @@
         CodeSwitch<T15> Switch15 { get; }
         CodeSwitch<T16> Switch16 { get; }
     }
-
 }

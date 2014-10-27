@@ -57,69 +57,69 @@
     <Compile Include="Caching\IReadOnlyCache.cs" />
     <Compile Include="Caching\IReloadCache.cs" />
     <Compile Include="Caching\IUpdateCache.cs" />
-    <Compile Include="CodeFeatureMetadata.cs" />
-    <Compile Include="CodeFeatureStateCacheLoaded.cs" />
-    <Compile Include="CodeFeatureStateUpdated.cs" />
     <Compile Include="CodeSwitch.cs" />
+    <Compile Include="Configuration\CodeFeatureState.cs" />
     <Compile Include="Configuration\ConfigurationCodeFeatureStateCacheProvider.cs" />
+    <Compile Include="Configuration\DefaultCodeFeatureState.cs" />
     <Compile Include="Configuration\FeatureStateElement.cs" />
     <Compile Include="Configuration\FeatureStateElementCollection.cs" />
     <Compile Include="Configuration\FooidityConfigurationSection.cs" />
-    <Compile Include="DefaultCodeFeatureState.cs" />
-    <Compile Include="DependentFooIdFactoryImpl.cs">
-      <DependentUpon>DependentFooIdFactoryImpl.tt</DependentUpon>
+    <Compile Include="Dependents\DependentFooId.cs">
+      <DependentUpon>DependentFooId.tt</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="DependentFooIdFactory.cs">
+    <Compile Include="Dependents\DependentFooIdFactory.cs">
       <DependentUpon>DependentFooIdFactory.tt</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="DependentFooId.cs">
+    <Compile Include="Dependents\DependentFooIdFactoryImpl.cs">
+      <DependentUpon>DependentFooIdFactoryImpl.tt</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>DependentFooId.tt</DependentUpon>
     </Compile>
     <Compile Include="DisabledCodeSwitch.cs" />
-    <Compile Include="DynamicCodeSwitch.cs" />
+    <Compile Include="FeatureStateCodeSwitch.cs" />
     <Compile Include="EnabledCodeSwitch.cs" />
-    <Compile Include="FooIdOfT.cs">
+    <Compile Include="Events\CodeFeatureStateCacheLoaded.cs" />
+    <Compile Include="Events\CodeFeatureStateUpdated.cs" />
+    <Compile Include="CodeSwitchOfT.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>FooIdOfT.tt</DependentUpon>
+      <DependentUpon>CodeSwitchOfT.tt</DependentUpon>
     </Compile>
     <Compile Include="CodeFeature.cs" />
-    <Compile Include="ICodeFeatureMetadata.cs" />
     <Compile Include="ICodeFeatureStateCache.cs" />
     <Compile Include="IfExtensions.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>IfExtensions.tt</DependentUpon>
     </Compile>
+    <Compile Include="Metadata\CodeFeatureMetadata.cs" />
+    <Compile Include="Metadata\ICodeFeatureMetadata.cs" />
     <Compile Include="Security\EnabledByRoleInThreadPrincipal.cs" />
     <Compile Include="Security\EnabledForAuthenticatedIdentity.cs" />
     <Compile Include="Snapshot.cs" />
     <Compile Include="IToggleCodeSwitch.cs" />
-    <Compile Include="CodeFeatureState.cs" />
     <Compile Include="ToggleCodeSwitch.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="DependentFooIdFactoryImpl.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>DependentFooIdFactoryImpl.cs</LastGenOutput>
-    </None>
-    <None Include="DependentFooIdFactory.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>DependentFooIdFactory.cs</LastGenOutput>
-    </None>
-    <None Include="DependentFooId.tt">
+    <None Include="Dependents\DependentFooId.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>DependentFooId.cs</LastGenOutput>
     </None>
-    <None Include="FooIdOfT.tt">
+    <None Include="Dependents\DependentFooIdFactory.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>FooIdOfT.cs</LastGenOutput>
+      <LastGenOutput>DependentFooIdFactory.cs</LastGenOutput>
+    </None>
+    <None Include="Dependents\DependentFooIdFactoryImpl.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>DependentFooIdFactoryImpl.cs</LastGenOutput>
+    </None>
+    <None Include="CodeSwitchOfT.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>CodeSwitchOfT.cs</LastGenOutput>
     </None>
     <None Include="IfExtensions.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

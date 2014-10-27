@@ -1,6 +1,7 @@
-﻿namespace Fooidity
+﻿namespace Fooidity.Events
 {
     using System;
+
 
     /// <summary>
     /// Observable when the state cache is loaded

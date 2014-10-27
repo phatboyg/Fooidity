@@ -1,6 +1,7 @@
 ﻿namespace Fooidity.Caching
 {
     using System;
+    using Configuration;
 
 
     public interface ICodeFeatureStateCacheInstance
