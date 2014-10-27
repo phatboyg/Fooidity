@@ -57,6 +57,7 @@
     <Compile Include="Contexts\UserContextKeyProvider.cs" />
     <Compile Include="Defaults\FooIdContainer_Specs.cs" />
     <Compile Include="Defaults\RegisterGeneric_Specs.cs" />
+    <Compile Include="ExceptionLogging_Specs.cs" />
     <Compile Include="Features\DbEnabled.cs" />
     <Compile Include="Features\UseNewCodePath.cs" />
     <Compile Include="Features\UseNewMethod.cs" />

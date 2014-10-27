@@ -12,7 +12,7 @@
         public void Should_keep_both_containers_separated_by_scope()
         {
             var builder = new ContainerBuilder();
-            builder.RegisterByFooId<BigOn, A, BigA, LittleA>();
+            builder.RegisterSwitchedType<BigOn, A, BigA, LittleA>();
 //            builder.RegisterType<DefaultDataProvider>()
 //                .As<IDataProvider>()
 //                .SingleInstance();

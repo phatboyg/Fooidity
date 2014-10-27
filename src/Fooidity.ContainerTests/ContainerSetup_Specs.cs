@@ -14,7 +14,7 @@
 
             builder.RegisterEnabled<UseClassAv2>();
 
-            builder.RegisterByFooId<UseClassAv2, A, ClassA_V2, ClassA>();
+            builder.RegisterSwitchedType<UseClassAv2, A, ClassA_V2, ClassA>();
 
             IContainer container = builder.Build();
 
@@ -30,7 +30,7 @@
 
             builder.RegisterDisabled<UseClassAv2>();
 
-            builder.RegisterByFooId<UseClassAv2, A, ClassA_V2, ClassA>();
+            builder.RegisterSwitchedType<UseClassAv2, A, ClassA_V2, ClassA>();
 
             IContainer container = builder.Build();
 
@@ -46,8 +46,7 @@
 
             builder.RegisterEnabled<UseClassAv2>();
 
-            builder.RegisterByFooId<UseClassAv2, A>(context => new ClassA_V2(), context => new ClassA())
-                .As<A>();
+            builder.RegisterSwitched<UseClassAv2, A>(context => new ClassA_V2(), context => new ClassA());
 
             IContainer container = builder.Build();
 

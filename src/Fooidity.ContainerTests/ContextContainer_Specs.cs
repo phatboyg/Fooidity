@@ -1,7 +1,9 @@
 ﻿namespace Fooidity.ContainerTests
 {
     using System;
+    using System.Collections.Generic;
     using Autofac;
+    using Autofac.Core;
     using AutofacIntegration;
     using Contexts;
     using Events;
@@ -12,6 +14,20 @@
     [TestFixture]
     public class Configuring_the_container_for_user_contexts
     {
+        [Test]
+        public void No_context_should_throw_the_proper_exception()
+        {
+            var exception = Assert.Throws<DependencyResolutionException>(() =>
+            {
+                using (ILifetimeScope scope = _container.BeginLifetimeScope())
+                {
+                    var codeSwitch = scope.Resolve<CodeSwitch<UseNewCodePath>>();
+                }
+            });
+
+            Assert.IsInstanceOf<ContextSwitchException>(exception.InnerException);
+        }
+
         [Test]
         public void Should_be_enabled_for_specified_user()
         {
@@ -27,7 +43,7 @@
 
                 Assert.AreEqual("No", repository.IsDbEnabled);
 
-                var codeSwitchesEvaluated = scope.GetCodeSwitchesEvaluated();
+                IEnumerable<CodeSwitchEvaluated> codeSwitchesEvaluated = scope.GetCodeSwitchesEvaluated();
 
                 foreach (CodeSwitchEvaluated evaluated in codeSwitchesEvaluated)
                     Console.WriteLine("{0}: {1}", evaluated.Id, evaluated.Enabled);
@@ -45,7 +61,7 @@
 
                 Assert.IsFalse(codeSwitch.Enabled);
 
-                var codeSwitchesEvaluated = scope.GetCodeSwitchesEvaluated();
+                IEnumerable<CodeSwitchEvaluated> codeSwitchesEvaluated = scope.GetCodeSwitchesEvaluated();
 
                 foreach (CodeSwitchEvaluated evaluated in codeSwitchesEvaluated)
                     Console.WriteLine("{0}: {1}", evaluated.Id, evaluated.Enabled);
