@@ -1,10 +1,8 @@
 ﻿namespace Fooidity.CodeSwitches
 {
     using System;
-    using Caching.Internals;
     using Configuration;
     using Events;
-    using Metadata;
 
 
     /// <summary>
@@ -21,7 +19,7 @@
         readonly TContext _context;
         readonly IContextFeatureStateCache<TContext> _contextCache;
         readonly Lazy<bool> _enabled;
-        readonly Connectable<IObserver<CodeSwitchEvaluated>> _evaluated;
+        readonly CodeSwitchEvaluatedObservable<TFeature> _evaluated;
 
         public ContextFeatureStateCodeSwitch(ICodeFeatureStateCache cache,
             IContextFeatureStateCache<TContext> contextCache, TContext context)
@@ -30,7 +28,7 @@
             _contextCache = contextCache;
             _context = context;
 
-            _evaluated = new Connectable<IObserver<CodeSwitchEvaluated>>();
+            _evaluated = new CodeSwitchEvaluatedObservable<TFeature>();
             _enabled = new Lazy<bool>(Evaluate);
         }
 
@@ -48,8 +46,7 @@
         {
             bool enabled = GetEnabled();
 
-            var evaluted = new Evaluated(enabled);
-            _evaluated.ForEach(x => x.OnNext(evaluted));
+            _evaluated.Evaluated(enabled);
 
             return enabled;
         }
@@ -65,37 +62,6 @@
             }
 
             return _cache.TryGetState<TFeature>(out codeFeatureState) && codeFeatureState.Enabled;
-        }
-
-
-        class Evaluated :
-            CodeSwitchEvaluated
-        {
-            readonly bool _enabled;
-            readonly string _id;
-            readonly DateTime _timestamp;
-
-            public Evaluated(bool enabled)
-            {
-                _timestamp = DateTime.UtcNow;
-                _id = CodeFeatureMetadata<TFeature>.Id;
-                _enabled = enabled;
-            }
-
-            public DateTime Timestamp
-            {
-                get { return _timestamp; }
-            }
-
-            public string Id
-            {
-                get { return _id; }
-            }
-
-            public bool Enabled
-            {
-                get { return _enabled; }
-            }
         }
     }
 }

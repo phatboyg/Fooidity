@@ -1,27 +1,21 @@
-﻿namespace Fooidity.CodeSwitches
+namespace Fooidity.CodeSwitches
 {
     using System;
-    using Configuration;
+    using System.Security.Principal;
+    using System.Threading;
     using Events;
 
 
-    /// <summary>
-    /// A dynamic code switch that uses the feature state cache to determine the switch state
-    /// </summary>
-    /// <typeparam name="TFeature"></typeparam>
-    public class CodeFeatureStateCodeSwitch<TFeature> :
+    public class EnabledForAuthenticatedIdentityCodeSwitch<TFeature> :
         CodeSwitch<TFeature>,
         IObservable<CodeSwitchEvaluated>
         where TFeature : struct, CodeFeature
     {
-        readonly ICodeFeatureStateCache _cache;
         readonly Lazy<bool> _enabled;
         readonly CodeSwitchEvaluatedObservable<TFeature> _evaluated;
 
-        public CodeFeatureStateCodeSwitch(ICodeFeatureStateCache cache)
+        public EnabledForAuthenticatedIdentityCodeSwitch()
         {
-            _cache = cache;
-
             _evaluated = new CodeSwitchEvaluatedObservable<TFeature>();
             _enabled = new Lazy<bool>(Evaluate);
         }
@@ -36,6 +30,14 @@
             return _evaluated.Connect(observer);
         }
 
+        bool GetEnabled()
+        {
+            IPrincipal principal = Thread.CurrentPrincipal;
+            if (principal == null)
+                return false;
+
+            return principal.Identity.IsAuthenticated;
+        }
 
         bool Evaluate()
         {
@@ -44,12 +46,6 @@
             _evaluated.Evaluated(enabled);
 
             return enabled;
-        }
-
-        bool GetEnabled()
-        {
-            CodeFeatureState featureState;
-            return _cache.TryGetState<TFeature>(out featureState) && featureState.Enabled;
         }
     }
 }

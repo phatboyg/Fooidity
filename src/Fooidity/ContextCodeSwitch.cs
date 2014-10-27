@@ -1,4 +1,4 @@
-﻿namespace Fooidity.CodeSwitches
+﻿namespace Fooidity
 {
     public interface ContextCodeSwitch<TFeature, TContext> :
         CodeSwitch<TFeature>

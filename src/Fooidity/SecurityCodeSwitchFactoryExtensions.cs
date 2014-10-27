@@ -16,7 +16,7 @@
             string role)
             where TFeature : struct, CodeFeature
         {
-            return new EnabledThreadPrincipalInRoleCodeSwitch<TFeature>(role);
+            return new EnabledForThreadPrincipalInRoleCodeSwitch<TFeature>(role);
         }
 
         /// <summary>
@@ -27,7 +27,7 @@
         public static CodeSwitch<TFeature> EnabledForAuthenticatedIdentity<TFeature>(this ICodeSwitchFactory factory)
             where TFeature : struct, CodeFeature
         {
-            return new EnableAuthenticatedIdentityCodeSwitch<TFeature>();
+            return new EnabledForAuthenticatedIdentityCodeSwitch<TFeature>();
         }
     }
 }

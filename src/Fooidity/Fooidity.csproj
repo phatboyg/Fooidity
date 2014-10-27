@@ -63,13 +63,13 @@
     <Compile Include="Caching\IUpdateCache.cs" />
     <Compile Include="CodeSwitch.cs" />
     <Compile Include="CodeSwitches\CodeFeatureStateCodeSwitch.cs" />
-    <Compile Include="CodeSwitches\ContextCodeSwitch.cs" />
+    <Compile Include="CodeSwitches\CodeSwitchEvaluatedObservable.cs" />
     <Compile Include="CodeSwitches\ContextFeatureStateCodeSwitch.cs" />
     <Compile Include="CodeSwitches\DateRangeCodeSwitch.cs" />
     <Compile Include="CodeSwitches\DisabledCodeSwitch.cs" />
-    <Compile Include="CodeSwitches\EnableAuthenticatedIdentityCodeSwitch.cs" />
+    <Compile Include="CodeSwitches\EnabledForAuthenticatedIdentityCodeSwitch.cs" />
     <Compile Include="CodeSwitches\EnabledCodeSwitch.cs" />
-    <Compile Include="CodeSwitches\EnabledThreadPrincipalInRoleCodeSwitch.cs" />
+    <Compile Include="CodeSwitches\EnabledForThreadPrincipalInRoleCodeSwitch.cs" />
     <Compile Include="CodeSwitches\ToggleCodeSwitch.cs" />
     <Compile Include="CodeSwitchFactory.cs" />
     <Compile Include="CodeSwitchStateTracker.cs" />
@@ -85,7 +85,9 @@
     <Compile Include="Configuration\FeatureStateElement.cs" />
     <Compile Include="Configuration\FeatureStateElementCollection.cs" />
     <Compile Include="Configuration\FooidityConfigurationSection.cs" />
+    <Compile Include="ContextCodeSwitch.cs" />
     <Compile Include="ContextKeyProvider.cs" />
+    <Compile Include="CurrentTimeProvider.cs" />
     <Compile Include="DateTimeSwitchExtensions.cs" />
     <Compile Include="Dependents\DependentFooId.cs">
       <DependentUpon>DependentFooId.tt</DependentUpon>

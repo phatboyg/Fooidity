@@ -1,16 +1,44 @@
 ﻿namespace Fooidity.CodeSwitches
 {
+    using System;
+    using Events;
+
+
     /// <summary>
     /// A disabled code switch is always disabled
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public class DisabledCodeSwitch<T> :
-        CodeSwitch<T>
-        where T : struct, CodeFeature
+    /// <typeparam name="TFeature"></typeparam>
+    public class DisabledCodeSwitch<TFeature> :
+        CodeSwitch<TFeature>,
+        IObservable<CodeSwitchEvaluated>
+        where TFeature : struct, CodeFeature
     {
-        bool CodeSwitch<T>.Enabled
+        readonly CodeSwitchEvaluatedObservable<TFeature> _evaluated;
+        bool _evaluationComplete;
+
+        public DisabledCodeSwitch()
         {
-            get { return false; }
+            _evaluated = new CodeSwitchEvaluatedObservable<TFeature>();
+        }
+
+        bool CodeSwitch<TFeature>.Enabled
+        {
+            get
+            {
+                if (!_evaluationComplete)
+                {
+                    _evaluationComplete = true;
+
+                    _evaluated.Evaluated(false);
+                }
+
+                return false;
+            }
+        }
+
+        public IDisposable Subscribe(IObserver<CodeSwitchEvaluated> observer)
+        {
+            return _evaluated.Connect(observer);
         }
     }
 }
