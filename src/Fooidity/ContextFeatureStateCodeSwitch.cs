@@ -2,6 +2,7 @@
 {
     using System;
     using Caching;
+    using Caching.Internals;
     using Configuration;
     using Events;
     using Metadata;
@@ -58,9 +59,9 @@
         {
             CodeFeatureState codeFeatureState;
             ContextFeatureState contextFeatureState;
-            if (_contextCache.TryGetState(_context, out contextFeatureState))
+            if (_contextCache.TryGetContextFeatureState(_context, out contextFeatureState))
             {
-                if (contextFeatureState.TryGetFeature<TFeature>(out codeFeatureState))
+                if (contextFeatureState.TryGetCodeFeatureState<TFeature>(out codeFeatureState))
                     return codeFeatureState.Enabled;
             }
 

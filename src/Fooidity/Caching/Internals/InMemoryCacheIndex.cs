@@ -1,4 +1,4 @@
-namespace Fooidity.Caching
+namespace Fooidity.Caching.Internals
 {
     using System;
     using System.Collections.Generic;
@@ -10,7 +10,7 @@ namespace Fooidity.Caching
     /// <typeparam name="TKey"></typeparam>
     /// <typeparam name="TValue"></typeparam>
     /// <typeparam name="TIndex"></typeparam>
-    public class InMemoryCacheIndex<TKey, TValue, TIndex> :
+    class InMemoryCacheIndex<TKey, TValue, TIndex> :
         ICacheIndex<TIndex, TValue>,
         IObserver<CacheItemAdded<TValue>>,
         IObserver<CacheItemRemoved<TValue>>,

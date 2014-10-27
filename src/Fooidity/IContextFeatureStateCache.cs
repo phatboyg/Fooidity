@@ -9,6 +9,6 @@
     /// <typeparam name="TContext"></typeparam>
     public interface IContextFeatureStateCache<in TContext>
     {
-        bool TryGetState(TContext context, out ContextFeatureState featureState);
+        bool TryGetContextFeatureState(TContext context, out ContextFeatureState featureState);
     }
 }

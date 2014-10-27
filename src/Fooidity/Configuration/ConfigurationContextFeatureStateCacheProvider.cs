@@ -3,6 +3,7 @@ namespace Fooidity.Configuration
     using System;
     using System.Configuration;
     using Caching;
+    using Caching.Internals;
     using Metadata;
 
 
@@ -64,9 +65,9 @@ namespace Fooidity.Configuration
                                     }
                                 }
 
-                                var state = new ContextFeatureStateImpl(instance.Key, featureCache);
+                                var state = new ContextFeatureStateImpl(featureCache);
 
-                                cache.TryAdd(state.Key, state);
+                                cache.TryAdd(instance.Key, state);
                             }
                         }
                     }
@@ -112,20 +113,13 @@ namespace Fooidity.Configuration
             ContextFeatureState
         {
             readonly IReadOnlyCache<string, CodeFeatureState> _cache;
-            readonly string _key;
 
-            public ContextFeatureStateImpl(string key, IReadOnlyCache<string, CodeFeatureState> cache)
+            public ContextFeatureStateImpl(IReadOnlyCache<string, CodeFeatureState> cache)
             {
-                _key = key;
                 _cache = cache;
             }
 
-            public string Key
-            {
-                get { return _key; }
-            }
-
-            public bool TryGetFeature<TFeature>(out CodeFeatureState featureState)
+            public bool TryGetCodeFeatureState<TFeature>(out CodeFeatureState featureState)
             {
                 return _cache.TryGet(CodeFeatureMetadata<TFeature>.Id, out featureState);
             }

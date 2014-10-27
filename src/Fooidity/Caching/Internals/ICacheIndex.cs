@@ -1,4 +1,4 @@
-namespace Fooidity.Caching
+namespace Fooidity.Caching.Internals
 {
     using System;
 
@@ -8,7 +8,7 @@ namespace Fooidity.Caching
     /// </summary>
     /// <typeparam name="TKey"></typeparam>
     /// <typeparam name="TValue"></typeparam>
-    public interface ICacheIndex<in TKey, TValue> :
+    interface ICacheIndex<in TKey, TValue> :
         IReadOnlyCache<TKey, TValue>,
         IDisposable
     {

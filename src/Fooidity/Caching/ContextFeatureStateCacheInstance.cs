@@ -1,9 +1,10 @@
 ﻿namespace Fooidity.Caching
 {
     using Configuration;
+    using Internals;
 
 
-    public class ContextFeatureStateCacheInstance<TContext> :
+    class ContextFeatureStateCacheInstance<TContext> :
         IContextFeatureStateCacheInstance<TContext>
     {
         readonly IReadOnlyCache<string, ContextFeatureState> _cache;
@@ -13,9 +14,14 @@
             _cache = cache;
         }
 
-        public IReadOnlyCache<string, ContextFeatureState> Cache
+        public bool TryGetContextFeatureState(string key, out ContextFeatureState featureState)
         {
-            get { return _cache; }
+            return _cache.TryGet(key, out featureState);
+        }
+
+        public int Count
+        {
+            get { return _cache.Values.Count; }
         }
     }
 }

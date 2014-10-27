@@ -1,10 +1,10 @@
-namespace Fooidity.Caching
+namespace Fooidity.Caching.Internals
 {
     /// <summary>
     /// Signals an item was added to the cache
     /// </summary>
     /// <typeparam name="TValue"></typeparam>
-    public interface CacheItemAdded<out TValue>
+    interface CacheItemAdded<out TValue>
     {
         TValue Value { get; }
     }

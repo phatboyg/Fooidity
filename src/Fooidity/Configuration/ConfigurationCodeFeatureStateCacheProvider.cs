@@ -3,6 +3,7 @@
     using System;
     using System.Configuration;
     using Caching;
+    using Caching.Internals;
 
 
     public class ConfigurationCodeFeatureStateCacheProvider :

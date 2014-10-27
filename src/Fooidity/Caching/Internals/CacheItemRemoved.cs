@@ -1,10 +1,10 @@
-namespace Fooidity.Caching
+namespace Fooidity.Caching.Internals
 {
     /// <summary>
     /// Signals an item was removed from the cache
     /// </summary>
     /// <typeparam name="TValue"></typeparam>
-    public interface CacheItemRemoved<out TValue>
+    interface CacheItemRemoved<out TValue>
     {
         TValue Value { get; }
     }

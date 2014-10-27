@@ -1,4 +1,4 @@
-﻿namespace Fooidity.Caching
+﻿namespace Fooidity.Caching.Internals
 {
     using System;
     using System.Collections.Concurrent;
@@ -7,7 +7,7 @@
     using System.Threading;
 
 
-    public class Connectable<T>
+    class Connectable<T>
     {
         readonly ConcurrentDictionary<long, T> _connections;
         long _nextId;

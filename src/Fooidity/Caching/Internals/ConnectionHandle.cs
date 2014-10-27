@@ -1,9 +1,9 @@
-﻿namespace Fooidity.Caching
+﻿namespace Fooidity.Caching.Internals
 {
     using System;
 
 
-    public interface ConnectionHandle :
+    interface ConnectionHandle :
         IDisposable
     {
         void Disconnect();

@@ -4,6 +4,7 @@
     using System.Threading;
     using Configuration;
     using Events;
+    using Internals;
     using Metadata;
 
 
@@ -31,7 +32,7 @@
 
         public bool TryGetState<TFeature>(out CodeFeatureState featureState)
         {
-            if (_cache.Cache.TryGet(CodeFeatureMetadata<TFeature>.Id, out featureState))
+            if (_cache.TryGetState(CodeFeatureMetadata<TFeature>.Id, out featureState))
                 return true;
 
             if (_cache.DefaultState)
@@ -56,7 +57,7 @@
 
             Interlocked.Exchange(ref _cache, cache);
 
-            var loaded = new Loaded(startTime, endTime - startTime, cache.Cache.Values.Count);
+            var loaded = new Loaded(startTime, endTime - startTime, cache.Count);
 
             _cacheLoaded.ForEach(x => x.OnNext(loaded));
         }

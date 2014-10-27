@@ -2,6 +2,7 @@
 {
     using System;
     using Caching;
+    using Caching.Internals;
     using Configuration;
     using Events;
     using Metadata;

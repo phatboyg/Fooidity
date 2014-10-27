@@ -4,6 +4,7 @@
     using System.Threading;
     using Configuration;
     using Events;
+    using Internals;
 
 
     /// <summary>
@@ -29,11 +30,11 @@
             _cache = _cacheProvider.Load();
         }
 
-        public bool TryGetState(TContext context, out ContextFeatureState featureState)
+        public bool TryGetContextFeatureState(TContext context, out ContextFeatureState featureState)
         {
             string key = _keyProvider.GetKey(context);
 
-            return _cache.Cache.TryGet(key, out featureState);
+            return _cache.TryGetContextFeatureState(key, out featureState);
         }
 
         public void ReloadCache()
@@ -44,7 +45,7 @@
 
             Interlocked.Exchange(ref _cache, cache);
 
-            var loaded = new Loaded(startTime, endTime - startTime, cache.Cache.Values.Count);
+            var loaded = new Loaded(startTime, endTime - startTime, cache.Count);
 
             _cacheLoaded.ForEach(x => x.OnNext(loaded));
         }

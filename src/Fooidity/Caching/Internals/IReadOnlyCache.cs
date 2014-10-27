@@ -1,10 +1,10 @@
-namespace Fooidity.Caching
+namespace Fooidity.Caching.Internals
 {
     using System;
     using System.Collections.Generic;
 
 
-    public interface IReadOnlyCache<in TKey, TValue> :
+    interface IReadOnlyCache<in TKey, TValue> :
         IObservable<CacheItemAdded<TValue>>,
         IObservable<CacheItemRemoved<TValue>>,
         IObservable<CacheItemUpdated<TValue>>

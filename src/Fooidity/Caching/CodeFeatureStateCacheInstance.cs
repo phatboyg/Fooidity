@@ -2,9 +2,10 @@
 {
     using System;
     using Configuration;
+    using Internals;
 
 
-    public class CodeFeatureStateCacheInstance :
+    class CodeFeatureStateCacheInstance :
         ICodeFeatureStateCacheInstance
     {
         readonly IReadOnlyCache<string, CodeFeatureState> _cache;
@@ -19,19 +20,19 @@
             _defaultState = defaultState;
         }
 
-        public IReadOnlyCache<string, CodeFeatureState> Cache
-        {
-            get { return _cache; }
-        }
-
-        public ICacheIndex<Type, CodeFeatureState> TypeIndex
-        {
-            get { return _typeIndex; }
-        }
-
         public bool DefaultState
         {
             get { return _defaultState; }
+        }
+
+        public int Count
+        {
+            get { return _cache.Values.Count; }
+        }
+
+        public bool TryGetState(string id, out CodeFeatureState featureState)
+        {
+            return _cache.TryGet(id, out featureState);
         }
     }
 }

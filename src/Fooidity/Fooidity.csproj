@@ -41,25 +41,24 @@
     <Compile Include="..\SolutionVersion.cs">
       <Link>Properties\SolutionVersion.cs</Link>
     </Compile>
-    <Compile Include="Caching\CacheItemAdded.cs" />
-    <Compile Include="Caching\CacheItemRemoved.cs" />
-    <Compile Include="Caching\CacheItemUpdated.cs" />
     <Compile Include="Caching\CodeFeatureStateCache.cs" />
     <Compile Include="Caching\CodeFeatureStateCacheInstance.cs" />
-    <Compile Include="Caching\Connectable.cs" />
-    <Compile Include="Caching\ConnectionHandle.cs" />
     <Compile Include="Caching\ContextFeatureStateCache.cs" />
     <Compile Include="Caching\ContextFeatureStateCacheInstance.cs" />
-    <Compile Include="Caching\ContextKeyProvider.cs" />
-    <Compile Include="Caching\ICache.cs" />
-    <Compile Include="Caching\ICacheIndex.cs" />
     <Compile Include="Caching\ICodeFeatureStateCacheInstance.cs" />
     <Compile Include="Caching\ICodeFeatureStateCacheProvider.cs" />
     <Compile Include="Caching\IContextFeatureStateCacheInstance.cs" />
     <Compile Include="Caching\IContextFeatureStateCacheProvider.cs" />
-    <Compile Include="Caching\InMemoryCache.cs" />
-    <Compile Include="Caching\InMemoryCacheIndex.cs" />
-    <Compile Include="Caching\IReadOnlyCache.cs" />
+    <Compile Include="Caching\Internals\CacheItemAdded.cs" />
+    <Compile Include="Caching\Internals\CacheItemRemoved.cs" />
+    <Compile Include="Caching\Internals\CacheItemUpdated.cs" />
+    <Compile Include="Caching\Internals\Connectable.cs" />
+    <Compile Include="Caching\Internals\ConnectionHandle.cs" />
+    <Compile Include="Caching\Internals\ICache.cs" />
+    <Compile Include="Caching\Internals\ICacheIndex.cs" />
+    <Compile Include="Caching\Internals\InMemoryCache.cs" />
+    <Compile Include="Caching\Internals\InMemoryCacheIndex.cs" />
+    <Compile Include="Caching\Internals\IReadOnlyCache.cs" />
     <Compile Include="Caching\IReloadCache.cs" />
     <Compile Include="Caching\IUpdateCache.cs" />
     <Compile Include="CodeSwitch.cs" />
@@ -78,6 +77,7 @@
     <Compile Include="Configuration\FooidityConfigurationSection.cs" />
     <Compile Include="ContextCodeSwitch.cs" />
     <Compile Include="ContextFeatureStateCodeSwitch.cs" />
+    <Compile Include="ContextKeyProvider.cs" />
     <Compile Include="DateRangeCodeSwitch.cs" />
     <Compile Include="Dependents\DependentFooId.cs">
       <DependentUpon>DependentFooId.tt</DependentUpon>

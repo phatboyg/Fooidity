@@ -1,4 +1,4 @@
-namespace Fooidity.Caching
+namespace Fooidity.Caching.Internals
 {
     using System;
     using System.Collections.Concurrent;
@@ -6,7 +6,7 @@ namespace Fooidity.Caching
     using System.Linq;
 
 
-    public class InMemoryCache<TKey, TValue> :
+    class InMemoryCache<TKey, TValue> :
         ICache<TKey, TValue>
     {
         readonly Connectable<IObserver<CacheItemAdded<TValue>>> _added;
