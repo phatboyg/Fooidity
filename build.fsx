@@ -9,6 +9,10 @@ let nunit = findToolFolderInSubPath "nunit-console.exe" "src/packages/nunit.runn
 
 let PRODUCT = "Fooidity"
 
+//props
+let output = "build_output"
+let artifacts = "build_artifacts"
+
 Target "Build" (fun _ ->
   CreateCSharpAssemblyInfo "./src/SolutionVersion.cs"
         [Attribute.Title PRODUCT
@@ -34,6 +38,11 @@ Target "Test-Unit" (fun _ ->
 
 Target "Go" (fun _ ->
   trace "go"
+)
+
+Target "Clean" (fun _ ->
+  [output; artifacts]
+    |> List.iter FileHelper.CleanDir
 )
 
 "Build"
