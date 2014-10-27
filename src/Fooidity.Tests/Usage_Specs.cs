@@ -11,7 +11,7 @@
         {
             CodeSwitch<A> a = CodeSwitch.Enabled<A>();
             CodeSwitch<B> b = CodeSwitch.Enabled<B>();
-            ToggleCodeSwitch<C> c = CodeSwitch.Toggle<C>();
+            IToggleCodeSwitch<C> c = CodeSwitch.Toggle<C>();
 
             CodeSwitch<ABC> abc = CodeSwitch.Dependent<ABC>(x => x.Upon(a, b, c));
             Assert.IsFalse(abc.Enabled);

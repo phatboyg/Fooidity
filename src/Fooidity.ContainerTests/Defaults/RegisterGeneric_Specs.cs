@@ -12,7 +12,7 @@
         {
             var builder = new ContainerBuilder();
 
-            builder.CodeSwitchesDisabledByDefault();
+            builder.DisableCodeSwitchesByDefault();
 
             IContainer container = builder.Build();
 
@@ -26,7 +26,7 @@
         {
             var builder = new ContainerBuilder();
 
-            builder.CodeSwitchesDisabledByDefault();
+            builder.DisableCodeSwitchesByDefault();
 
             builder.RegisterEnabled<Active>();
 
@@ -42,7 +42,7 @@
         {
             var builder = new ContainerBuilder();
 
-            builder.CodeSwitchesDisabledByDefault();
+            builder.DisableCodeSwitchesByDefault();
 
             IContainer container = builder.Build();
 

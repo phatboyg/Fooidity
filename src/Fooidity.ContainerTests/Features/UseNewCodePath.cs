@@ -4,4 +4,10 @@
         CodeFeature
     {
     }
+
+
+    public struct DbEnabled :
+        CodeFeature
+    {
+    }
 }

@@ -3,7 +3,9 @@
     /// <summary>
     /// Control a toggle fooId, allowing it to be enabled or disabled
     /// </summary>
-    public interface IToggleCodeSwitch<TFeature>
+    public interface IToggleCodeSwitch<TFeature> :
+        CodeSwitch<TFeature>
+        where TFeature : struct, CodeFeature
     {
         /// <summary>
         /// Enable the fooId

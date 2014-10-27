@@ -5,6 +5,7 @@
     using Caching;
     using Configuration;
     using Contexts;
+    using Events;
     using Features;
     using NUnit.Framework;
 
@@ -23,12 +24,14 @@
 
                 Assert.IsTrue(codeSwitch.Enabled);
 
+                var repository = scope.Resolve<Repository>();
+
+                Assert.AreEqual("No", repository.IsDbEnabled);
+
                 var tracker = scope.Resolve<CodeSwitchStateTracker>();
 
-                foreach (var evaluated in tracker)
-                {
+                foreach (CodeSwitchEvaluated evaluated in tracker)
                     Console.WriteLine("{0}: {1}", evaluated.Id, evaluated.Enabled);
-                }
             }
         }
 
@@ -45,10 +48,8 @@
 
                 var tracker = scope.Resolve<CodeSwitchStateTracker>();
 
-                foreach (var evaluated in tracker)
-                {
+                foreach (CodeSwitchEvaluated evaluated in tracker)
                     Console.WriteLine("{0}: {1}", evaluated.Id, evaluated.Enabled);
-                }
             }
         }
 
@@ -67,11 +68,30 @@
 
             builder.RegisterModule<ConfigurationCodeFeatureCacheModule>();
 
+            builder.RegisterCodeSwitch<DbEnabled>();
             builder.RegisterContextSwitch<UseNewCodePath, UserContext>();
 
             builder.EnableCodeSwitchTracker();
 
+            builder.RegisterType<Repository>();
+
             _container = builder.Build();
+        }
+
+
+        class Repository
+        {
+            readonly CodeSwitch<DbEnabled> _dbEnabled;
+
+            public Repository(CodeSwitch<DbEnabled> dbEnabled)
+            {
+                _dbEnabled = dbEnabled;
+            }
+
+            public string IsDbEnabled
+            {
+                get { return _dbEnabled.Enabled ? "Yes" : "No"; }
+            }
         }
 
 

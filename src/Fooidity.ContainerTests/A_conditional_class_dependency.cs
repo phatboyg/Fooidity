@@ -45,7 +45,7 @@
         {
             var builder = new ContainerBuilder();
 
-            builder.CodeSwitchesDisabledByDefault();
+            builder.DisableCodeSwitchesByDefault();
 
             builder.RegisterType<ConditionalClass>();
 

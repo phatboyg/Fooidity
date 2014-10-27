@@ -5,7 +5,6 @@
     /// </summary>
     /// <typeparam name="TFeature">The code feature</typeparam>
     public class ToggleCodeSwitch<TFeature> :
-        CodeSwitch<TFeature>,
         IToggleCodeSwitch<TFeature>
         where TFeature : struct, CodeFeature
     {
