@@ -18,7 +18,7 @@ namespace Fooidity
         {
             builder.RegisterGeneric(typeof(DisabledCodeSwitch<>))
                 .As(typeof(CodeSwitch<>))
-                .OnActivated(x => OnCodeSwitchActivation(x.Context, (IObservable<CodeSwitchEvaluated>)x.Instance));
+                .OnActivating(x => OnCodeSwitchActivation(x.Context, (IObservable<CodeSwitchEvaluated>)x.Instance));
         }
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace Fooidity
         {
             builder.RegisterGeneric(typeof(EnabledCodeSwitch<>))
                 .As(typeof(CodeSwitch<>))
-                .OnActivated(x => OnCodeSwitchActivation(x.Context, (IObservable<CodeSwitchEvaluated>)x.Instance));
+                .OnActivating(x => OnCodeSwitchActivation(x.Context, (IObservable<CodeSwitchEvaluated>)x.Instance));
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace Fooidity
         {
             builder.RegisterType<EnabledCodeSwitch<TFeature>>()
                 .As<CodeSwitch<TFeature>>()
-                .OnActivated(x => OnCodeSwitchActivation(x.Context, x.Instance));
+                .OnActivating(x => OnCodeSwitchActivation(x.Context, x.Instance));
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Fooidity
         {
             builder.RegisterType<DisabledCodeSwitch<TFeature>>()
                 .As<CodeSwitch<TFeature>>()
-                .OnActivated(x => OnCodeSwitchActivation(x.Context, x.Instance));
+                .OnActivating(x => OnCodeSwitchActivation(x.Context, x.Instance));
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace Fooidity
             var builder = new ContainerBuilder();
             builder.RegisterType<DisabledCodeSwitch<TFeature>>()
                 .As<CodeSwitch<TFeature>>()
-                .OnActivated(x => OnCodeSwitchActivation(x.Context, x.Instance))
+                .OnActivating(x => OnCodeSwitchActivation(x.Context, x.Instance))
                 .SingleInstance();
 
             builder.Update(container);
@@ -109,7 +109,7 @@ namespace Fooidity
             builder.RegisterType<ToggleCodeSwitch<TFeature>>()
                 .As<CodeSwitch<TFeature>>()
                 .As<IToggleCodeSwitch<TFeature>>()
-                .OnActivated(x => OnCodeSwitchActivation(x.Context, x.Instance));
+                .OnActivating(x => OnCodeSwitchActivation(x.Context, x.Instance));
         }
 
         public static void RegisterCodeSwitch<TFeature>(this ContainerBuilder builder)
@@ -117,7 +117,7 @@ namespace Fooidity
         {
             builder.RegisterType<CodeFeatureStateCodeSwitch<TFeature>>()
                 .As<CodeSwitch<TFeature>>()
-                .OnActivated(x => OnCodeSwitchActivation(x.Context, x.Instance));
+                .OnActivating(x => OnCodeSwitchActivation(x.Context, x.Instance));
         }
 
         /// <summary>
@@ -143,7 +143,7 @@ namespace Fooidity
                 return new ContextFeatureStateCodeSwitch<TFeature, TContext>(cache, contextCache, switchContext);
             })
                 .As<CodeSwitch<TFeature>>()
-                .OnActivated(x => OnCodeSwitchActivation(x.Context, x.Instance));
+                .OnActivating(x => OnCodeSwitchActivation(x.Context, x.Instance));
         }
 
         static void OnCodeSwitchActivation(IComponentContext context, IObservable<CodeSwitchEvaluated> observable)

@@ -35,7 +35,14 @@
         }
 
 
-        class TestClass
+        interface IClass
+        {
+            void MakeHappy();
+        }
+
+
+        class TestClass :
+            IClass
         {
             readonly ILogger _logger;
             readonly CodeSwitch<UseNewCodePath> _useNewCodePath;
@@ -60,6 +67,32 @@
             }
         }
 
+        class TestClassV2 :
+            IClass
+        {
+            readonly ILogger _logger;
+            readonly CodeSwitch<UseNewCodePath> _useNewCodePath;
+
+            public TestClassV2(ILogger logger, CodeSwitch<UseNewCodePath> useNewCodePath)
+            {
+                _logger = logger;
+                _useNewCodePath = useNewCodePath;
+            }
+
+            public void MakeHappy()
+            {
+                try
+                {
+                    if(!_useNewCodePath.Enabled)
+                        throw new InvalidOperationException("Code path not enabled from V2!");
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex);
+                }
+            }
+        }
+
 
         [TestFixture]
         public class When_an_exception_occurs_within_a_switched_code_path
@@ -69,7 +102,7 @@
             {
                 using (var scope = _container.BeginLifetimeScope())
                 {
-                    var testClass = _container.Resolve<TestClass>();
+                    var testClass = _container.Resolve<IClass>();
 
                     testClass.MakeHappy();
                 }
@@ -89,11 +122,13 @@
                 var builder = new ContainerBuilder();
 
                 builder.RegisterToggle<UseNewCodePath>();
+                builder.RegisterToggle<UseNewClass>();
                 builder.EnableCodeSwitchTracking();
 
                 builder.RegisterType<Logger>()
                     .As<ILogger>();
 
+                builder.RegisterSwitchedType<UseNewClass, IClass, TestClassV2, TestClass>();
                 builder.RegisterType<TestClass>();
 
                 _container = builder.Build();

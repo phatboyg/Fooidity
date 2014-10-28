@@ -59,6 +59,7 @@
     <Compile Include="Defaults\RegisterGeneric_Specs.cs" />
     <Compile Include="ExceptionLogging_Specs.cs" />
     <Compile Include="Features\DbEnabled.cs" />
+    <Compile Include="Features\UseNewClass.cs" />
     <Compile Include="Features\UseNewCodePath.cs" />
     <Compile Include="Features\UseNewMethod.cs" />
     <Compile Include="Subjects\ConditionalClass.cs" />
