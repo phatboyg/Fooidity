@@ -23,7 +23,7 @@ namespace Fooidity.Configuration
                     {
                         ContextElement context = configuration.Contexts[i];
 
-                        var contextId = new ContextFeatureId(context.Id);
+                        var contextId = new ContextId(context.Id);
 
                         Type contextType = contextId.GetType(false);
                         if (contextType == null)

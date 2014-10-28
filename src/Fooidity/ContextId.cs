@@ -6,31 +6,31 @@
 
 
     /// <summary>
-    /// A code feature id is generated based on the type and is used to identify a code feature
-    /// outside of the compiled code base (such as in a configuration file, database, etc).
+    /// A context id is generated based on the type and is used to identify a context
+    /// in configuration sources
     /// </summary>
     [Serializable]
-    public class ContextFeatureId :
+    public class ContextId :
         TypeUrn
     {
-        public ContextFeatureId(Type type)
+        public ContextId(Type type)
             : base(GetCodeFeatureId(type))
         {
         }
 
-        public ContextFeatureId(string uriString)
+        public ContextId(string uriString)
             : base(uriString)
         {
             if (!Scheme.Equals("urn", StringComparison.OrdinalIgnoreCase))
                 throw new FormatException("A ContextFeatureId must be a URN");
         }
 
-        protected ContextFeatureId(SerializationInfo serializationInfo, StreamingContext streamingContext)
+        protected ContextId(SerializationInfo serializationInfo, StreamingContext streamingContext)
             : base(serializationInfo, streamingContext)
         {
         }
 
-        public ContextFeatureId(Uri uri)
+        public ContextId(Uri uri)
             : base(uri.ToString())
         {
             if (!Scheme.Equals("urn", StringComparison.OrdinalIgnoreCase))

@@ -62,7 +62,9 @@
     <Compile Include="Caching\IReloadCache.cs" />
     <Compile Include="Caching\IUpdateCache.cs" />
     <Compile Include="CodeFeatureId.cs" />
-    <Compile Include="ContextFeatureId.cs" />
+    <Compile Include="ContextId.cs" />
+    <Compile Include="Metadata\ContextMetadata.cs" />
+    <Compile Include="Metadata\IContextMetadata.cs" />
     <Compile Include="TypeUrn.cs" />
     <Compile Include="TypeUrnParser.cs" />
     <Compile Include="CodeSwitch.cs" />
