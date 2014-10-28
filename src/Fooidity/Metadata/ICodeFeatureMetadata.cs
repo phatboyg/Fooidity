@@ -5,7 +5,7 @@ namespace Fooidity.Metadata
 
     public interface ICodeFeatureMetadata<TFeature>
     {
-        string Id { get; }
+        CodeFeatureId Id { get; }
 
         Type FeatureType { get; }
     }

@@ -6,11 +6,11 @@
     public class ContextElement :
         ConfigurationElement
     {
-        [ConfigurationProperty("type", DefaultValue = "", IsRequired = false)]
-        public string Type
+        [ConfigurationProperty("id", DefaultValue = "", IsRequired = false)]
+        public string Id
         {
-            get { return (string)this["type"]; }
-            set { this["type"] = value; }
+            get { return (string)this["id"]; }
+            set { this["id"] = value; }
         }
 
         [ConfigurationProperty("instances", IsDefaultCollection = true, IsRequired = false),

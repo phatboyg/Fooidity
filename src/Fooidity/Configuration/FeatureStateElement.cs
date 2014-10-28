@@ -13,14 +13,6 @@
             set { this["id"] = value; }
         }
 
-        [ConfigurationProperty("type", DefaultValue = "", IsRequired = false)]
-        public string Type
-        {
-            get { return (string)this["type"]; }
-            set { this["type"] = value; }
-        }
-
-
         [ConfigurationProperty("enabled", DefaultValue = false, IsRequired = false)]
         public bool Enabled
         {

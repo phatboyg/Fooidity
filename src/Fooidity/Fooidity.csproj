@@ -61,6 +61,10 @@
     <Compile Include="Caching\Internals\IReadOnlyCache.cs" />
     <Compile Include="Caching\IReloadCache.cs" />
     <Compile Include="Caching\IUpdateCache.cs" />
+    <Compile Include="CodeFeatureId.cs" />
+    <Compile Include="ContextFeatureId.cs" />
+    <Compile Include="TypeUrn.cs" />
+    <Compile Include="TypeUrnParser.cs" />
     <Compile Include="CodeSwitch.cs" />
     <Compile Include="CodeSwitches\CodeFeatureStateCodeSwitch.cs" />
     <Compile Include="CodeSwitches\CodeSwitchEvaluatedObservable.cs" />

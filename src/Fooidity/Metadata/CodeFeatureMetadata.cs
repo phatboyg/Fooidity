@@ -11,16 +11,16 @@
     public class CodeFeatureMetadata<TFeature> :
         ICodeFeatureMetadata<TFeature>
     {
-        readonly string _id;
+        readonly CodeFeatureId _id;
 
         CodeFeatureMetadata()
         {
             Type type = typeof(TFeature);
 
-            _id = string.Format("urn:feature:{0}{1}", type.Name, type.Namespace != null ? ":" + type.Namespace : "");
+            _id = new CodeFeatureId(typeof(TFeature));
         }
 
-        public static string Id
+        public static CodeFeatureId Id
         {
             get { return Cached.Instance.Value.Id; }
         }
@@ -30,7 +30,7 @@
             get { return typeof(TFeature); }
         }
 
-        string ICodeFeatureMetadata<TFeature>.Id
+        CodeFeatureId ICodeFeatureMetadata<TFeature>.Id
         {
             get { return _id; }
         }

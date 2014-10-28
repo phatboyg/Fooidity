@@ -23,12 +23,11 @@ namespace Fooidity.Configuration
                     {
                         ContextElement context = configuration.Contexts[i];
 
-                        if (string.IsNullOrWhiteSpace(context.Type))
-                            continue;
+                        var contextId = new ContextFeatureId(context.Id);
 
-                        Type contextType = Type.GetType(context.Type);
+                        Type contextType = contextId.GetType(false);
                         if (contextType == null)
-                            throw new ConfigurationErrorsException("The context type is not valid: " + context.Type);
+                            throw new ConfigurationErrorsException("The context type is not valid: " + context.Id);
 
                         if (contextType != typeof(TContext))
                             continue;
@@ -39,7 +38,7 @@ namespace Fooidity.Configuration
                             {
                                 ContextInstanceElement instance = context.Instances[instanceIndex];
 
-                                var featureCache = new InMemoryCache<string, CodeFeatureState>();
+                                var featureCache = new InMemoryCache<CodeFeatureId, CodeFeatureState>();
 
                                 if (instance.Features != null)
                                 {
@@ -47,18 +46,13 @@ namespace Fooidity.Configuration
                                     {
                                         FeatureStateElement feature = instance.Features[j];
 
-                                        Type codeFeatureType = null;
-                                        if (!string.IsNullOrWhiteSpace(feature.Type))
-                                        {
-                                            codeFeatureType = Type.GetType(feature.Type);
-                                            if (codeFeatureType == null)
-                                            {
-                                                throw new ConfigurationErrorsException("The feature type is not valid: "
-                                                                                       + feature.Type);
-                                            }
-                                        }
+                                        var featureId = new CodeFeatureId(feature.Id);
 
-                                        var codeState = new CodeFeatureStateImpl(feature.Id, codeFeatureType,
+                                        Type codeFeatureType = featureId.GetType(false);
+                                        if (codeFeatureType == null)
+                                            throw new ConfigurationErrorsException("The feature type is not valid: " + feature.Id);
+
+                                        var codeState = new CodeFeatureStateImpl(featureId, codeFeatureType,
                                             feature.Enabled);
 
                                         featureCache.TryAdd(codeState.Id, codeState);
@@ -83,9 +77,9 @@ namespace Fooidity.Configuration
         {
             readonly bool _enabled;
             readonly Type _featureType;
-            readonly string _id;
+            readonly CodeFeatureId _id;
 
-            public CodeFeatureStateImpl(string id, Type featureType, bool enabled)
+            public CodeFeatureStateImpl(CodeFeatureId id, Type featureType, bool enabled)
             {
                 _enabled = enabled;
                 _featureType = featureType;
@@ -97,7 +91,7 @@ namespace Fooidity.Configuration
                 get { return _featureType; }
             }
 
-            public string Id
+            public CodeFeatureId Id
             {
                 get { return _id; }
             }
@@ -112,9 +106,9 @@ namespace Fooidity.Configuration
         class ContextFeatureStateImpl :
             ContextFeatureState
         {
-            readonly IReadOnlyCache<string, CodeFeatureState> _cache;
+            readonly IReadOnlyCache<CodeFeatureId, CodeFeatureState> _cache;
 
-            public ContextFeatureStateImpl(IReadOnlyCache<string, CodeFeatureState> cache)
+            public ContextFeatureStateImpl(IReadOnlyCache<CodeFeatureId, CodeFeatureState> cache)
             {
                 _cache = cache;
             }

@@ -43,7 +43,7 @@
         {
             var contextElement = element as ContextElement;
 
-            return contextElement.Type;
+            return contextElement.Id;
         }
     }
 }

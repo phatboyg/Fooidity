@@ -17,7 +17,7 @@
         /// <summary>
         /// The feature identifier connected to the code switch
         /// </summary>
-        string Id { get; }
+        Uri Id { get; }
 
         /// <summary>
         /// Whether the feature was enabled or disabled after evaluation

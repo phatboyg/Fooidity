@@ -21,7 +21,7 @@
             CodeSwitchEvaluated
         {
             readonly bool _enabled;
-            readonly string _id;
+            readonly CodeFeatureId _id;
             readonly DateTime _timestamp;
 
             public CodeSwitchEvaluatedEvent(bool enabled)
@@ -36,7 +36,7 @@
                 get { return _timestamp; }
             }
 
-            public string Id
+            public Uri Id
             {
                 get { return _id; }
             }

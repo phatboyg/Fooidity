@@ -4,13 +4,13 @@ namespace Fooidity.Configuration
 
 
     [ConfigurationCollection(typeof(ContextInstanceElement),
-        CollectionType = ConfigurationElementCollectionType.AddRemoveClearMap)]
+        CollectionType = ConfigurationElementCollectionType.BasicMap)]
     public class ContextInstanceElementCollection
         : ConfigurationElementCollection
     {
         public override ConfigurationElementCollectionType CollectionType
         {
-            get { return ConfigurationElementCollectionType.AddRemoveClearMap; }
+            get { return ConfigurationElementCollectionType.BasicMap; }
         }
 
         public ContextInstanceElement this[int index]
@@ -22,6 +22,10 @@ namespace Fooidity.Configuration
                     BaseRemoveAt(index);
                 base.BaseAdd(index, value);
             }
+        }
+        protected override string ElementName
+        {
+            get { return "instance"; }
         }
 
         public new ContextInstanceElement this[string name]

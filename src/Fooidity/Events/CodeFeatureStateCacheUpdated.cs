@@ -21,7 +21,7 @@
         /// <summary>
         /// The FeatureId that was updated
         /// </summary>
-        string Id { get; }
+        Uri Id { get; }
 
         /// <summary>
         /// The updated state of the feature

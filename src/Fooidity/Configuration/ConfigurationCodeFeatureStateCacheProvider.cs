@@ -11,7 +11,7 @@
     {
         public ICodeFeatureStateCacheInstance Load()
         {
-            var cache = new InMemoryCache<string, CodeFeatureState>();
+            var cache = new InMemoryCache<CodeFeatureId, CodeFeatureState>();
             ICacheIndex<Type, CodeFeatureState> index = cache.GetIndex(x => x.FeatureType);
             bool defaultState = false;
 
@@ -26,15 +26,13 @@
                     {
                         FeatureStateElement feature = configuration.Features[i];
 
-                        Type codeFeatureType = null;
-                        if (!string.IsNullOrWhiteSpace(feature.Type))
-                        {
-                            codeFeatureType = Type.GetType(feature.Type);
-                            if (codeFeatureType == null)
-                                throw new ConfigurationErrorsException("The feature type is not valid: " + feature.Type);
-                        }
+                        var featureId = new CodeFeatureId(feature.Id);
 
-                        var state = new FeatureState(feature.Id, codeFeatureType, feature.Enabled);
+                        Type codeFeatureType = featureId.GetType(false);
+                        if (codeFeatureType == null)
+                            throw new ConfigurationErrorsException("The feature type is not valid: " + feature.Id);
+
+                        var state = new FeatureState(featureId, codeFeatureType, feature.Enabled);
 
                         cache.TryAdd(state.Id, state);
                     }
@@ -50,16 +48,16 @@
         {
             readonly bool _enabled;
             readonly Type _featureType;
-            readonly string _id;
+            readonly CodeFeatureId _id;
 
-            public FeatureState(string id, Type featureType, bool enabled)
+            public FeatureState(CodeFeatureId id, Type featureType, bool enabled)
             {
                 _enabled = enabled;
                 _featureType = featureType;
                 _id = id;
             }
 
-            public string Id
+            public CodeFeatureId Id
             {
                 get { return _id; }
             }

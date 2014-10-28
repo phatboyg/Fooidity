@@ -14,7 +14,7 @@
             _enabled = enabled;
         }
 
-        public string Id
+        public CodeFeatureId Id
         {
             get { return CodeFeatureMetadata<TFeature>.Id; }
         }

@@ -73,12 +73,13 @@
         public void UpdateCache(CodeFeatureStateUpdated value)
         {
             CodeFeatureState existingFeatureState;
-            if (_cache.TryGetState(value.Id, out existingFeatureState))
+            var featureId = new CodeFeatureId(value.Id);
+            if (_cache.TryGetState(featureId, out existingFeatureState))
             {
-                var updatedFeatureState = new UpdatedCodeFeatureState(value.Id, existingFeatureState.FeatureType, value.Enabled);
+                var updatedFeatureState = new UpdatedCodeFeatureState(featureId, existingFeatureState.FeatureType, value.Enabled);
 
                 DateTime startTime = DateTime.UtcNow;
-                bool updated = _cache.TryUpdate(value.Id, updatedFeatureState, existingFeatureState);
+                bool updated = _cache.TryUpdate(featureId, updatedFeatureState, existingFeatureState);
                 DateTime endTime = DateTime.UtcNow;
 
                 if (updated)
@@ -127,10 +128,10 @@
         {
             readonly TimeSpan _duration;
             readonly bool _enabled;
-            readonly string _id;
+            readonly Uri _id;
             readonly DateTime _timestamp;
 
-            public Updated(DateTime timestamp, TimeSpan duration, string id, bool enabled)
+            public Updated(DateTime timestamp, TimeSpan duration, CodeFeatureId id, bool enabled)
             {
                 _timestamp = timestamp;
                 _duration = duration;
@@ -148,7 +149,7 @@
                 get { return _duration; }
             }
 
-            public string Id
+            public Uri Id
             {
                 get { return _id; }
             }
@@ -165,16 +166,16 @@
         {
             readonly bool _enabled;
             readonly Type _featureType;
-            readonly string _id;
+            readonly CodeFeatureId _id;
 
-            public UpdatedCodeFeatureState(string id, Type featureType, bool enabled)
+            public UpdatedCodeFeatureState(CodeFeatureId id, Type featureType, bool enabled)
             {
                 _id = id;
                 _featureType = featureType;
                 _enabled = enabled;
             }
 
-            public string Id
+            public CodeFeatureId Id
             {
                 get { return _id; }
             }

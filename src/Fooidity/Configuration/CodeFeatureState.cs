@@ -11,7 +11,7 @@
         /// <summary>
         /// The switch Id, which is a URN formatted string based on the feature type
         /// </summary>
-        string Id { get; }
+        CodeFeatureId Id { get; }
 
         /// <summary>
         /// The feature type
