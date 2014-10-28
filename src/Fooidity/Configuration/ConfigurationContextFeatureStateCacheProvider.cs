@@ -52,8 +52,7 @@ namespace Fooidity.Configuration
                                         if (codeFeatureType == null)
                                             throw new ConfigurationErrorsException("The feature type is not valid: " + feature.Id);
 
-                                        var codeState = new CodeFeatureStateImpl(featureId, codeFeatureType,
-                                            feature.Enabled);
+                                        var codeState = new CodeFeatureStateImpl(featureId, feature.Enabled);
 
                                         featureCache.TryAdd(codeState.Id, codeState);
                                     }
@@ -76,19 +75,12 @@ namespace Fooidity.Configuration
             CodeFeatureState
         {
             readonly bool _enabled;
-            readonly Type _featureType;
             readonly CodeFeatureId _id;
 
-            public CodeFeatureStateImpl(CodeFeatureId id, Type featureType, bool enabled)
+            public CodeFeatureStateImpl(CodeFeatureId id, bool enabled)
             {
                 _enabled = enabled;
-                _featureType = featureType;
                 _id = id;
-            }
-
-            public Type FeatureType
-            {
-                get { return _featureType; }
             }
 
             public CodeFeatureId Id

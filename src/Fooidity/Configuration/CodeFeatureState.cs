@@ -14,11 +14,6 @@
         CodeFeatureId Id { get; }
 
         /// <summary>
-        /// The feature type
-        /// </summary>
-        Type FeatureType { get; }
-
-        /// <summary>
         /// The state of the switch
         /// </summary>
         bool Enabled { get; }

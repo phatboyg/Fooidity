@@ -1,6 +1,5 @@
 ﻿namespace Fooidity.Caching
 {
-    using System;
     using Configuration;
     using Internals;
 
@@ -10,13 +9,10 @@
     {
         readonly ICache<CodeFeatureId, CodeFeatureState> _cache;
         readonly bool _defaultState;
-        readonly ICacheIndex<Type, CodeFeatureState> _typeIndex;
 
-        public CodeFeatureStateCacheInstance(ICache<CodeFeatureId, CodeFeatureState> cache,
-            ICacheIndex<Type, CodeFeatureState> typeIndex, bool defaultState)
+        public CodeFeatureStateCacheInstance(ICache<CodeFeatureId, CodeFeatureState> cache, bool defaultState)
         {
             _cache = cache;
-            _typeIndex = typeIndex;
             _defaultState = defaultState;
         }
 

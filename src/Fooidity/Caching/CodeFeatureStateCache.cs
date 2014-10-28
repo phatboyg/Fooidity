@@ -76,7 +76,7 @@
             var featureId = new CodeFeatureId(value.Id);
             if (_cache.TryGetState(featureId, out existingFeatureState))
             {
-                var updatedFeatureState = new UpdatedCodeFeatureState(featureId, existingFeatureState.FeatureType, value.Enabled);
+                var updatedFeatureState = new UpdatedCodeFeatureState(featureId, value.Enabled);
 
                 DateTime startTime = DateTime.UtcNow;
                 bool updated = _cache.TryUpdate(featureId, updatedFeatureState, existingFeatureState);
@@ -165,24 +165,17 @@
             CodeFeatureState
         {
             readonly bool _enabled;
-            readonly Type _featureType;
             readonly CodeFeatureId _id;
 
-            public UpdatedCodeFeatureState(CodeFeatureId id, Type featureType, bool enabled)
+            public UpdatedCodeFeatureState(CodeFeatureId id, bool enabled)
             {
                 _id = id;
-                _featureType = featureType;
                 _enabled = enabled;
             }
 
             public CodeFeatureId Id
             {
                 get { return _id; }
-            }
-
-            public Type FeatureType
-            {
-                get { return _featureType; }
             }
 
             public bool Enabled

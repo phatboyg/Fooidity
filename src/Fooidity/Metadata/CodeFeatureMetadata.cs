@@ -15,19 +15,12 @@
 
         CodeFeatureMetadata()
         {
-            Type type = typeof(TFeature);
-
             _id = new CodeFeatureId(typeof(TFeature));
         }
 
         public static CodeFeatureId Id
         {
             get { return Cached.Instance.Value.Id; }
-        }
-
-        public Type FeatureType
-        {
-            get { return typeof(TFeature); }
         }
 
         CodeFeatureId ICodeFeatureMetadata<TFeature>.Id

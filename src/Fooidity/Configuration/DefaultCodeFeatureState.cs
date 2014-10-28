@@ -1,6 +1,5 @@
 ﻿namespace Fooidity.Configuration
 {
-    using System;
     using Metadata;
 
 
@@ -17,11 +16,6 @@
         public CodeFeatureId Id
         {
             get { return CodeFeatureMetadata<TFeature>.Id; }
-        }
-
-        public Type FeatureType
-        {
-            get { return typeof(TFeature); }
         }
 
         public bool Enabled
