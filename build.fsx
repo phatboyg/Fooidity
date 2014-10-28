@@ -1,33 +1,51 @@
 #r @"src/packages/FAKE/tools/FakeLib.dll"
 open Fake
 open Fake.AssemblyInfoFile
+open Fake.FileSystem
 
-let buildMode = "Release" //"Debug"
-let testDlls = !! (sprintf "./**/bin/%s/*.Tests.dll" buildMode)
-let solution = !! ("./src/*.sln")
+let buildMode = "Release";
+let VERSION = "0.1.0.0"
+
+type BuildInfo = {
+  product: string;
+  description: string;
+  mode: string;
+  testDlls: FileIncludes;
+  integrationDlls: FileIncludes;
+  solutions: FileIncludes;
+  output: string;
+  artifacts: string;
+
+}
+let props = {
+  product="Fooidity";
+  description="An implementation switching library"
+  mode=buildMode;
+  output="build_output";
+  artifacts="build_artifacts";
+  testDlls= !! (sprintf "./**/bin/%s/*.Tests.dll" buildMode);
+  integrationDlls= !! (sprintf "./**/bin/%s/*.IntegrationTests.dll" buildMode);
+  solutions= !! ("./src/*.sln");
+}
+
 let nunit = findToolFolderInSubPath "nunit-console.exe" "src/packages/nunit.runners"
 
-let PRODUCT = "Fooidity"
-
-//props
-let output = "build_output"
-let artifacts = "build_artifacts"
 
 Target "Build" (fun _ ->
   CreateCSharpAssemblyInfo "./src/SolutionVersion.cs"
-        [Attribute.Title PRODUCT
-         Attribute.Description "An implementation switching library"
+        [Attribute.Title props.product
+         Attribute.Description props.description
          Attribute.Guid "A539B42C-CB9F-4a23-8E57-AF4E7CEE5BAD"
-         Attribute.Product PRODUCT
-         Attribute.Version "0.1.0.0"
-         Attribute.FileVersion "0.1.0.0"]
+         Attribute.Product props.product
+         Attribute.Version VERSION
+         Attribute.FileVersion VERSION]
 
-  MSBuild null "Build" ["Configuration", buildMode] solution
+  MSBuild null "Build" ["Configuration", props.mode] props.solutions
     |> Log "AppBuild-Output"
 )
 
 Target "Test-Unit" (fun _ ->
-  testDlls
+  props.testDlls
     |> NUnit (fun p ->
       {p with
         DisableShadowCopy = true;
@@ -41,8 +59,23 @@ Target "Go" (fun _ ->
 )
 
 Target "Clean" (fun _ ->
-  [output; artifacts]
+  [props.output; props.artifacts]
     |> List.iter FileHelper.CleanDir
+)
+
+Target "NuGet" (fun _ ->
+  NuGet (fun p ->
+        {p with
+            Authors = ["Chris Patterson"]
+            Project = props.product
+            Description = props.description
+            OutputPath = props.output
+            Summary = props.description
+            WorkingDir = ""
+            Version = VERSION
+            AccessKey = ""
+            Publish = false })
+            "Fooidity.nuspec"
 )
 
 "Build"
