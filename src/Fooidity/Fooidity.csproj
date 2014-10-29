@@ -98,18 +98,18 @@
     <Compile Include="ContextCodeSwitch.cs" />
     <Compile Include="ContextKeyProvider.cs" />
     <Compile Include="DateTimeSwitchExtensions.cs" />
-    <Compile Include="Dependents\DependentFooId.cs">
-      <DependentUpon>DependentFooId.tt</DependentUpon>
+    <Compile Include="Dependents\DependentCodeSwitch.cs">
+      <DependentUpon>DependentCodeSwitch.tt</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Dependents\DependentFooIdFactory.cs">
-      <DependentUpon>DependentFooIdFactory.tt</DependentUpon>
+    <Compile Include="Dependents\IDependentCodeSwitchFactory.cs">
+      <DependentUpon>IDependentCodeSwitchFactory.tt</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Dependents\DependentFooIdFactoryImpl.cs">
-      <DependentUpon>DependentFooIdFactoryImpl.tt</DependentUpon>
+    <Compile Include="Dependents\DependentCodeSwitchFactory.cs">
+      <DependentUpon>DependentCodeSwitchFactory.tt</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
@@ -140,17 +140,17 @@
     <Compile Include="IToggleCodeSwitch.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Dependents\DependentFooId.tt">
+    <None Include="Dependents\DependentCodeSwitch.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>DependentFooId.cs</LastGenOutput>
+      <LastGenOutput>DependentCodeSwitch.cs</LastGenOutput>
     </None>
-    <None Include="Dependents\DependentFooIdFactory.tt">
+    <None Include="Dependents\IDependentCodeSwitchFactory.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>DependentFooIdFactory.cs</LastGenOutput>
+      <LastGenOutput>IDependentCodeSwitchFactory.cs</LastGenOutput>
     </None>
-    <None Include="Dependents\DependentFooIdFactoryImpl.tt">
+    <None Include="Dependents\DependentCodeSwitchFactory.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>DependentFooIdFactoryImpl.cs</LastGenOutput>
+      <LastGenOutput>DependentCodeSwitchFactory.cs</LastGenOutput>
     </None>
     <None Include="CodeSwitchOfT.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
