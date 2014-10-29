@@ -63,9 +63,13 @@
     <Compile Include="Caching\IUpdateCache.cs" />
     <Compile Include="CodeFeatureId.cs" />
     <Compile Include="ContextId.cs" />
+    <Compile Include="ContextProvider.cs" />
+    <Compile Include="DefaultContextProvider.cs" />
+    <Compile Include="ICodeSwitchContainerScope.cs" />
     <Compile Include="ICodeSwitchEvaluationObserver.cs" />
     <Compile Include="Metadata\ContextMetadata.cs" />
     <Compile Include="Metadata\IContextMetadata.cs" />
+    <Compile Include="ObjectContextProvider.cs" />
     <Compile Include="TypeUrn.cs" />
     <Compile Include="TypeUrnParser.cs" />
     <Compile Include="CodeSwitch.cs" />
@@ -138,6 +142,7 @@
     <Compile Include="Metadata\ICodeFeatureMetadata.cs" />
     <Compile Include="SecurityCodeSwitchFactoryExtensions.cs" />
     <Compile Include="IToggleCodeSwitch.cs" />
+    <Compile Include="ValueTypeContextProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Dependents\DependentCodeSwitch.tt">
