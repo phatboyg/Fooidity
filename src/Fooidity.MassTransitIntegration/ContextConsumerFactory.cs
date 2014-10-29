@@ -29,27 +29,32 @@
         IEnumerable<Action<IConsumeContext<TMessage>>> IConsumerFactory<TConsumer>.GetConsumer<TMessage>(IConsumeContext<TMessage> context,
             InstanceHandlerSelector<TConsumer, TMessage> selector)
         {
-            TContext switchContext = default(TContext);
-
-            ContextProvider<TMessage, TContext> provider;
-            if (_scope.TryResolve(out provider))
-            {
-                if (!provider.TryGetContext(context.Message, out switchContext))
-                    throw new ContextSwitchException("Failed to retrieve context from message: " + typeof(TMessage).ToShortTypeName());
-            }
-
-            using (ICodeSwitchContainerScope innerScope = _scope.CreateContainerScope(switchContext))
+            using (ICodeSwitchContainerScope innerScope = CreateContainerScope(context))
             {
                 TConsumer consumer;
                 if (!innerScope.TryResolve(out consumer))
                 {
-                    throw new ConfigurationException(string.Format("Unable to resolve type '{0}' from container: ",
-                        typeof(TConsumer)));
+                    throw new ConfigurationException(string.Format("The consumer type {0} could not be resolved from the container.",
+                        typeof(TConsumer).ToShortTypeName()));
                 }
 
                 foreach (var handler in selector(consumer, context))
                     yield return handler;
             }
+        }
+
+        ICodeSwitchContainerScope CreateContainerScope<TMessage>(IConsumeContext<TMessage> context)
+            where TMessage : class
+        {
+            ContextProvider<TMessage, TContext> provider;
+            if (_scope.TryResolve(out provider))
+            {
+                TContext switchContext;
+                if (provider.TryGetContext(context.Message, out switchContext))
+                    return _scope.CreateContainerScope(switchContext);
+            }
+
+            return _scope.CreateContainerScope();
         }
     }
 }

@@ -11,10 +11,16 @@
         IDisposable
     {
         /// <summary>
+        /// Create a nested container scope without a resolved context
+        /// </summary>
+        /// <returns></returns>
+        ICodeSwitchContainerScope CreateContainerScope();
+
+        /// <summary>
         /// Create a nested container scope
         /// </summary>
-        /// <typeparam name="TContext"></typeparam>
-        /// <param name="context"></param>
+        /// <typeparam name="TContext">The context type</typeparam>
+        /// <param name="context">The context to add to the container</param>
         /// <returns></returns>
         ICodeSwitchContainerScope CreateContainerScope<TContext>(TContext context);
 
