@@ -1,11 +1,16 @@
 ﻿namespace Fooidity
 {
+    using System;
+    using Events;
+
+
     /// <summary>
     /// A code switch determines and returns the state of the switch based on any environmental
     /// conditions that are present at the time of the switch being evaluated.
     /// </summary>
     /// <typeparam name="TFeature">The code feature that identifies the switch state</typeparam>
-    public interface CodeSwitch<TFeature>
+    public interface CodeSwitch<TFeature> :
+        IObservable<CodeSwitchEvaluated>
         where TFeature : struct, CodeFeature
     {
         /// <summary>

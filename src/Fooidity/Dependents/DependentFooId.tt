@@ -4,6 +4,9 @@
 <#@ import namespace="System.Linq" #>
 namespace Fooidity.Dependents
 {
+    using System;
+    using CodeSwitches;
+    using Events;
 <# for(int i=1; i<=16; i++){
     var tActionArgs = String.Join(", ",Enumerable.Range(1,i).Select(it=>String.Format("T{0}",it)));
 #>
@@ -13,16 +16,40 @@ namespace Fooidity.Dependents
         where T : struct, CodeFeature
         <#= String.Join(Environment.NewLine + "        ", Enumerable.Range(1, i).Select(x => String.Format("where T{0} : struct, CodeFeature", x))) #>
     {
+        readonly Lazy<bool> _enabled;
+        readonly CodeSwitchEvaluatedObservable<T> _evaluated;
         <#= String.Join(Environment.NewLine + "        ", Enumerable.Range(1, i).Select(x => String.Format("readonly CodeSwitch<T{0}> _codeSwitch{0};", x))) #>
 
         public DependentCodeSwitch(<#= String.Join(", ", Enumerable.Range(1, i).Select(x => String.Format("CodeSwitch<T{0}> codeSwitch{0}", x))) #>)
         {
+            _evaluated = new CodeSwitchEvaluatedObservable<T>();
+            _enabled = new Lazy<bool>(Evaluate);
+
             <#= String.Join(Environment.NewLine + "            ", Enumerable.Range(1, i).Select(x => String.Format("_codeSwitch{0} = codeSwitch{0};", x))) #>
         }
 
         public bool Enabled
         {
-            get { return <#= String.Join(" && ", Enumerable.Range(1, i).Select(x => String.Format("_codeSwitch{0}.Enabled", x))) #>; }
+            get { return _enabled.Value; }
+        }
+
+        public IDisposable Subscribe(IObserver<CodeSwitchEvaluated> observer)
+        {
+            return _evaluated.Connect(observer);
+        }
+
+        bool Evaluate()
+        {
+            bool enabled = GetEnabled();
+
+            _evaluated.Evaluated(enabled);
+
+            return enabled;
+        }
+
+        bool GetEnabled()
+        {
+            return <#= String.Join(" && ", Enumerable.Range(1, i).Select(x => String.Format("_codeSwitch{0}.Enabled", x))) #>;
         }
         <# for(int j = 1; j <= i; j++) { 
         #>

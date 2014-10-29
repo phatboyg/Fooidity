@@ -10,8 +10,7 @@
     /// </summary>
     /// <typeparam name="TFeature"></typeparam>
     public class CodeFeatureStateCodeSwitch<TFeature> :
-        CodeSwitch<TFeature>,
-        IObservable<CodeSwitchEvaluated>
+        CodeSwitch<TFeature>
         where TFeature : struct, CodeFeature
     {
         readonly ICodeFeatureStateCache _cache;

@@ -11,8 +11,7 @@
     /// <typeparam name="TFeature">The feature</typeparam>
     /// <typeparam name="TContext">The context type for this code switch</typeparam>
     public class ContextFeatureStateCodeSwitch<TFeature, TContext> :
-        ContextCodeSwitch<TFeature, TContext>,
-        IObservable<CodeSwitchEvaluated>
+        ContextCodeSwitch<TFeature, TContext>
         where TFeature : struct, CodeFeature
     {
         readonly ICodeFeatureStateCache _cache;

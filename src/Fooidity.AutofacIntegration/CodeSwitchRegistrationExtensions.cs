@@ -127,15 +127,21 @@ namespace Fooidity
         /// <typeparam name="TFeature">The code feature</typeparam>
         /// <typeparam name="TContext">The switch context</typeparam>
         /// <param name="builder"></param>
-        public static void RegisterContextSwitch<TFeature, TContext>(this ContainerBuilder builder)
+        /// <param name="throwIfContextNotFound">If the context is not available, throw an exception</param>
+        public static void RegisterContextSwitch<TFeature, TContext>(this ContainerBuilder builder, bool throwIfContextNotFound = true)
             where TFeature : struct, CodeFeature
         {
-            builder.Register(context =>
+            builder.Register<CodeSwitch<TFeature>>(context =>
             {
                 // this gives a cleaner error message than a container exception
                 TContext switchContext;
                 if (!context.TryResolve(out switchContext))
-                    throw new ContextSwitchException("The context type was not found: " + typeof(TContext).Name);
+                {
+                    if(throwIfContextNotFound)  
+                        throw new ContextSwitchException("The context type was not found: " + typeof(TContext).Name);
+
+                    return new CodeFeatureStateCodeSwitch<TFeature>(context.Resolve<ICodeFeatureStateCache>());
+                }
 
                 var cache = context.Resolve<ICodeFeatureStateCache>();
                 var contextCache = context.Resolve<IContextFeatureStateCache<TContext>>();

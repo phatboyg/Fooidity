@@ -1,21 +1,48 @@
 ﻿namespace Fooidity.Dependents
 {
+    using System;
+    using CodeSwitches;
+    using Events;
 
     public class DependentCodeSwitch<T, T1> :
         CodeSwitch<T, T1>
         where T : struct, CodeFeature
         where T1 : struct, CodeFeature
     {
+        readonly Lazy<bool> _enabled;
+        readonly CodeSwitchEvaluatedObservable<T> _evaluated;
         readonly CodeSwitch<T1> _codeSwitch1;
 
         public DependentCodeSwitch(CodeSwitch<T1> codeSwitch1)
         {
+            _evaluated = new CodeSwitchEvaluatedObservable<T>();
+            _enabled = new Lazy<bool>(Evaluate);
+
             _codeSwitch1 = codeSwitch1;
         }
 
         public bool Enabled
         {
-            get { return _codeSwitch1.Enabled; }
+            get { return _enabled.Value; }
+        }
+
+        public IDisposable Subscribe(IObserver<CodeSwitchEvaluated> observer)
+        {
+            return _evaluated.Connect(observer);
+        }
+
+        bool Evaluate()
+        {
+            bool enabled = GetEnabled();
+
+            _evaluated.Evaluated(enabled);
+
+            return enabled;
+        }
+
+        bool GetEnabled()
+        {
+            return _codeSwitch1.Enabled;
         }
         
         public CodeSwitch<T1> Switch1
@@ -30,18 +57,42 @@
         where T1 : struct, CodeFeature
         where T2 : struct, CodeFeature
     {
+        readonly Lazy<bool> _enabled;
+        readonly CodeSwitchEvaluatedObservable<T> _evaluated;
         readonly CodeSwitch<T1> _codeSwitch1;
         readonly CodeSwitch<T2> _codeSwitch2;
 
         public DependentCodeSwitch(CodeSwitch<T1> codeSwitch1, CodeSwitch<T2> codeSwitch2)
         {
+            _evaluated = new CodeSwitchEvaluatedObservable<T>();
+            _enabled = new Lazy<bool>(Evaluate);
+
             _codeSwitch1 = codeSwitch1;
             _codeSwitch2 = codeSwitch2;
         }
 
         public bool Enabled
         {
-            get { return _codeSwitch1.Enabled && _codeSwitch2.Enabled; }
+            get { return _enabled.Value; }
+        }
+
+        public IDisposable Subscribe(IObserver<CodeSwitchEvaluated> observer)
+        {
+            return _evaluated.Connect(observer);
+        }
+
+        bool Evaluate()
+        {
+            bool enabled = GetEnabled();
+
+            _evaluated.Evaluated(enabled);
+
+            return enabled;
+        }
+
+        bool GetEnabled()
+        {
+            return _codeSwitch1.Enabled && _codeSwitch2.Enabled;
         }
         
         public CodeSwitch<T1> Switch1
@@ -62,12 +113,17 @@
         where T2 : struct, CodeFeature
         where T3 : struct, CodeFeature
     {
+        readonly Lazy<bool> _enabled;
+        readonly CodeSwitchEvaluatedObservable<T> _evaluated;
         readonly CodeSwitch<T1> _codeSwitch1;
         readonly CodeSwitch<T2> _codeSwitch2;
         readonly CodeSwitch<T3> _codeSwitch3;
 
         public DependentCodeSwitch(CodeSwitch<T1> codeSwitch1, CodeSwitch<T2> codeSwitch2, CodeSwitch<T3> codeSwitch3)
         {
+            _evaluated = new CodeSwitchEvaluatedObservable<T>();
+            _enabled = new Lazy<bool>(Evaluate);
+
             _codeSwitch1 = codeSwitch1;
             _codeSwitch2 = codeSwitch2;
             _codeSwitch3 = codeSwitch3;
@@ -75,7 +131,26 @@
 
         public bool Enabled
         {
-            get { return _codeSwitch1.Enabled && _codeSwitch2.Enabled && _codeSwitch3.Enabled; }
+            get { return _enabled.Value; }
+        }
+
+        public IDisposable Subscribe(IObserver<CodeSwitchEvaluated> observer)
+        {
+            return _evaluated.Connect(observer);
+        }
+
+        bool Evaluate()
+        {
+            bool enabled = GetEnabled();
+
+            _evaluated.Evaluated(enabled);
+
+            return enabled;
+        }
+
+        bool GetEnabled()
+        {
+            return _codeSwitch1.Enabled && _codeSwitch2.Enabled && _codeSwitch3.Enabled;
         }
         
         public CodeSwitch<T1> Switch1
@@ -102,6 +177,8 @@
         where T3 : struct, CodeFeature
         where T4 : struct, CodeFeature
     {
+        readonly Lazy<bool> _enabled;
+        readonly CodeSwitchEvaluatedObservable<T> _evaluated;
         readonly CodeSwitch<T1> _codeSwitch1;
         readonly CodeSwitch<T2> _codeSwitch2;
         readonly CodeSwitch<T3> _codeSwitch3;
@@ -109,6 +186,9 @@
 
         public DependentCodeSwitch(CodeSwitch<T1> codeSwitch1, CodeSwitch<T2> codeSwitch2, CodeSwitch<T3> codeSwitch3, CodeSwitch<T4> codeSwitch4)
         {
+            _evaluated = new CodeSwitchEvaluatedObservable<T>();
+            _enabled = new Lazy<bool>(Evaluate);
+
             _codeSwitch1 = codeSwitch1;
             _codeSwitch2 = codeSwitch2;
             _codeSwitch3 = codeSwitch3;
@@ -117,7 +197,26 @@
 
         public bool Enabled
         {
-            get { return _codeSwitch1.Enabled && _codeSwitch2.Enabled && _codeSwitch3.Enabled && _codeSwitch4.Enabled; }
+            get { return _enabled.Value; }
+        }
+
+        public IDisposable Subscribe(IObserver<CodeSwitchEvaluated> observer)
+        {
+            return _evaluated.Connect(observer);
+        }
+
+        bool Evaluate()
+        {
+            bool enabled = GetEnabled();
+
+            _evaluated.Evaluated(enabled);
+
+            return enabled;
+        }
+
+        bool GetEnabled()
+        {
+            return _codeSwitch1.Enabled && _codeSwitch2.Enabled && _codeSwitch3.Enabled && _codeSwitch4.Enabled;
         }
         
         public CodeSwitch<T1> Switch1
@@ -150,6 +249,8 @@
         where T4 : struct, CodeFeature
         where T5 : struct, CodeFeature
     {
+        readonly Lazy<bool> _enabled;
+        readonly CodeSwitchEvaluatedObservable<T> _evaluated;
         readonly CodeSwitch<T1> _codeSwitch1;
         readonly CodeSwitch<T2> _codeSwitch2;
         readonly CodeSwitch<T3> _codeSwitch3;
@@ -158,6 +259,9 @@
 
         public DependentCodeSwitch(CodeSwitch<T1> codeSwitch1, CodeSwitch<T2> codeSwitch2, CodeSwitch<T3> codeSwitch3, CodeSwitch<T4> codeSwitch4, CodeSwitch<T5> codeSwitch5)
         {
+            _evaluated = new CodeSwitchEvaluatedObservable<T>();
+            _enabled = new Lazy<bool>(Evaluate);
+
             _codeSwitch1 = codeSwitch1;
             _codeSwitch2 = codeSwitch2;
             _codeSwitch3 = codeSwitch3;
@@ -167,7 +271,26 @@
 
         public bool Enabled
         {
-            get { return _codeSwitch1.Enabled && _codeSwitch2.Enabled && _codeSwitch3.Enabled && _codeSwitch4.Enabled && _codeSwitch5.Enabled; }
+            get { return _enabled.Value; }
+        }
+
+        public IDisposable Subscribe(IObserver<CodeSwitchEvaluated> observer)
+        {
+            return _evaluated.Connect(observer);
+        }
+
+        bool Evaluate()
+        {
+            bool enabled = GetEnabled();
+
+            _evaluated.Evaluated(enabled);
+
+            return enabled;
+        }
+
+        bool GetEnabled()
+        {
+            return _codeSwitch1.Enabled && _codeSwitch2.Enabled && _codeSwitch3.Enabled && _codeSwitch4.Enabled && _codeSwitch5.Enabled;
         }
         
         public CodeSwitch<T1> Switch1
@@ -206,6 +329,8 @@
         where T5 : struct, CodeFeature
         where T6 : struct, CodeFeature
     {
+        readonly Lazy<bool> _enabled;
+        readonly CodeSwitchEvaluatedObservable<T> _evaluated;
         readonly CodeSwitch<T1> _codeSwitch1;
         readonly CodeSwitch<T2> _codeSwitch2;
         readonly CodeSwitch<T3> _codeSwitch3;
@@ -215,6 +340,9 @@
 
         public DependentCodeSwitch(CodeSwitch<T1> codeSwitch1, CodeSwitch<T2> codeSwitch2, CodeSwitch<T3> codeSwitch3, CodeSwitch<T4> codeSwitch4, CodeSwitch<T5> codeSwitch5, CodeSwitch<T6> codeSwitch6)
         {
+            _evaluated = new CodeSwitchEvaluatedObservable<T>();
+            _enabled = new Lazy<bool>(Evaluate);
+
             _codeSwitch1 = codeSwitch1;
             _codeSwitch2 = codeSwitch2;
             _codeSwitch3 = codeSwitch3;
@@ -225,7 +353,26 @@
 
         public bool Enabled
         {
-            get { return _codeSwitch1.Enabled && _codeSwitch2.Enabled && _codeSwitch3.Enabled && _codeSwitch4.Enabled && _codeSwitch5.Enabled && _codeSwitch6.Enabled; }
+            get { return _enabled.Value; }
+        }
+
+        public IDisposable Subscribe(IObserver<CodeSwitchEvaluated> observer)
+        {
+            return _evaluated.Connect(observer);
+        }
+
+        bool Evaluate()
+        {
+            bool enabled = GetEnabled();
+
+            _evaluated.Evaluated(enabled);
+
+            return enabled;
+        }
+
+        bool GetEnabled()
+        {
+            return _codeSwitch1.Enabled && _codeSwitch2.Enabled && _codeSwitch3.Enabled && _codeSwitch4.Enabled && _codeSwitch5.Enabled && _codeSwitch6.Enabled;
         }
         
         public CodeSwitch<T1> Switch1
@@ -270,6 +417,8 @@
         where T6 : struct, CodeFeature
         where T7 : struct, CodeFeature
     {
+        readonly Lazy<bool> _enabled;
+        readonly CodeSwitchEvaluatedObservable<T> _evaluated;
         readonly CodeSwitch<T1> _codeSwitch1;
         readonly CodeSwitch<T2> _codeSwitch2;
         readonly CodeSwitch<T3> _codeSwitch3;
@@ -280,6 +429,9 @@
 
         public DependentCodeSwitch(CodeSwitch<T1> codeSwitch1, CodeSwitch<T2> codeSwitch2, CodeSwitch<T3> codeSwitch3, CodeSwitch<T4> codeSwitch4, CodeSwitch<T5> codeSwitch5, CodeSwitch<T6> codeSwitch6, CodeSwitch<T7> codeSwitch7)
         {
+            _evaluated = new CodeSwitchEvaluatedObservable<T>();
+            _enabled = new Lazy<bool>(Evaluate);
+
             _codeSwitch1 = codeSwitch1;
             _codeSwitch2 = codeSwitch2;
             _codeSwitch3 = codeSwitch3;
@@ -291,7 +443,26 @@
 
         public bool Enabled
         {
-            get { return _codeSwitch1.Enabled && _codeSwitch2.Enabled && _codeSwitch3.Enabled && _codeSwitch4.Enabled && _codeSwitch5.Enabled && _codeSwitch6.Enabled && _codeSwitch7.Enabled; }
+            get { return _enabled.Value; }
+        }
+
+        public IDisposable Subscribe(IObserver<CodeSwitchEvaluated> observer)
+        {
+            return _evaluated.Connect(observer);
+        }
+
+        bool Evaluate()
+        {
+            bool enabled = GetEnabled();
+
+            _evaluated.Evaluated(enabled);
+
+            return enabled;
+        }
+
+        bool GetEnabled()
+        {
+            return _codeSwitch1.Enabled && _codeSwitch2.Enabled && _codeSwitch3.Enabled && _codeSwitch4.Enabled && _codeSwitch5.Enabled && _codeSwitch6.Enabled && _codeSwitch7.Enabled;
         }
         
         public CodeSwitch<T1> Switch1
@@ -342,6 +513,8 @@
         where T7 : struct, CodeFeature
         where T8 : struct, CodeFeature
     {
+        readonly Lazy<bool> _enabled;
+        readonly CodeSwitchEvaluatedObservable<T> _evaluated;
         readonly CodeSwitch<T1> _codeSwitch1;
         readonly CodeSwitch<T2> _codeSwitch2;
         readonly CodeSwitch<T3> _codeSwitch3;
@@ -353,6 +526,9 @@
 
         public DependentCodeSwitch(CodeSwitch<T1> codeSwitch1, CodeSwitch<T2> codeSwitch2, CodeSwitch<T3> codeSwitch3, CodeSwitch<T4> codeSwitch4, CodeSwitch<T5> codeSwitch5, CodeSwitch<T6> codeSwitch6, CodeSwitch<T7> codeSwitch7, CodeSwitch<T8> codeSwitch8)
         {
+            _evaluated = new CodeSwitchEvaluatedObservable<T>();
+            _enabled = new Lazy<bool>(Evaluate);
+
             _codeSwitch1 = codeSwitch1;
             _codeSwitch2 = codeSwitch2;
             _codeSwitch3 = codeSwitch3;
@@ -365,7 +541,26 @@
 
         public bool Enabled
         {
-            get { return _codeSwitch1.Enabled && _codeSwitch2.Enabled && _codeSwitch3.Enabled && _codeSwitch4.Enabled && _codeSwitch5.Enabled && _codeSwitch6.Enabled && _codeSwitch7.Enabled && _codeSwitch8.Enabled; }
+            get { return _enabled.Value; }
+        }
+
+        public IDisposable Subscribe(IObserver<CodeSwitchEvaluated> observer)
+        {
+            return _evaluated.Connect(observer);
+        }
+
+        bool Evaluate()
+        {
+            bool enabled = GetEnabled();
+
+            _evaluated.Evaluated(enabled);
+
+            return enabled;
+        }
+
+        bool GetEnabled()
+        {
+            return _codeSwitch1.Enabled && _codeSwitch2.Enabled && _codeSwitch3.Enabled && _codeSwitch4.Enabled && _codeSwitch5.Enabled && _codeSwitch6.Enabled && _codeSwitch7.Enabled && _codeSwitch8.Enabled;
         }
         
         public CodeSwitch<T1> Switch1
@@ -422,6 +617,8 @@
         where T8 : struct, CodeFeature
         where T9 : struct, CodeFeature
     {
+        readonly Lazy<bool> _enabled;
+        readonly CodeSwitchEvaluatedObservable<T> _evaluated;
         readonly CodeSwitch<T1> _codeSwitch1;
         readonly CodeSwitch<T2> _codeSwitch2;
         readonly CodeSwitch<T3> _codeSwitch3;
@@ -434,6 +631,9 @@
 
         public DependentCodeSwitch(CodeSwitch<T1> codeSwitch1, CodeSwitch<T2> codeSwitch2, CodeSwitch<T3> codeSwitch3, CodeSwitch<T4> codeSwitch4, CodeSwitch<T5> codeSwitch5, CodeSwitch<T6> codeSwitch6, CodeSwitch<T7> codeSwitch7, CodeSwitch<T8> codeSwitch8, CodeSwitch<T9> codeSwitch9)
         {
+            _evaluated = new CodeSwitchEvaluatedObservable<T>();
+            _enabled = new Lazy<bool>(Evaluate);
+
             _codeSwitch1 = codeSwitch1;
             _codeSwitch2 = codeSwitch2;
             _codeSwitch3 = codeSwitch3;
@@ -447,7 +647,26 @@
 
         public bool Enabled
         {
-            get { return _codeSwitch1.Enabled && _codeSwitch2.Enabled && _codeSwitch3.Enabled && _codeSwitch4.Enabled && _codeSwitch5.Enabled && _codeSwitch6.Enabled && _codeSwitch7.Enabled && _codeSwitch8.Enabled && _codeSwitch9.Enabled; }
+            get { return _enabled.Value; }
+        }
+
+        public IDisposable Subscribe(IObserver<CodeSwitchEvaluated> observer)
+        {
+            return _evaluated.Connect(observer);
+        }
+
+        bool Evaluate()
+        {
+            bool enabled = GetEnabled();
+
+            _evaluated.Evaluated(enabled);
+
+            return enabled;
+        }
+
+        bool GetEnabled()
+        {
+            return _codeSwitch1.Enabled && _codeSwitch2.Enabled && _codeSwitch3.Enabled && _codeSwitch4.Enabled && _codeSwitch5.Enabled && _codeSwitch6.Enabled && _codeSwitch7.Enabled && _codeSwitch8.Enabled && _codeSwitch9.Enabled;
         }
         
         public CodeSwitch<T1> Switch1
@@ -510,6 +729,8 @@
         where T9 : struct, CodeFeature
         where T10 : struct, CodeFeature
     {
+        readonly Lazy<bool> _enabled;
+        readonly CodeSwitchEvaluatedObservable<T> _evaluated;
         readonly CodeSwitch<T1> _codeSwitch1;
         readonly CodeSwitch<T2> _codeSwitch2;
         readonly CodeSwitch<T3> _codeSwitch3;
@@ -523,6 +744,9 @@
 
         public DependentCodeSwitch(CodeSwitch<T1> codeSwitch1, CodeSwitch<T2> codeSwitch2, CodeSwitch<T3> codeSwitch3, CodeSwitch<T4> codeSwitch4, CodeSwitch<T5> codeSwitch5, CodeSwitch<T6> codeSwitch6, CodeSwitch<T7> codeSwitch7, CodeSwitch<T8> codeSwitch8, CodeSwitch<T9> codeSwitch9, CodeSwitch<T10> codeSwitch10)
         {
+            _evaluated = new CodeSwitchEvaluatedObservable<T>();
+            _enabled = new Lazy<bool>(Evaluate);
+
             _codeSwitch1 = codeSwitch1;
             _codeSwitch2 = codeSwitch2;
             _codeSwitch3 = codeSwitch3;
@@ -537,7 +761,26 @@
 
         public bool Enabled
         {
-            get { return _codeSwitch1.Enabled && _codeSwitch2.Enabled && _codeSwitch3.Enabled && _codeSwitch4.Enabled && _codeSwitch5.Enabled && _codeSwitch6.Enabled && _codeSwitch7.Enabled && _codeSwitch8.Enabled && _codeSwitch9.Enabled && _codeSwitch10.Enabled; }
+            get { return _enabled.Value; }
+        }
+
+        public IDisposable Subscribe(IObserver<CodeSwitchEvaluated> observer)
+        {
+            return _evaluated.Connect(observer);
+        }
+
+        bool Evaluate()
+        {
+            bool enabled = GetEnabled();
+
+            _evaluated.Evaluated(enabled);
+
+            return enabled;
+        }
+
+        bool GetEnabled()
+        {
+            return _codeSwitch1.Enabled && _codeSwitch2.Enabled && _codeSwitch3.Enabled && _codeSwitch4.Enabled && _codeSwitch5.Enabled && _codeSwitch6.Enabled && _codeSwitch7.Enabled && _codeSwitch8.Enabled && _codeSwitch9.Enabled && _codeSwitch10.Enabled;
         }
         
         public CodeSwitch<T1> Switch1
@@ -606,6 +849,8 @@
         where T10 : struct, CodeFeature
         where T11 : struct, CodeFeature
     {
+        readonly Lazy<bool> _enabled;
+        readonly CodeSwitchEvaluatedObservable<T> _evaluated;
         readonly CodeSwitch<T1> _codeSwitch1;
         readonly CodeSwitch<T2> _codeSwitch2;
         readonly CodeSwitch<T3> _codeSwitch3;
@@ -620,6 +865,9 @@
 
         public DependentCodeSwitch(CodeSwitch<T1> codeSwitch1, CodeSwitch<T2> codeSwitch2, CodeSwitch<T3> codeSwitch3, CodeSwitch<T4> codeSwitch4, CodeSwitch<T5> codeSwitch5, CodeSwitch<T6> codeSwitch6, CodeSwitch<T7> codeSwitch7, CodeSwitch<T8> codeSwitch8, CodeSwitch<T9> codeSwitch9, CodeSwitch<T10> codeSwitch10, CodeSwitch<T11> codeSwitch11)
         {
+            _evaluated = new CodeSwitchEvaluatedObservable<T>();
+            _enabled = new Lazy<bool>(Evaluate);
+
             _codeSwitch1 = codeSwitch1;
             _codeSwitch2 = codeSwitch2;
             _codeSwitch3 = codeSwitch3;
@@ -635,7 +883,26 @@
 
         public bool Enabled
         {
-            get { return _codeSwitch1.Enabled && _codeSwitch2.Enabled && _codeSwitch3.Enabled && _codeSwitch4.Enabled && _codeSwitch5.Enabled && _codeSwitch6.Enabled && _codeSwitch7.Enabled && _codeSwitch8.Enabled && _codeSwitch9.Enabled && _codeSwitch10.Enabled && _codeSwitch11.Enabled; }
+            get { return _enabled.Value; }
+        }
+
+        public IDisposable Subscribe(IObserver<CodeSwitchEvaluated> observer)
+        {
+            return _evaluated.Connect(observer);
+        }
+
+        bool Evaluate()
+        {
+            bool enabled = GetEnabled();
+
+            _evaluated.Evaluated(enabled);
+
+            return enabled;
+        }
+
+        bool GetEnabled()
+        {
+            return _codeSwitch1.Enabled && _codeSwitch2.Enabled && _codeSwitch3.Enabled && _codeSwitch4.Enabled && _codeSwitch5.Enabled && _codeSwitch6.Enabled && _codeSwitch7.Enabled && _codeSwitch8.Enabled && _codeSwitch9.Enabled && _codeSwitch10.Enabled && _codeSwitch11.Enabled;
         }
         
         public CodeSwitch<T1> Switch1
@@ -710,6 +977,8 @@
         where T11 : struct, CodeFeature
         where T12 : struct, CodeFeature
     {
+        readonly Lazy<bool> _enabled;
+        readonly CodeSwitchEvaluatedObservable<T> _evaluated;
         readonly CodeSwitch<T1> _codeSwitch1;
         readonly CodeSwitch<T2> _codeSwitch2;
         readonly CodeSwitch<T3> _codeSwitch3;
@@ -725,6 +994,9 @@
 
         public DependentCodeSwitch(CodeSwitch<T1> codeSwitch1, CodeSwitch<T2> codeSwitch2, CodeSwitch<T3> codeSwitch3, CodeSwitch<T4> codeSwitch4, CodeSwitch<T5> codeSwitch5, CodeSwitch<T6> codeSwitch6, CodeSwitch<T7> codeSwitch7, CodeSwitch<T8> codeSwitch8, CodeSwitch<T9> codeSwitch9, CodeSwitch<T10> codeSwitch10, CodeSwitch<T11> codeSwitch11, CodeSwitch<T12> codeSwitch12)
         {
+            _evaluated = new CodeSwitchEvaluatedObservable<T>();
+            _enabled = new Lazy<bool>(Evaluate);
+
             _codeSwitch1 = codeSwitch1;
             _codeSwitch2 = codeSwitch2;
             _codeSwitch3 = codeSwitch3;
@@ -741,7 +1013,26 @@
 
         public bool Enabled
         {
-            get { return _codeSwitch1.Enabled && _codeSwitch2.Enabled && _codeSwitch3.Enabled && _codeSwitch4.Enabled && _codeSwitch5.Enabled && _codeSwitch6.Enabled && _codeSwitch7.Enabled && _codeSwitch8.Enabled && _codeSwitch9.Enabled && _codeSwitch10.Enabled && _codeSwitch11.Enabled && _codeSwitch12.Enabled; }
+            get { return _enabled.Value; }
+        }
+
+        public IDisposable Subscribe(IObserver<CodeSwitchEvaluated> observer)
+        {
+            return _evaluated.Connect(observer);
+        }
+
+        bool Evaluate()
+        {
+            bool enabled = GetEnabled();
+
+            _evaluated.Evaluated(enabled);
+
+            return enabled;
+        }
+
+        bool GetEnabled()
+        {
+            return _codeSwitch1.Enabled && _codeSwitch2.Enabled && _codeSwitch3.Enabled && _codeSwitch4.Enabled && _codeSwitch5.Enabled && _codeSwitch6.Enabled && _codeSwitch7.Enabled && _codeSwitch8.Enabled && _codeSwitch9.Enabled && _codeSwitch10.Enabled && _codeSwitch11.Enabled && _codeSwitch12.Enabled;
         }
         
         public CodeSwitch<T1> Switch1
@@ -822,6 +1113,8 @@
         where T12 : struct, CodeFeature
         where T13 : struct, CodeFeature
     {
+        readonly Lazy<bool> _enabled;
+        readonly CodeSwitchEvaluatedObservable<T> _evaluated;
         readonly CodeSwitch<T1> _codeSwitch1;
         readonly CodeSwitch<T2> _codeSwitch2;
         readonly CodeSwitch<T3> _codeSwitch3;
@@ -838,6 +1131,9 @@
 
         public DependentCodeSwitch(CodeSwitch<T1> codeSwitch1, CodeSwitch<T2> codeSwitch2, CodeSwitch<T3> codeSwitch3, CodeSwitch<T4> codeSwitch4, CodeSwitch<T5> codeSwitch5, CodeSwitch<T6> codeSwitch6, CodeSwitch<T7> codeSwitch7, CodeSwitch<T8> codeSwitch8, CodeSwitch<T9> codeSwitch9, CodeSwitch<T10> codeSwitch10, CodeSwitch<T11> codeSwitch11, CodeSwitch<T12> codeSwitch12, CodeSwitch<T13> codeSwitch13)
         {
+            _evaluated = new CodeSwitchEvaluatedObservable<T>();
+            _enabled = new Lazy<bool>(Evaluate);
+
             _codeSwitch1 = codeSwitch1;
             _codeSwitch2 = codeSwitch2;
             _codeSwitch3 = codeSwitch3;
@@ -855,7 +1151,26 @@
 
         public bool Enabled
         {
-            get { return _codeSwitch1.Enabled && _codeSwitch2.Enabled && _codeSwitch3.Enabled && _codeSwitch4.Enabled && _codeSwitch5.Enabled && _codeSwitch6.Enabled && _codeSwitch7.Enabled && _codeSwitch8.Enabled && _codeSwitch9.Enabled && _codeSwitch10.Enabled && _codeSwitch11.Enabled && _codeSwitch12.Enabled && _codeSwitch13.Enabled; }
+            get { return _enabled.Value; }
+        }
+
+        public IDisposable Subscribe(IObserver<CodeSwitchEvaluated> observer)
+        {
+            return _evaluated.Connect(observer);
+        }
+
+        bool Evaluate()
+        {
+            bool enabled = GetEnabled();
+
+            _evaluated.Evaluated(enabled);
+
+            return enabled;
+        }
+
+        bool GetEnabled()
+        {
+            return _codeSwitch1.Enabled && _codeSwitch2.Enabled && _codeSwitch3.Enabled && _codeSwitch4.Enabled && _codeSwitch5.Enabled && _codeSwitch6.Enabled && _codeSwitch7.Enabled && _codeSwitch8.Enabled && _codeSwitch9.Enabled && _codeSwitch10.Enabled && _codeSwitch11.Enabled && _codeSwitch12.Enabled && _codeSwitch13.Enabled;
         }
         
         public CodeSwitch<T1> Switch1
@@ -942,6 +1257,8 @@
         where T13 : struct, CodeFeature
         where T14 : struct, CodeFeature
     {
+        readonly Lazy<bool> _enabled;
+        readonly CodeSwitchEvaluatedObservable<T> _evaluated;
         readonly CodeSwitch<T1> _codeSwitch1;
         readonly CodeSwitch<T2> _codeSwitch2;
         readonly CodeSwitch<T3> _codeSwitch3;
@@ -959,6 +1276,9 @@
 
         public DependentCodeSwitch(CodeSwitch<T1> codeSwitch1, CodeSwitch<T2> codeSwitch2, CodeSwitch<T3> codeSwitch3, CodeSwitch<T4> codeSwitch4, CodeSwitch<T5> codeSwitch5, CodeSwitch<T6> codeSwitch6, CodeSwitch<T7> codeSwitch7, CodeSwitch<T8> codeSwitch8, CodeSwitch<T9> codeSwitch9, CodeSwitch<T10> codeSwitch10, CodeSwitch<T11> codeSwitch11, CodeSwitch<T12> codeSwitch12, CodeSwitch<T13> codeSwitch13, CodeSwitch<T14> codeSwitch14)
         {
+            _evaluated = new CodeSwitchEvaluatedObservable<T>();
+            _enabled = new Lazy<bool>(Evaluate);
+
             _codeSwitch1 = codeSwitch1;
             _codeSwitch2 = codeSwitch2;
             _codeSwitch3 = codeSwitch3;
@@ -977,7 +1297,26 @@
 
         public bool Enabled
         {
-            get { return _codeSwitch1.Enabled && _codeSwitch2.Enabled && _codeSwitch3.Enabled && _codeSwitch4.Enabled && _codeSwitch5.Enabled && _codeSwitch6.Enabled && _codeSwitch7.Enabled && _codeSwitch8.Enabled && _codeSwitch9.Enabled && _codeSwitch10.Enabled && _codeSwitch11.Enabled && _codeSwitch12.Enabled && _codeSwitch13.Enabled && _codeSwitch14.Enabled; }
+            get { return _enabled.Value; }
+        }
+
+        public IDisposable Subscribe(IObserver<CodeSwitchEvaluated> observer)
+        {
+            return _evaluated.Connect(observer);
+        }
+
+        bool Evaluate()
+        {
+            bool enabled = GetEnabled();
+
+            _evaluated.Evaluated(enabled);
+
+            return enabled;
+        }
+
+        bool GetEnabled()
+        {
+            return _codeSwitch1.Enabled && _codeSwitch2.Enabled && _codeSwitch3.Enabled && _codeSwitch4.Enabled && _codeSwitch5.Enabled && _codeSwitch6.Enabled && _codeSwitch7.Enabled && _codeSwitch8.Enabled && _codeSwitch9.Enabled && _codeSwitch10.Enabled && _codeSwitch11.Enabled && _codeSwitch12.Enabled && _codeSwitch13.Enabled && _codeSwitch14.Enabled;
         }
         
         public CodeSwitch<T1> Switch1
@@ -1070,6 +1409,8 @@
         where T14 : struct, CodeFeature
         where T15 : struct, CodeFeature
     {
+        readonly Lazy<bool> _enabled;
+        readonly CodeSwitchEvaluatedObservable<T> _evaluated;
         readonly CodeSwitch<T1> _codeSwitch1;
         readonly CodeSwitch<T2> _codeSwitch2;
         readonly CodeSwitch<T3> _codeSwitch3;
@@ -1088,6 +1429,9 @@
 
         public DependentCodeSwitch(CodeSwitch<T1> codeSwitch1, CodeSwitch<T2> codeSwitch2, CodeSwitch<T3> codeSwitch3, CodeSwitch<T4> codeSwitch4, CodeSwitch<T5> codeSwitch5, CodeSwitch<T6> codeSwitch6, CodeSwitch<T7> codeSwitch7, CodeSwitch<T8> codeSwitch8, CodeSwitch<T9> codeSwitch9, CodeSwitch<T10> codeSwitch10, CodeSwitch<T11> codeSwitch11, CodeSwitch<T12> codeSwitch12, CodeSwitch<T13> codeSwitch13, CodeSwitch<T14> codeSwitch14, CodeSwitch<T15> codeSwitch15)
         {
+            _evaluated = new CodeSwitchEvaluatedObservable<T>();
+            _enabled = new Lazy<bool>(Evaluate);
+
             _codeSwitch1 = codeSwitch1;
             _codeSwitch2 = codeSwitch2;
             _codeSwitch3 = codeSwitch3;
@@ -1107,7 +1451,26 @@
 
         public bool Enabled
         {
-            get { return _codeSwitch1.Enabled && _codeSwitch2.Enabled && _codeSwitch3.Enabled && _codeSwitch4.Enabled && _codeSwitch5.Enabled && _codeSwitch6.Enabled && _codeSwitch7.Enabled && _codeSwitch8.Enabled && _codeSwitch9.Enabled && _codeSwitch10.Enabled && _codeSwitch11.Enabled && _codeSwitch12.Enabled && _codeSwitch13.Enabled && _codeSwitch14.Enabled && _codeSwitch15.Enabled; }
+            get { return _enabled.Value; }
+        }
+
+        public IDisposable Subscribe(IObserver<CodeSwitchEvaluated> observer)
+        {
+            return _evaluated.Connect(observer);
+        }
+
+        bool Evaluate()
+        {
+            bool enabled = GetEnabled();
+
+            _evaluated.Evaluated(enabled);
+
+            return enabled;
+        }
+
+        bool GetEnabled()
+        {
+            return _codeSwitch1.Enabled && _codeSwitch2.Enabled && _codeSwitch3.Enabled && _codeSwitch4.Enabled && _codeSwitch5.Enabled && _codeSwitch6.Enabled && _codeSwitch7.Enabled && _codeSwitch8.Enabled && _codeSwitch9.Enabled && _codeSwitch10.Enabled && _codeSwitch11.Enabled && _codeSwitch12.Enabled && _codeSwitch13.Enabled && _codeSwitch14.Enabled && _codeSwitch15.Enabled;
         }
         
         public CodeSwitch<T1> Switch1
@@ -1206,6 +1569,8 @@
         where T15 : struct, CodeFeature
         where T16 : struct, CodeFeature
     {
+        readonly Lazy<bool> _enabled;
+        readonly CodeSwitchEvaluatedObservable<T> _evaluated;
         readonly CodeSwitch<T1> _codeSwitch1;
         readonly CodeSwitch<T2> _codeSwitch2;
         readonly CodeSwitch<T3> _codeSwitch3;
@@ -1225,6 +1590,9 @@
 
         public DependentCodeSwitch(CodeSwitch<T1> codeSwitch1, CodeSwitch<T2> codeSwitch2, CodeSwitch<T3> codeSwitch3, CodeSwitch<T4> codeSwitch4, CodeSwitch<T5> codeSwitch5, CodeSwitch<T6> codeSwitch6, CodeSwitch<T7> codeSwitch7, CodeSwitch<T8> codeSwitch8, CodeSwitch<T9> codeSwitch9, CodeSwitch<T10> codeSwitch10, CodeSwitch<T11> codeSwitch11, CodeSwitch<T12> codeSwitch12, CodeSwitch<T13> codeSwitch13, CodeSwitch<T14> codeSwitch14, CodeSwitch<T15> codeSwitch15, CodeSwitch<T16> codeSwitch16)
         {
+            _evaluated = new CodeSwitchEvaluatedObservable<T>();
+            _enabled = new Lazy<bool>(Evaluate);
+
             _codeSwitch1 = codeSwitch1;
             _codeSwitch2 = codeSwitch2;
             _codeSwitch3 = codeSwitch3;
@@ -1245,7 +1613,26 @@
 
         public bool Enabled
         {
-            get { return _codeSwitch1.Enabled && _codeSwitch2.Enabled && _codeSwitch3.Enabled && _codeSwitch4.Enabled && _codeSwitch5.Enabled && _codeSwitch6.Enabled && _codeSwitch7.Enabled && _codeSwitch8.Enabled && _codeSwitch9.Enabled && _codeSwitch10.Enabled && _codeSwitch11.Enabled && _codeSwitch12.Enabled && _codeSwitch13.Enabled && _codeSwitch14.Enabled && _codeSwitch15.Enabled && _codeSwitch16.Enabled; }
+            get { return _enabled.Value; }
+        }
+
+        public IDisposable Subscribe(IObserver<CodeSwitchEvaluated> observer)
+        {
+            return _evaluated.Connect(observer);
+        }
+
+        bool Evaluate()
+        {
+            bool enabled = GetEnabled();
+
+            _evaluated.Evaluated(enabled);
+
+            return enabled;
+        }
+
+        bool GetEnabled()
+        {
+            return _codeSwitch1.Enabled && _codeSwitch2.Enabled && _codeSwitch3.Enabled && _codeSwitch4.Enabled && _codeSwitch5.Enabled && _codeSwitch6.Enabled && _codeSwitch7.Enabled && _codeSwitch8.Enabled && _codeSwitch9.Enabled && _codeSwitch10.Enabled && _codeSwitch11.Enabled && _codeSwitch12.Enabled && _codeSwitch13.Enabled && _codeSwitch14.Enabled && _codeSwitch15.Enabled && _codeSwitch16.Enabled;
         }
         
         public CodeSwitch<T1> Switch1

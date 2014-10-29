@@ -5,8 +5,7 @@
 
 
     public class DateRangeCodeSwitch<TFeature> :
-        IToggleCodeSwitch<TFeature>,
-        IObservable<CodeSwitchEvaluated>
+        IToggleCodeSwitch<TFeature>
         where TFeature : struct, CodeFeature
     {
         readonly CurrentTimeProvider _currentTimeProvider;
