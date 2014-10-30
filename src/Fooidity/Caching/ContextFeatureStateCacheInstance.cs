@@ -7,9 +7,9 @@
     class ContextFeatureStateCacheInstance<TContext> :
         IContextFeatureStateCacheInstance<TContext>
     {
-        readonly IReadOnlyCache<string, ContextFeatureState> _cache;
+        readonly ICache<string, ContextFeatureState> _cache;
 
-        public ContextFeatureStateCacheInstance(IReadOnlyCache<string, ContextFeatureState> cache)
+        public ContextFeatureStateCacheInstance(ICache<string, ContextFeatureState> cache)
         {
             _cache = cache;
         }
@@ -17,6 +17,11 @@
         public bool TryGetContextFeatureState(string key, out ContextFeatureState featureState)
         {
             return _cache.TryGet(key, out featureState);
+        }
+
+        public bool TryAdd(string key, ContextFeatureState contextFeatureState)
+        {
+            return _cache.TryAdd(key, contextFeatureState);
         }
 
         public int Count

@@ -4,7 +4,6 @@ namespace Fooidity.Configuration
     using System.Configuration;
     using Caching;
     using Caching.Internals;
-    using Metadata;
 
 
     public class ConfigurationContextFeatureStateCacheProvider<TContext> :
@@ -68,54 +67,6 @@ namespace Fooidity.Configuration
             }
 
             return new ContextFeatureStateCacheInstance<TContext>(cache);
-        }
-
-
-        class CodeFeatureStateImpl :
-            CodeFeatureState
-        {
-            readonly bool _enabled;
-            readonly CodeFeatureId _id;
-
-            public CodeFeatureStateImpl(CodeFeatureId id, bool enabled)
-            {
-                _enabled = enabled;
-                _id = id;
-            }
-
-            public CodeFeatureId Id
-            {
-                get { return _id; }
-            }
-
-            public bool Enabled
-            {
-                get { return _enabled; }
-            }
-        }
-
-
-        class ContextFeatureStateImpl :
-            ContextFeatureState
-        {
-            readonly IReadOnlyCache<CodeFeatureId, CodeFeatureState> _cache;
-            string _key;
-
-            public ContextFeatureStateImpl(IReadOnlyCache<CodeFeatureId, CodeFeatureState> cache, string key)
-            {
-                _cache = cache;
-                _key = key;
-            }
-
-            public string Key
-            {
-                get { return _key; }
-            }
-
-            public bool TryGetCodeFeatureState<TFeature>(out CodeFeatureState featureState)
-            {
-                return _cache.TryGet(CodeFeatureMetadata<TFeature>.Id, out featureState);
-            }
         }
     }
 }

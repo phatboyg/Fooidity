@@ -48,7 +48,7 @@
             ContextFeatureState contextFeatureState;
             if (_contextCache.TryGetContextFeatureState(_context, out contextFeatureState))
             {
-                if (contextFeatureState.TryGetCodeFeatureState<TFeature>(out codeFeatureState))
+                if (contextFeatureState.TryGetCodeFeatureState(CodeFeatureMetadata<TFeature>.Id, out codeFeatureState))
                 {
                     _evaluated.Evaluated(ContextMetadata<TContext>.Id, contextFeatureState.Key, codeFeatureState.Enabled);
                     return codeFeatureState.Enabled;

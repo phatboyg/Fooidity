@@ -80,7 +80,7 @@
                 if (existingFeatureState.Enabled == update.Enabled)
                     return;
 
-                var updatedFeatureState = new UpdatedCodeFeatureState(codeFeatureId, update.Enabled);
+                var updatedFeatureState = new CodeFeatureStateImpl(codeFeatureId, update.Enabled);
 
                 DateTime startTime = DateTime.UtcNow;
                 bool updated = _cache.TryUpdate(codeFeatureId, updatedFeatureState, existingFeatureState);
@@ -96,7 +96,7 @@
             }
             else
             {
-                var featureState = new UpdatedCodeFeatureState(codeFeatureId, update.Enabled);
+                var featureState = new CodeFeatureStateImpl(codeFeatureId, update.Enabled);
 
                 DateTime startTime = DateTime.UtcNow;
                 bool updated = _cache.TryAdd(codeFeatureId, featureState);
@@ -207,30 +207,6 @@
             public Uri CodeFeatureId
             {
                 get { return _codeFeatureId; }
-            }
-
-            public bool Enabled
-            {
-                get { return _enabled; }
-            }
-        }
-
-
-        class UpdatedCodeFeatureState :
-            CodeFeatureState
-        {
-            readonly bool _enabled;
-            readonly CodeFeatureId _id;
-
-            public UpdatedCodeFeatureState(CodeFeatureId id, bool enabled)
-            {
-                _id = id;
-                _enabled = enabled;
-            }
-
-            public CodeFeatureId Id
-            {
-                get { return _id; }
             }
 
             public bool Enabled

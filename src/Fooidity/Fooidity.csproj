@@ -65,8 +65,12 @@
     <Compile Include="Caching\UpdateCodeFeature.cs" />
     <Compile Include="Caching\UpdateContextCodeFeature.cs" />
     <Compile Include="CodeFeatureId.cs" />
+    <Compile Include="Configuration\CodeFeatureStateImpl.cs" />
+    <Compile Include="Configuration\ContextFeatureStateImpl.cs" />
     <Compile Include="ContextId.cs" />
     <Compile Include="ContextProvider.cs" />
+    <Compile Include="Contracts\ContextCodeFeatureStateCacheLoaded.cs" />
+    <Compile Include="Contracts\ContextCodeFeatureStateCacheUpdated.cs" />
     <Compile Include="Contracts\Host.cs" />
     <Compile Include="DefaultContextProvider.cs" />
     <Compile Include="Contracts\CodeFeatureStateDisabled.cs" />

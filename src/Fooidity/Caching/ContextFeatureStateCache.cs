@@ -14,10 +14,13 @@
     public class ContextFeatureStateCache<TContext> :
         IContextFeatureStateCache<TContext>,
         IReloadCache,
-        IUpdateContextFeatureCache
+        IUpdateContextFeatureCache,
+        IObservable<ContextCodeFeatureStateCacheLoaded>,
+        IObservable<ContextCodeFeatureStateCacheUpdated>
     {
-        readonly Connectable<IObserver<CodeFeatureStateCacheLoaded>> _cacheLoaded;
+        readonly Connectable<IObserver<ContextCodeFeatureStateCacheLoaded>> _cacheLoaded;
         readonly IContextFeatureStateCacheProvider<TContext> _cacheProvider;
+        readonly Connectable<IObserver<ContextCodeFeatureStateCacheUpdated>> _cacheUpdated;
         readonly ContextKeyProvider<TContext> _keyProvider;
         IContextFeatureStateCacheInstance<TContext> _cache;
 
@@ -27,7 +30,8 @@
             _cacheProvider = cacheProvider;
             _keyProvider = keyProvider;
 
-            _cacheLoaded = new Connectable<IObserver<CodeFeatureStateCacheLoaded>>();
+            _cacheLoaded = new Connectable<IObserver<ContextCodeFeatureStateCacheLoaded>>();
+            _cacheUpdated = new Connectable<IObserver<ContextCodeFeatureStateCacheUpdated>>();
 
             _cache = _cacheProvider.Load();
         }
@@ -37,6 +41,16 @@
             string key = _keyProvider.GetKey(context);
 
             return _cache.TryGetContextFeatureState(key, out featureState);
+        }
+
+        public IDisposable Subscribe(IObserver<ContextCodeFeatureStateCacheLoaded> observer)
+        {
+            return _cacheLoaded.Connect(observer);
+        }
+
+        public IDisposable Subscribe(IObserver<ContextCodeFeatureStateCacheUpdated> observer)
+        {
+            return _cacheUpdated.Connect(observer);
         }
 
         public void ReloadCache()
@@ -57,29 +71,84 @@
             // ignore updates that aren't for this cache instance
             if (update.ContextId != ContextMetadata<TContext>.Id)
                 return;
-        }
 
-        public IDisposable Subscribe(IObserver<CodeFeatureStateCacheLoaded> observer)
-        {
-            return _cacheLoaded.Connect(observer);
+            CodeFeatureId codeFeatureId = update.CodeFeatureId;
+
+            ContextFeatureState existingContext;
+            if (_cache.TryGetContextFeatureState(update.Key, out existingContext))
+            {
+                CodeFeatureState existingCode;
+                if (existingContext.TryGetCodeFeatureState(codeFeatureId, out existingCode))
+                {
+                    if (existingCode.Enabled == update.Enabled)
+                        return;
+
+                    var updatedFeatureState = new CodeFeatureStateImpl(codeFeatureId, update.Enabled);
+
+                    DateTime startTime = DateTime.UtcNow;
+                    bool updated = existingContext.TryUpdate(codeFeatureId, updatedFeatureState, existingCode);
+                    DateTime endTime = DateTime.UtcNow;
+                    if (updated)
+                    {
+                        var updatedEvent = new Updated(update.CommandId, startTime, endTime - startTime, update.ContextId, update.Key,
+                            updatedFeatureState.Id, updatedFeatureState.Enabled);
+
+                        _cacheUpdated.ForEach(x => x.OnNext(updatedEvent));
+                    }
+                }
+                else
+                {
+                    var featureState = new CodeFeatureStateImpl(codeFeatureId, update.Enabled);
+
+                    DateTime startTime = DateTime.UtcNow;
+                    bool updated = existingContext.TryAdd(codeFeatureId, featureState);
+                    DateTime endTime = DateTime.UtcNow;
+
+                    if (updated)
+                    {
+                        var updatedEvent = new Updated(update.CommandId, startTime, endTime - startTime, update.ContextId, update.Key,
+                            featureState.Id, featureState.Enabled);
+
+                        _cacheUpdated.ForEach(x => x.OnNext(updatedEvent));
+                    }
+                }
+            }
+            else
+            {
+                var featureState = new CodeFeatureStateImpl(codeFeatureId, update.Enabled);
+                var cache = new InMemoryCache<CodeFeatureId, CodeFeatureState>();
+                cache.TryAdd(codeFeatureId, featureState);
+                var contextFeatureState = new ContextFeatureStateImpl(cache, update.Key);
+
+                DateTime startTime = DateTime.UtcNow;
+                bool updated = _cache.TryAdd(update.Key, contextFeatureState);
+                DateTime endTime = DateTime.UtcNow;
+
+                if (updated)
+                {
+                    var updatedEvent = new Updated(update.CommandId, startTime, endTime - startTime, update.ContextId, update.Key,
+                        featureState.Id, featureState.Enabled);
+                    _cacheUpdated.ForEach(x => x.OnNext(updatedEvent));
+                }
+            }
         }
 
 
         class Loaded :
-            CodeFeatureStateCacheLoaded
+            ContextCodeFeatureStateCacheLoaded
         {
-            readonly int _codeFeatureCount;
+            readonly int _contextCount;
             readonly TimeSpan _duration;
             readonly Guid _eventId;
             readonly Host _host;
             readonly DateTime _timestamp;
 
-            public Loaded(DateTime timestamp, TimeSpan duration, int codeFeatureCount)
+            public Loaded(DateTime timestamp, TimeSpan duration, int contextCount)
             {
                 _eventId = Guid.NewGuid();
                 _timestamp = timestamp;
                 _duration = duration;
-                _codeFeatureCount = codeFeatureCount;
+                _contextCount = contextCount;
                 _host = HostMetadata.Host;
             }
 
@@ -103,9 +172,83 @@
                 get { return _duration; }
             }
 
-            public int CodeFeatureCount
+            public int ContextCount
             {
-                get { return _codeFeatureCount; }
+                get { return _contextCount; }
+            }
+        }
+
+
+        class Updated :
+            ContextCodeFeatureStateCacheUpdated
+        {
+            readonly Uri _codeFeatureId;
+            readonly Guid? _commandId;
+            readonly Uri _contextId;
+            readonly string _contextKey;
+            readonly TimeSpan _duration;
+            readonly bool _enabled;
+            readonly Guid _eventId;
+            readonly Host _host;
+            readonly DateTime _timestamp;
+
+            public Updated(Guid? commandId, DateTime timestamp, TimeSpan duration, Uri contextId, string contextKey, Uri codeFeatureId,
+                bool enabled)
+            {
+                _eventId = Guid.NewGuid();
+                _timestamp = timestamp;
+                _duration = duration;
+                _commandId = commandId;
+                _contextId = contextId;
+                _contextKey = contextKey;
+                _codeFeatureId = codeFeatureId;
+                _enabled = enabled;
+                _host = HostMetadata.Host;
+            }
+
+            public bool Enabled
+            {
+                get { return _enabled; }
+            }
+
+            public Host Host
+            {
+                get { return _host; }
+            }
+
+            public Guid EventId
+            {
+                get { return _eventId; }
+            }
+
+            public DateTime Timestamp
+            {
+                get { return _timestamp; }
+            }
+
+            public TimeSpan Duration
+            {
+                get { return _duration; }
+            }
+
+            public Guid? CommandId
+            {
+                get { return _commandId; }
+            }
+
+            public Uri ContextId
+            {
+                get { return _contextId; }
+            }
+
+            public string ContextKey
+            {
+                get { return _contextKey; }
+            }
+
+            public Uri CodeFeatureId
+            {
+                get { return _codeFeatureId; }
             }
         }
     }

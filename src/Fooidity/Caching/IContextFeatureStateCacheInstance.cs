@@ -17,5 +17,13 @@
         /// <param name="featureState"></param>
         /// <returns></returns>
         bool TryGetContextFeatureState(string key, out ContextFeatureState featureState);
+
+        /// <summary>
+        /// Try to add a context feature state to the cache
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="contextFeatureState"></param>
+        /// <returns></returns>
+        bool TryAdd(string key, ContextFeatureState contextFeatureState);
     }
 }
