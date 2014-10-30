@@ -83,54 +83,52 @@
                     if (existingCode.Enabled == update.Enabled)
                         return;
 
-                    var updatedFeatureState = new CodeFeatureStateImpl(codeFeatureId, update.Enabled);
-
-                    DateTime startTime = DateTime.UtcNow;
-                    bool updated = existingContext.TryUpdate(codeFeatureId, updatedFeatureState, existingCode);
-                    DateTime endTime = DateTime.UtcNow;
-                    if (updated)
-                    {
-                        var updatedEvent = new Updated(update.CommandId, startTime, endTime - startTime, update.ContextId, update.Key,
-                            updatedFeatureState.Id, updatedFeatureState.Enabled);
-
-                        _cacheUpdated.ForEach(x => x.OnNext(updatedEvent));
-                    }
+                    UpdateExistingCodeFeature(update, codeFeatureId, existingContext, existingCode);
                 }
                 else
-                {
-                    var featureState = new CodeFeatureStateImpl(codeFeatureId, update.Enabled);
-
-                    DateTime startTime = DateTime.UtcNow;
-                    bool updated = existingContext.TryAdd(codeFeatureId, featureState);
-                    DateTime endTime = DateTime.UtcNow;
-
-                    if (updated)
-                    {
-                        var updatedEvent = new Updated(update.CommandId, startTime, endTime - startTime, update.ContextId, update.Key,
-                            featureState.Id, featureState.Enabled);
-
-                        _cacheUpdated.ForEach(x => x.OnNext(updatedEvent));
-                    }
-                }
+                    AddCodeFeatureState(update, codeFeatureId, existingContext);
             }
             else
-            {
-                var featureState = new CodeFeatureStateImpl(codeFeatureId, update.Enabled);
-                var cache = new InMemoryCache<CodeFeatureId, CodeFeatureState>();
-                cache.TryAdd(codeFeatureId, featureState);
-                var contextFeatureState = new ContextFeatureStateImpl(cache, update.Key);
+                AddContextFeatureState(update, codeFeatureId);
+        }
 
-                DateTime startTime = DateTime.UtcNow;
-                bool updated = _cache.TryAdd(update.Key, contextFeatureState);
-                DateTime endTime = DateTime.UtcNow;
+        void UpdateExistingCodeFeature(UpdateContextCodeFeature update, CodeFeatureId codeFeatureId, ContextFeatureState existingContext,
+            CodeFeatureState existingCode)
+        {
+            var featureState = new CodeFeatureStateImpl(codeFeatureId, update.Enabled);
 
-                if (updated)
-                {
-                    var updatedEvent = new Updated(update.CommandId, startTime, endTime - startTime, update.ContextId, update.Key,
-                        featureState.Id, featureState.Enabled);
-                    _cacheUpdated.ForEach(x => x.OnNext(updatedEvent));
-                }
-            }
+            bool updated = existingContext.TryUpdate(codeFeatureId, featureState, existingCode);
+            if (updated)
+                NotifyUpdated(update, featureState);
+        }
+
+        void AddCodeFeatureState(UpdateContextCodeFeature update, CodeFeatureId codeFeatureId, ContextFeatureState existingContext)
+        {
+            var featureState = new CodeFeatureStateImpl(codeFeatureId, update.Enabled);
+
+            bool updated = existingContext.TryAdd(codeFeatureId, featureState);
+            if (updated)
+                NotifyUpdated(update, featureState);
+        }
+
+        void AddContextFeatureState(UpdateContextCodeFeature update, CodeFeatureId codeFeatureId)
+        {
+            var featureState = new CodeFeatureStateImpl(codeFeatureId, update.Enabled);
+            var cache = new InMemoryCache<CodeFeatureId, CodeFeatureState>();
+            cache.TryAdd(codeFeatureId, featureState);
+            var contextFeatureState = new ContextFeatureStateImpl(cache, update.Key);
+
+            bool updated = _cache.TryAdd(update.Key, contextFeatureState);
+            if (updated)
+                NotifyUpdated(update, featureState);
+        }
+
+        void NotifyUpdated(UpdateContextCodeFeature update, CodeFeatureStateImpl updatedFeatureState)
+        {
+            var updatedEvent = new Updated(update.CommandId, update.ContextId, update.Key,
+                updatedFeatureState.Id, updatedFeatureState.Enabled);
+
+            _cacheUpdated.ForEach(x => x.OnNext(updatedEvent));
         }
 
 
@@ -192,12 +190,12 @@
             readonly Host _host;
             readonly DateTime _timestamp;
 
-            public Updated(Guid? commandId, DateTime timestamp, TimeSpan duration, Uri contextId, string contextKey, Uri codeFeatureId,
+            public Updated(Guid? commandId, Uri contextId, string contextKey, Uri codeFeatureId,
                 bool enabled)
             {
                 _eventId = Guid.NewGuid();
-                _timestamp = timestamp;
-                _duration = duration;
+                _timestamp = DateTime.UtcNow;
+                _duration = TimeSpan.Zero;
                 _commandId = commandId;
                 _contextId = contextId;
                 _contextKey = contextKey;
