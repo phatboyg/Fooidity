@@ -1,4 +1,4 @@
-﻿namespace Fooidity.Events
+﻿namespace Fooidity.Contracts
 {
     using System;
 
@@ -8,6 +8,8 @@
     /// </summary>
     public interface CodeFeatureStateCacheUpdated
     {
+        Guid EventId { get; }
+
         /// <summary>
         /// The time the cache update started
         /// </summary>
@@ -19,13 +21,23 @@
         TimeSpan Duration { get; }
 
         /// <summary>
+        /// The command identifier that triggered the update
+        /// </summary>
+        Guid? CommandId { get; }
+
+        /// <summary>
         /// The FeatureId that was updated
         /// </summary>
-        Uri Id { get; }
+        Uri CodeFeatureId { get; }
 
         /// <summary>
         /// The updated state of the feature
         /// </summary>
         bool Enabled { get; }
+
+        /// <summary>
+        /// The host that loaded the cache
+        /// </summary>
+        Host Host { get; }
     }
 }

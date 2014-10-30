@@ -1,4 +1,4 @@
-﻿namespace Fooidity.Events
+﻿namespace Fooidity.Contracts
 {
     using System;
 
@@ -17,11 +17,26 @@
         /// <summary>
         /// The feature identifier connected to the code switch
         /// </summary>
-        Uri Id { get; }
+        Uri CodeFeatureId { get; }
 
         /// <summary>
         /// Whether the feature was enabled or disabled after evaluation
         /// </summary>
         bool Enabled { get; }
+
+        /// <summary>
+        /// If context was used to evaluate the switch, the context id
+        /// </summary>
+        Uri ContextId { get; }
+
+        /// <summary>
+        /// The key used to select the context if a context is used
+        /// </summary>
+        string ContextKey { get; }
+
+        /// <summary>
+        /// The host on which the switch was evaluated
+        /// </summary>
+        Host Host { get; }
     }
 }

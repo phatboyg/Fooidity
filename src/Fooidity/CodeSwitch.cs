@@ -1,7 +1,7 @@
 ﻿namespace Fooidity
 {
     using System;
-    using Events;
+    using Contracts;
 
 
     /// <summary>

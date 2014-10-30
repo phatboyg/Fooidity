@@ -21,7 +21,8 @@
 
             builder.RegisterType<ContextFeatureStateCache<TContext>>()
                 .As<IContextFeatureStateCache<TContext>>()
-                .Named<IReloadCache>("contextFeatureCache")
+                .As<IUpdateContextFeatureCache>()
+                .As<IReloadCache>()
                 .SingleInstance();
 
             builder.RegisterType<ConfigurationContextFeatureStateCacheProvider<TContext>>()

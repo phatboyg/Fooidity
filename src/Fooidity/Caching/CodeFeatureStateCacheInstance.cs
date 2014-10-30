@@ -35,5 +35,10 @@
         {
             return _cache.TryUpdate(id, featureState, previousFeatureState);
         }
+
+        public bool TryAdd(CodeFeatureId id, CodeFeatureState featureState)
+        {
+            return _cache.TryAdd(id, featureState);
+        }
     }
 }

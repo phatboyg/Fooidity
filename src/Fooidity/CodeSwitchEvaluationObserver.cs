@@ -5,7 +5,7 @@
     using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Linq;
-    using Events;
+    using Contracts;
 
 
     /// <summary>

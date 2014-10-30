@@ -3,7 +3,7 @@ namespace Fooidity.CodeSwitches
     using System;
     using System.Security.Principal;
     using System.Threading;
-    using Events;
+    using Contracts;
 
 
     public class EnabledForAuthenticatedIdentityCodeSwitch<TFeature> :

@@ -1,4 +1,4 @@
-﻿namespace Fooidity.Events
+﻿namespace Fooidity.Contracts
 {
     using System;
 
@@ -8,6 +8,11 @@
     /// </summary>
     public interface CodeFeatureStateCacheLoaded
     {
+        /// <summary>
+        /// Identifies the event
+        /// </summary>
+        Guid EventId { get; }
+
         /// <summary>
         /// The time the cache load started
         /// </summary>
@@ -21,6 +26,11 @@
         /// <summary>
         /// The number of code features loaded
         /// </summary>
-        int Count { get; }
+        int CodeFeatureCount { get; }
+
+        /// <summary>
+        /// The host that loaded the cache
+        /// </summary>
+        Host Host { get; }
     }
 }

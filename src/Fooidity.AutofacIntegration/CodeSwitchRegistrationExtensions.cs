@@ -4,7 +4,7 @@ namespace Fooidity
     using System.Collections.Generic;
     using Autofac;
     using CodeSwitches;
-    using Events;
+    using Contracts;
 
 
     public static class CodeSwitchRegistrationExtensions
@@ -128,7 +128,7 @@ namespace Fooidity
         /// <typeparam name="TContext">The switch context</typeparam>
         /// <param name="builder"></param>
         /// <param name="throwIfContextNotFound">If the context is not available, throw an exception</param>
-        public static void RegisterContextSwitch<TFeature, TContext>(this ContainerBuilder builder, bool throwIfContextNotFound = true)
+        public static void RegisterContextSwitch<TFeature, TContext>(this ContainerBuilder builder, bool throwIfContextNotFound = false)
             where TFeature : struct, CodeFeature
         {
             builder.Register<CodeSwitch<TFeature>>(context =>

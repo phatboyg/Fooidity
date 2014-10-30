@@ -3,8 +3,9 @@
     using System;
     using System.Threading;
     using Configuration;
-    using Events;
+    using Contracts;
     using Internals;
+    using Metadata;
 
 
     /// <summary>
@@ -12,7 +13,8 @@
     /// </summary>
     public class ContextFeatureStateCache<TContext> :
         IContextFeatureStateCache<TContext>,
-        IReloadCache
+        IReloadCache,
+        IUpdateContextFeatureCache
     {
         readonly Connectable<IObserver<CodeFeatureStateCacheLoaded>> _cacheLoaded;
         readonly IContextFeatureStateCacheProvider<TContext> _cacheProvider;
@@ -50,29 +52,45 @@
             _cacheLoaded.ForEach(x => x.OnNext(loaded));
         }
 
+        public void UpdateCache(UpdateContextCodeFeature update)
+        {
+            // ignore updates that aren't for this cache instance
+            if (update.ContextId != ContextMetadata<TContext>.Id)
+                return;
+        }
+
         public IDisposable Subscribe(IObserver<CodeFeatureStateCacheLoaded> observer)
         {
             return _cacheLoaded.Connect(observer);
-        }
-
-        public void UpdateCache(CodeFeatureStateUpdated value)
-        {
-            throw new NotImplementedException("The update hasn't been built yet but it's coming");
         }
 
 
         class Loaded :
             CodeFeatureStateCacheLoaded
         {
-            readonly int _count;
+            readonly int _codeFeatureCount;
             readonly TimeSpan _duration;
+            readonly Guid _eventId;
+            readonly Host _host;
             readonly DateTime _timestamp;
 
-            public Loaded(DateTime timestamp, TimeSpan duration, int count)
+            public Loaded(DateTime timestamp, TimeSpan duration, int codeFeatureCount)
             {
+                _eventId = Guid.NewGuid();
                 _timestamp = timestamp;
                 _duration = duration;
-                _count = count;
+                _codeFeatureCount = codeFeatureCount;
+                _host = HostMetadata.Host;
+            }
+
+            public Host Host
+            {
+                get { return _host; }
+            }
+
+            public Guid EventId
+            {
+                get { return _eventId; }
             }
 
             public DateTime Timestamp
@@ -85,9 +103,9 @@
                 get { return _duration; }
             }
 
-            public int Count
+            public int CodeFeatureCount
             {
-                get { return _count; }
+                get { return _codeFeatureCount; }
             }
         }
     }

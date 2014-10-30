@@ -1,7 +1,7 @@
 ﻿namespace Fooidity
 {
     using System.Collections.Generic;
-    using Events;
+    using Contracts;
 
 
     /// <summary>

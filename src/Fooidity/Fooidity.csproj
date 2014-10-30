@@ -60,15 +60,24 @@
     <Compile Include="Caching\Internals\InMemoryCacheIndex.cs" />
     <Compile Include="Caching\Internals\IReadOnlyCache.cs" />
     <Compile Include="Caching\IReloadCache.cs" />
-    <Compile Include="Caching\IUpdateCache.cs" />
+    <Compile Include="Caching\IUpdateCodeFeatureCache.cs" />
+    <Compile Include="Caching\IUpdateContextFeatureCache.cs" />
+    <Compile Include="Caching\UpdateCodeFeature.cs" />
+    <Compile Include="Caching\UpdateContextCodeFeature.cs" />
     <Compile Include="CodeFeatureId.cs" />
     <Compile Include="ContextId.cs" />
     <Compile Include="ContextProvider.cs" />
+    <Compile Include="Contracts\Host.cs" />
     <Compile Include="DefaultContextProvider.cs" />
+    <Compile Include="Contracts\CodeFeatureStateDisabled.cs" />
+    <Compile Include="Contracts\ContextCodeFeatureStateDisabled.cs" />
+    <Compile Include="Contracts\ContextCodeFeatureStateEnabled.cs" />
     <Compile Include="ICodeSwitchContainerScope.cs" />
     <Compile Include="ICodeSwitchEvaluationObserver.cs" />
     <Compile Include="Metadata\ContextMetadata.cs" />
+    <Compile Include="Metadata\HostMetadata.cs" />
     <Compile Include="Metadata\IContextMetadata.cs" />
+    <Compile Include="Metadata\IHostMetadata.cs" />
     <Compile Include="ObjectContextProvider.cs" />
     <Compile Include="TypeUrn.cs" />
     <Compile Include="TypeUrnParser.cs" />
@@ -117,16 +126,16 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Events\CodeFeatureStateCacheLoaded.cs" />
-    <Compile Include="Events\CodeFeatureStateCacheUpdated.cs" />
-    <Compile Include="Events\CodeFeatureStateUpdated.cs" />
+    <Compile Include="Contracts\CodeFeatureStateCacheLoaded.cs" />
+    <Compile Include="Contracts\CodeFeatureStateCacheUpdated.cs" />
+    <Compile Include="Contracts\CodeFeatureStateEnabled.cs" />
     <Compile Include="CodeSwitchOfT.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>CodeSwitchOfT.tt</DependentUpon>
     </Compile>
     <Compile Include="CodeFeature.cs" />
-    <Compile Include="Events\CodeSwitchEvaluated.cs" />
+    <Compile Include="Contracts\CodeSwitchEvaluated.cs" />
     <Compile Include="Exceptions\ContextSwitchException.cs" />
     <Compile Include="Exceptions\FooidityException.cs" />
     <Compile Include="ICodeFeatureStateCache.cs" />

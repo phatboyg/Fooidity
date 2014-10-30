@@ -3,7 +3,7 @@
     using System;
     using System.Threading;
     using Configuration;
-    using Events;
+    using Contracts;
     using Internals;
     using Metadata;
 
@@ -14,9 +14,9 @@
     public class CodeFeatureStateCache :
         ICodeFeatureStateCache,
         IReloadCache,
+        IUpdateCodeFeatureCache,
         IObservable<CodeFeatureStateCacheLoaded>,
-        IObservable<CodeFeatureStateCacheUpdated>,
-        IUpdateCache<CodeFeatureStateUpdated>
+        IObservable<CodeFeatureStateCacheUpdated>
     {
         readonly Connectable<IObserver<CodeFeatureStateCacheLoaded>> _cacheLoaded;
         readonly ICodeFeatureStateCacheProvider _cacheProvider;
@@ -70,21 +70,41 @@
             _cacheLoaded.ForEach(x => x.OnNext(loaded));
         }
 
-        public void UpdateCache(CodeFeatureStateUpdated value)
+        public void UpdateCache(UpdateCodeFeature update)
         {
+            CodeFeatureId codeFeatureId = update.CodeFeatureId;
+
             CodeFeatureState existingFeatureState;
-            var featureId = new CodeFeatureId(value.Id);
-            if (_cache.TryGetState(featureId, out existingFeatureState))
+            if (_cache.TryGetState(codeFeatureId, out existingFeatureState))
             {
-                var updatedFeatureState = new UpdatedCodeFeatureState(featureId, value.Enabled);
+                if (existingFeatureState.Enabled == update.Enabled)
+                    return;
+
+                var updatedFeatureState = new UpdatedCodeFeatureState(codeFeatureId, update.Enabled);
 
                 DateTime startTime = DateTime.UtcNow;
-                bool updated = _cache.TryUpdate(featureId, updatedFeatureState, existingFeatureState);
+                bool updated = _cache.TryUpdate(codeFeatureId, updatedFeatureState, existingFeatureState);
                 DateTime endTime = DateTime.UtcNow;
 
                 if (updated)
                 {
-                    var updatedEvent = new Updated(startTime, endTime - startTime, updatedFeatureState.Id, updatedFeatureState.Enabled);
+                    var updatedEvent = new Updated(startTime, endTime - startTime, updatedFeatureState.Id, updatedFeatureState.Enabled,
+                        update.CommandId);
+
+                    _cacheUpdated.ForEach(x => x.OnNext(updatedEvent));
+                }
+            }
+            else
+            {
+                var featureState = new UpdatedCodeFeatureState(codeFeatureId, update.Enabled);
+
+                DateTime startTime = DateTime.UtcNow;
+                bool updated = _cache.TryAdd(codeFeatureId, featureState);
+                DateTime endTime = DateTime.UtcNow;
+
+                if (updated)
+                {
+                    var updatedEvent = new Updated(startTime, endTime - startTime, featureState.Id, featureState.Enabled, update.CommandId);
 
                     _cacheUpdated.ForEach(x => x.OnNext(updatedEvent));
                 }
@@ -95,15 +115,24 @@
         class Loaded :
             CodeFeatureStateCacheLoaded
         {
-            readonly int _count;
+            readonly int _codeFeatureCount;
             readonly TimeSpan _duration;
+            readonly Guid _eventId;
+            readonly Host _host;
             readonly DateTime _timestamp;
 
-            public Loaded(DateTime timestamp, TimeSpan duration, int count)
+            public Loaded(DateTime timestamp, TimeSpan duration, int codeFeatureCount)
             {
+                _eventId = Guid.NewGuid();
                 _timestamp = timestamp;
                 _duration = duration;
-                _count = count;
+                _codeFeatureCount = codeFeatureCount;
+                _host = HostMetadata.Host;
+            }
+
+            public Guid EventId
+            {
+                get { return _eventId; }
             }
 
             public DateTime Timestamp
@@ -116,9 +145,14 @@
                 get { return _duration; }
             }
 
-            public int Count
+            public int CodeFeatureCount
             {
-                get { return _count; }
+                get { return _codeFeatureCount; }
+            }
+
+            public Host Host
+            {
+                get { return _host; }
             }
         }
 
@@ -126,17 +160,33 @@
         class Updated :
             CodeFeatureStateCacheUpdated
         {
+            readonly Uri _codeFeatureId;
+            readonly Guid? _commandId;
             readonly TimeSpan _duration;
             readonly bool _enabled;
-            readonly Uri _id;
+            readonly Guid _eventId;
+            readonly Host _host;
             readonly DateTime _timestamp;
 
-            public Updated(DateTime timestamp, TimeSpan duration, CodeFeatureId id, bool enabled)
+            public Updated(DateTime timestamp, TimeSpan duration, CodeFeatureId codeFeatureId, bool enabled, Guid? commandId = null)
             {
+                _eventId = Guid.NewGuid();
                 _timestamp = timestamp;
                 _duration = duration;
-                _id = id;
+                _codeFeatureId = codeFeatureId;
                 _enabled = enabled;
+                _commandId = commandId;
+                _host = HostMetadata.Host;
+            }
+
+            public Host Host
+            {
+                get { return _host; }
+            }
+
+            public Guid EventId
+            {
+                get { return _eventId; }
             }
 
             public DateTime Timestamp
@@ -144,14 +194,19 @@
                 get { return _timestamp; }
             }
 
+            public Guid? CommandId
+            {
+                get { return _commandId; }
+            }
+
             public TimeSpan Duration
             {
                 get { return _duration; }
             }
 
-            public Uri Id
+            public Uri CodeFeatureId
             {
-                get { return _id; }
+                get { return _codeFeatureId; }
             }
 
             public bool Enabled

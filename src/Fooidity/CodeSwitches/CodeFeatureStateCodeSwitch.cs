@@ -2,7 +2,7 @@
 {
     using System;
     using Configuration;
-    using Events;
+    using Contracts;
 
 
     /// <summary>

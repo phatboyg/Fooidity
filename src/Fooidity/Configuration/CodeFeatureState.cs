@@ -1,8 +1,5 @@
 ﻿namespace Fooidity.Configuration
 {
-    using System;
-
-
     /// <summary>
     /// The state of a code feature, typically loaded from a configuration source
     /// </summary>

@@ -58,7 +58,7 @@ namespace Fooidity.Configuration
                                     }
                                 }
 
-                                var state = new ContextFeatureStateImpl(featureCache);
+                                var state = new ContextFeatureStateImpl(featureCache, instance.Key);
 
                                 cache.TryAdd(instance.Key, state);
                             }
@@ -99,10 +99,17 @@ namespace Fooidity.Configuration
             ContextFeatureState
         {
             readonly IReadOnlyCache<CodeFeatureId, CodeFeatureState> _cache;
+            string _key;
 
-            public ContextFeatureStateImpl(IReadOnlyCache<CodeFeatureId, CodeFeatureState> cache)
+            public ContextFeatureStateImpl(IReadOnlyCache<CodeFeatureId, CodeFeatureState> cache, string key)
             {
                 _cache = cache;
+                _key = key;
+            }
+
+            public string Key
+            {
+                get { return _key; }
             }
 
             public bool TryGetCodeFeatureState<TFeature>(out CodeFeatureState featureState)

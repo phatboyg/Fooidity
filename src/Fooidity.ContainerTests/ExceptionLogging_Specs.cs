@@ -5,7 +5,7 @@
         using System;
         using System.Linq;
         using Autofac;
-        using Events;
+        using Contracts;
         using Features;
         using NUnit.Framework;
 
@@ -30,7 +30,7 @@
             {
                 CodeSwitchEvaluated[] switches = _evaluated.ToArray();
 
-                Console.WriteLine("{0}\n{1}", exception.Message, string.Join(Environment.NewLine, switches.Select(x => x.Id)));
+                Console.WriteLine("{0}\n{1}", exception.Message, string.Join(Environment.NewLine, switches.Select(x => x.CodeFeatureId)));
             }
         }
 

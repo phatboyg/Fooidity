@@ -30,5 +30,13 @@
         /// <param name="featureState"></param>
         /// <param name="previousFeatureState"></param>
         bool TryUpdate(CodeFeatureId id, CodeFeatureState featureState, CodeFeatureState previousFeatureState);
+
+        /// <summary>
+        /// Add a new feature state
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="featureState"></param>
+        /// <returns></returns>
+        bool TryAdd(CodeFeatureId id, CodeFeatureState featureState);
     }
 }

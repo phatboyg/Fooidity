@@ -2,7 +2,8 @@
 {
     using System;
     using CodeSwitches;
-    using Events;
+    using Contracts;
+
 
     public class DependentCodeSwitch<T, T1> :
         CodeSwitch<T, T1>

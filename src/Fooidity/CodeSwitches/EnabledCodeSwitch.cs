@@ -1,7 +1,7 @@
 ﻿namespace Fooidity.CodeSwitches
 {
     using System;
-    using Events;
+    using Contracts;
 
 
     /// <summary>

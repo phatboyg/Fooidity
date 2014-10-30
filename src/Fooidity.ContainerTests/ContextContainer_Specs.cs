@@ -6,7 +6,7 @@
     using Autofac.Core;
     using AutofacIntegration;
     using Contexts;
-    using Events;
+    using Contracts;
     using Features;
     using NUnit.Framework;
 
@@ -46,7 +46,7 @@
                 IEnumerable<CodeSwitchEvaluated> codeSwitchesEvaluated = scope.GetCodeSwitchesEvaluated();
 
                 foreach (CodeSwitchEvaluated evaluated in codeSwitchesEvaluated)
-                    Console.WriteLine("{0}: {1}", evaluated.Id, evaluated.Enabled);
+                    Console.WriteLine("{0}: {1}", evaluated.CodeFeatureId, evaluated.Enabled);
             }
         }
 
@@ -64,7 +64,7 @@
                 IEnumerable<CodeSwitchEvaluated> codeSwitchesEvaluated = scope.GetCodeSwitchesEvaluated();
 
                 foreach (CodeSwitchEvaluated evaluated in codeSwitchesEvaluated)
-                    Console.WriteLine("{0}: {1}", evaluated.Id, evaluated.Enabled);
+                    Console.WriteLine("{0}: {1}", evaluated.CodeFeatureId, evaluated.Enabled);
             }
         }
 
@@ -85,7 +85,7 @@
             builder.RegisterModule<ConfigurationContextFeatureCacheModule<UserContext, UserContextKeyProvider>>();
 
             builder.RegisterCodeSwitch<DbEnabled>();
-            builder.RegisterContextSwitch<UseNewCodePath, UserContext>();
+            builder.RegisterContextSwitch<UseNewCodePath, UserContext>(true);
 
             builder.EnableCodeSwitchTracking();
 

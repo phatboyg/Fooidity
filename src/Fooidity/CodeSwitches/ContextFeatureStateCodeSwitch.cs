@@ -2,7 +2,8 @@
 {
     using System;
     using Configuration;
-    using Events;
+    using Contracts;
+    using Metadata;
 
 
     /// <summary>
@@ -43,24 +44,22 @@
 
         bool Evaluate()
         {
-            bool enabled = GetEnabled();
-
-            _evaluated.Evaluated(enabled);
-
-            return enabled;
-        }
-
-        bool GetEnabled()
-        {
             CodeFeatureState codeFeatureState;
             ContextFeatureState contextFeatureState;
             if (_contextCache.TryGetContextFeatureState(_context, out contextFeatureState))
             {
                 if (contextFeatureState.TryGetCodeFeatureState<TFeature>(out codeFeatureState))
+                {
+                    _evaluated.Evaluated(ContextMetadata<TContext>.Id, contextFeatureState.Key, codeFeatureState.Enabled);
                     return codeFeatureState.Enabled;
+                }
             }
 
-            return _cache.TryGetState<TFeature>(out codeFeatureState) && codeFeatureState.Enabled;
+            bool enabled = _cache.TryGetState<TFeature>(out codeFeatureState) && codeFeatureState.Enabled;
+
+            _evaluated.Evaluated(enabled);
+
+            return enabled;
         }
     }
 }
