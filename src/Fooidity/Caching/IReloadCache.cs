@@ -1,7 +1,10 @@
 ﻿namespace Fooidity.Caching
 {
+    using System.Threading.Tasks;
+
+
     public interface IReloadCache
     {
-        void ReloadCache();
+        Task ReloadCache();
     }
 }

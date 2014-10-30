@@ -2,6 +2,7 @@
 {
     using System;
     using System.Threading;
+    using System.Threading.Tasks;
     using Configuration;
     using Contracts;
     using Internals;
@@ -30,7 +31,7 @@
             _cacheLoaded = new Connectable<IObserver<CodeFeatureStateCacheLoaded>>();
             _cacheUpdated = new Connectable<IObserver<CodeFeatureStateCacheUpdated>>();
 
-            _cache = _cacheProvider.Load();
+            _cache = LoadCache().Result;
         }
 
         public bool TryGetState<TFeature>(out CodeFeatureState featureState)
@@ -57,10 +58,10 @@
             return _cacheUpdated.Connect(observer);
         }
 
-        public void ReloadCache()
+        public async Task ReloadCache()
         {
             DateTime startTime = DateTime.UtcNow;
-            ICodeFeatureStateCacheInstance cache = _cacheProvider.Load();
+            ICodeFeatureStateCacheInstance cache = await LoadCache();
             DateTime endTime = DateTime.UtcNow;
 
             Interlocked.Exchange(ref _cache, cache);
@@ -111,6 +112,17 @@
             }
         }
 
+        async Task<ICodeFeatureStateCacheInstance> LoadCache()
+        {
+            
+            var states = await _cacheProvider.Load();
+
+            var cache = new InMemoryCache<CodeFeatureId, CodeFeatureState>();
+            foreach (CodeFeatureState state in states)
+                cache.TryAdd(state.Id, state);
+
+            return new CodeFeatureStateCacheInstance(cache, _cacheProvider.GetDefaultState().Result);
+        }
 
         class Loaded :
             CodeFeatureStateCacheLoaded

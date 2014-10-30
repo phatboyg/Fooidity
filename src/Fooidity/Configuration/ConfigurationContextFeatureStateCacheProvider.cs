@@ -1,17 +1,18 @@
 namespace Fooidity.Configuration
 {
     using System;
+    using System.Collections.Generic;
     using System.Configuration;
+    using System.Threading.Tasks;
     using Caching;
-    using Caching.Internals;
 
 
     public class ConfigurationContextFeatureStateCacheProvider<TContext> :
         IContextFeatureStateCacheProvider<TContext>
     {
-        public IContextFeatureStateCacheInstance<TContext> Load()
+        public async Task<IEnumerable<Tuple<string, CodeFeatureState>>> Load()
         {
-            var cache = new InMemoryCache<string, ContextFeatureState>();
+            var results = new List<Tuple<string, CodeFeatureState>>();
 
             var configuration = ConfigurationManager.GetSection("fooidity") as FooidityConfiguration;
             if (configuration != null)
@@ -37,8 +38,6 @@ namespace Fooidity.Configuration
                             {
                                 ContextInstanceElement instance = context.Instances[instanceIndex];
 
-                                var featureCache = new InMemoryCache<CodeFeatureId, CodeFeatureState>();
-
                                 if (instance.Features != null)
                                 {
                                     for (int j = 0; j < instance.Features.Count; j++)
@@ -51,22 +50,18 @@ namespace Fooidity.Configuration
                                         if (codeFeatureType == null)
                                             throw new ConfigurationErrorsException("The feature type is not valid: " + feature.Id);
 
-                                        var codeState = new CodeFeatureStateImpl(featureId, feature.Enabled);
+                                        CodeFeatureState codeState = new CodeFeatureStateImpl(featureId, feature.Enabled);
 
-                                        featureCache.TryAdd(codeState.Id, codeState);
+                                        results.Add(Tuple.Create(instance.Key, codeState));
                                     }
                                 }
-
-                                var state = new ContextFeatureStateImpl(featureCache, instance.Key);
-
-                                cache.TryAdd(instance.Key, state);
                             }
                         }
                     }
                 }
             }
 
-            return new ContextFeatureStateCacheInstance<TContext>(cache);
+            return results;
         }
     }
 }

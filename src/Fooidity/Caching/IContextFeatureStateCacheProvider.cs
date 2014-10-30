@@ -1,7 +1,12 @@
 ﻿namespace Fooidity.Caching
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+
+
     public interface IContextFeatureStateCacheProvider<in TContext>
     {
-        IContextFeatureStateCacheInstance<TContext> Load();
+        Task<IEnumerable<Tuple<string, CodeFeatureState>>> Load();
     }
 }

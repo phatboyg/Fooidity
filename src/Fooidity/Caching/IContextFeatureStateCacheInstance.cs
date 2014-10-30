@@ -1,8 +1,5 @@
 ﻿namespace Fooidity.Caching
 {
-    using Configuration;
-
-
     public interface IContextFeatureStateCacheInstance<in TContext>
     {
         /// <summary>

@@ -21,13 +21,13 @@
 
         public void Consume(ContextCodeFeatureStateDisabled message)
         {
-            UpdateCodeFeature(message.CodeFeatureId, message.CommandId ?? message.EventId, message.Timestamp, message.ContextId, message.Key,
+            UpdateCodeFeature(message.CodeFeatureId, message.CommandId ?? message.EventId, message.Timestamp, message.ContextId, message.ContextKey,
                 false);
         }
 
         public void Consume(ContextCodeFeatureStateEnabled message)
         {
-            UpdateCodeFeature(message.CodeFeatureId, message.CommandId ?? message.EventId, message.Timestamp, message.ContextId, message.Key,
+            UpdateCodeFeature(message.CodeFeatureId, message.CommandId ?? message.EventId, message.Timestamp, message.ContextId, message.ContextKey,
                 true);
         }
 

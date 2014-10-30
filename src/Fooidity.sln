@@ -21,11 +21,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fooidity.ContainerTests", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fooidity.MassTransitIntegration", "Fooidity.MassTransitIntegration\Fooidity.MassTransitIntegration.csproj", "{99028725-9165-452F-9C7C-8F61D0946260}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fooidity.Management", "Fooidity.Management\Fooidity.Management.csproj", "{C4FDFF40-F330-49EB-A64E-51DB54F1FEEA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fooidity.Management.Web", "Fooidity.Management.Web\Fooidity.Management.Web.csproj", "{C4FDFF40-F330-49EB-A64E-51DB54F1FEEA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fooidity.Management.Contracts", "Fooidity.Management.Contracts\Fooidity.Management.Contracts.csproj", "{A13612E2-CEFB-4FFD-85D8-169A957740EC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fooidity.Management", "Fooidity.Management\Fooidity.Management.csproj", "{A13612E2-CEFB-4FFD-85D8-169A957740EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fooidity.Management.Features", "Fooidity.Management.Features\Fooidity.Management.Features.csproj", "{B4B9DBF8-C695-46B9-97EC-2A2C3A974BD4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fooidity.AzureIntegration", "Fooidity.AzureIntegration\Fooidity.AzureIntegration.csproj", "{948CF3FF-E0DB-4E06-A0B8-8DD1C74A502C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fooidity.AzureIntegration.Tests", "Fooidity.AzureIntegration.Tests\Fooidity.AzureIntegration.Tests.csproj", "{E374835B-60B5-4C05-88D5-F8D1669707F4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fooidity.Management.AzureIntegration", "Fooidity.Management.AzureIntegration\Fooidity.Management.AzureIntegration.csproj", "{64B970E0-FF51-46DF-9C29-FDBA522A126C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,10 +65,18 @@ Global
 		{A13612E2-CEFB-4FFD-85D8-169A957740EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A13612E2-CEFB-4FFD-85D8-169A957740EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A13612E2-CEFB-4FFD-85D8-169A957740EC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B4B9DBF8-C695-46B9-97EC-2A2C3A974BD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B4B9DBF8-C695-46B9-97EC-2A2C3A974BD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B4B9DBF8-C695-46B9-97EC-2A2C3A974BD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B4B9DBF8-C695-46B9-97EC-2A2C3A974BD4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{948CF3FF-E0DB-4E06-A0B8-8DD1C74A502C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{948CF3FF-E0DB-4E06-A0B8-8DD1C74A502C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{948CF3FF-E0DB-4E06-A0B8-8DD1C74A502C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{948CF3FF-E0DB-4E06-A0B8-8DD1C74A502C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E374835B-60B5-4C05-88D5-F8D1669707F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E374835B-60B5-4C05-88D5-F8D1669707F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E374835B-60B5-4C05-88D5-F8D1669707F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E374835B-60B5-4C05-88D5-F8D1669707F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64B970E0-FF51-46DF-9C29-FDBA522A126C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64B970E0-FF51-46DF-9C29-FDBA522A126C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64B970E0-FF51-46DF-9C29-FDBA522A126C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64B970E0-FF51-46DF-9C29-FDBA522A126C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

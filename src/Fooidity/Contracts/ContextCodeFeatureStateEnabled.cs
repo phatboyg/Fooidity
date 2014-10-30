@@ -33,6 +33,6 @@
         /// <summary>
         /// The context instance in which the code feature was updated
         /// </summary>
-        string Key { get; }
+        string ContextKey { get; }
     }
 }

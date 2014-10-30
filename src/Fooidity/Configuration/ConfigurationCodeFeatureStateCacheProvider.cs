@@ -1,24 +1,22 @@
 ﻿namespace Fooidity.Configuration
 {
     using System;
+    using System.Collections.Generic;
     using System.Configuration;
+    using System.Threading.Tasks;
     using Caching;
-    using Caching.Internals;
 
 
     public class ConfigurationCodeFeatureStateCacheProvider :
         ICodeFeatureStateCacheProvider
     {
-        public ICodeFeatureStateCacheInstance Load()
+        public async Task<IEnumerable<CodeFeatureState>> Load()
         {
-            var cache = new InMemoryCache<CodeFeatureId, CodeFeatureState>();
-            bool defaultState = false;
+            var codeFeatureStates = new List<CodeFeatureState>();
 
             var configuration = ConfigurationManager.GetSection("fooidity") as FooidityConfiguration;
             if (configuration != null)
             {
-                defaultState = configuration.DefaultState;
-
                 if (configuration.Features != null)
                 {
                     for (int i = 0; i < configuration.Features.Count; i++)
@@ -33,12 +31,23 @@
 
                         var state = new FeatureState(featureId, feature.Enabled);
 
-                        cache.TryAdd(state.Id, state);
+                        codeFeatureStates.Add(state);
                     }
                 }
             }
 
-            return new CodeFeatureStateCacheInstance(cache, defaultState);
+            return codeFeatureStates;
+        }
+
+        public async Task<bool> GetDefaultState()
+        {
+            bool defaultState = false;
+
+            var configuration = ConfigurationManager.GetSection("fooidity") as FooidityConfiguration;
+            if (configuration != null)
+                defaultState = configuration.DefaultState;
+
+            return defaultState;
         }
 
 

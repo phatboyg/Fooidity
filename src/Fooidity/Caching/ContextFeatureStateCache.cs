@@ -1,8 +1,10 @@
 ﻿namespace Fooidity.Caching
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Threading;
-    using Configuration;
+    using System.Threading.Tasks;
     using Contracts;
     using Internals;
     using Metadata;
@@ -33,7 +35,7 @@
             _cacheLoaded = new Connectable<IObserver<ContextCodeFeatureStateCacheLoaded>>();
             _cacheUpdated = new Connectable<IObserver<ContextCodeFeatureStateCacheUpdated>>();
 
-            _cache = _cacheProvider.Load();
+            _cache = LoadCache().Result;
         }
 
         public bool TryGetContextFeatureState(TContext context, out ContextFeatureState featureState)
@@ -53,10 +55,10 @@
             return _cacheUpdated.Connect(observer);
         }
 
-        public void ReloadCache()
+        public async Task ReloadCache()
         {
             DateTime startTime = DateTime.UtcNow;
-            IContextFeatureStateCacheInstance<TContext> cache = _cacheProvider.Load();
+            IContextFeatureStateCacheInstance<TContext> cache = await LoadCache();
             DateTime endTime = DateTime.UtcNow;
 
             Interlocked.Exchange(ref _cache, cache);
@@ -90,6 +92,23 @@
             }
             else
                 AddContextFeatureState(update, codeFeatureId);
+        }
+
+        async Task<IContextFeatureStateCacheInstance<TContext>> LoadCache()
+        {
+            IEnumerable<Tuple<string, CodeFeatureState>> states = await _cacheProvider.Load();
+
+            var contextCache = new InMemoryCache<string, ContextFeatureState>();
+            foreach (var context in states.GroupBy(x => x.Item1))
+            {
+                var cache = new InMemoryCache<CodeFeatureId, CodeFeatureState>();
+                foreach (CodeFeatureState state in context.Select(x => x.Item2))
+                    cache.TryAdd(state.Id, state);
+
+                contextCache.TryAdd(context.Key, new ContextFeatureStateImpl(cache, context.Key));
+            }
+
+            return new ContextFeatureStateCacheInstance<TContext>(contextCache);
         }
 
         void UpdateExistingCodeFeature(UpdateContextCodeFeature update, CodeFeatureId codeFeatureId, ContextFeatureState existingContext,
