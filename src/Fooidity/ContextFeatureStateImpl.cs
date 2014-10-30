@@ -1,4 +1,4 @@
-namespace Fooidity.Configuration
+namespace Fooidity
 {
     using Caching.Internals;
 

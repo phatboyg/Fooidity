@@ -1,4 +1,4 @@
-﻿namespace Fooidity.Configuration
+namespace Fooidity
 {
     public interface ContextFeatureState
     {

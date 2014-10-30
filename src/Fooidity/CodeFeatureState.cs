@@ -1,4 +1,4 @@
-﻿namespace Fooidity.Configuration
+﻿namespace Fooidity
 {
     /// <summary>
     /// The state of a code feature, typically loaded from a configuration source

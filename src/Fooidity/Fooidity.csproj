@@ -65,8 +65,10 @@
     <Compile Include="Caching\UpdateCodeFeature.cs" />
     <Compile Include="Caching\UpdateContextCodeFeature.cs" />
     <Compile Include="CodeFeatureId.cs" />
-    <Compile Include="Configuration\CodeFeatureStateImpl.cs" />
-    <Compile Include="Configuration\ContextFeatureStateImpl.cs" />
+    <Compile Include="CodeFeatureState.cs" />
+    <Compile Include="CodeFeatureStateImpl.cs" />
+    <Compile Include="ContextFeatureState.cs" />
+    <Compile Include="ContextFeatureStateImpl.cs" />
     <Compile Include="ContextId.cs" />
     <Compile Include="ContextProvider.cs" />
     <Compile Include="Contracts\ContextCodeFeatureStateCacheLoaded.cs" />
@@ -100,12 +102,10 @@
     <Compile Include="CodeSwitches\ToggleSwitchState.cs" />
     <Compile Include="CodeSwitchFactory.cs" />
     <Compile Include="CodeSwitchEvaluationObserver.cs" />
-    <Compile Include="Configuration\CodeFeatureState.cs" />
     <Compile Include="Configuration\ConfigurationCodeFeatureStateCacheProvider.cs" />
     <Compile Include="Configuration\ConfigurationContextFeatureStateCacheProvider.cs" />
     <Compile Include="Configuration\ContextElement.cs" />
     <Compile Include="Configuration\ContextElementCollection.cs" />
-    <Compile Include="Configuration\ContextFeatureState.cs" />
     <Compile Include="Configuration\ContextInstanceElement.cs" />
     <Compile Include="Configuration\ContextInstanceElementCollection.cs" />
     <Compile Include="Configuration\DefaultCodeFeatureState.cs" />
