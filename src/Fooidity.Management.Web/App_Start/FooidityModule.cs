@@ -14,7 +14,7 @@
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<AzureStorageAccountProvider>()
-                .WithParameter("connectionName", "fooidity:Storage")
+                .WithParameter("connectionName", "Fooidity.AzureIntegration.ConnectionString")
                 .As<ICloudStorageAccountProvider>();
 
             builder.RegisterType<AzureTableProvider>()
