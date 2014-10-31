@@ -6,6 +6,9 @@ build_output/*
 **/*.user
 **/**/*.user
 
+csx
+rcf
+
 bin
 obj
 _ReSharper*
@@ -21,6 +24,7 @@ _ReSharper*
 *.orig
 *.user
 
+*.nupkg
 src/.nuget/nuget.exe
 src/packages/**/*
 docs/build/**/*

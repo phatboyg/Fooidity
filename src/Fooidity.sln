@@ -31,6 +31,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fooidity.AzureIntegration.T
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fooidity.Management.AzureIntegration", "Fooidity.Management.AzureIntegration\Fooidity.Management.AzureIntegration.csproj", "{64B970E0-FF51-46DF-9C29-FDBA522A126C}"
 EndProject
+Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "Fooidity.CloudService", "Fooidity.CloudService\Fooidity.CloudService.ccproj", "{DAF31B66-88C1-43C8-BA3C-B863643B495D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -77,6 +79,10 @@ Global
 		{64B970E0-FF51-46DF-9C29-FDBA522A126C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{64B970E0-FF51-46DF-9C29-FDBA522A126C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{64B970E0-FF51-46DF-9C29-FDBA522A126C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DAF31B66-88C1-43C8-BA3C-B863643B495D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAF31B66-88C1-43C8-BA3C-B863643B495D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DAF31B66-88C1-43C8-BA3C-B863643B495D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DAF31B66-88C1-43C8-BA3C-B863643B495D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
