@@ -1,10 +1,11 @@
 ﻿namespace Fooidity.Management.Web
 {
     using Autofac;
+    using AzureIntegration;
     using Caching;
-    using Configuration;
     using Contexts;
     using Features;
+    using Fooidity.AzureIntegration;
 
 
     class FooidityModule :
@@ -12,13 +13,21 @@
     {
         protected override void Load(ContainerBuilder builder)
         {
+            builder.RegisterType<AzureStorageAccountProvider>()
+                .WithParameter("connectionName", "fooidity:Storage")
+                .As<ICloudStorageAccountProvider>();
+
+            builder.RegisterType<AzureTableProvider>()
+                .As<ICloudTableProvider>()
+                .SingleInstance();
+
             builder.RegisterType<CodeFeatureStateCache>()
                 .As<ICodeFeatureStateCache>()
                 .As<IReloadCache>()
                 .As<IUpdateCodeFeatureCache>()
                 .SingleInstance();
 
-            builder.RegisterType<ConfigurationCodeFeatureStateCacheProvider>()
+            builder.RegisterType<AzureCodeFeatureStateCacheProvider>()
                 .As<ICodeFeatureStateCacheProvider>();
 
             builder.RegisterType<UserContextKeyProvider>()
@@ -30,8 +39,12 @@
                 .As<IUpdateContextFeatureCache>()
                 .SingleInstance();
 
-            builder.RegisterType<ConfigurationContextFeatureStateCacheProvider<UserContext>>()
+            builder.RegisterType<AzureContextFeatureStateCacheProvider<UserContext>>()
                 .As<IContextFeatureStateCacheProvider<UserContext>>();
+
+
+            builder.RegisterType<UpdateCodeFeatureStateCommandHandler>()
+                .As<ICommandHandler<UpdateCodeFeatureState>>();
 
             builder.RegisterContextSwitch<Feature_NewScreen, UserContext>();
         }

@@ -62,7 +62,7 @@
         [TestFixtureSetUp]
         public void Setup()
         {
-            _storageAccountProvider = new AzureStorageAccountProvider("fooidity");
+            _storageAccountProvider = new AzureStorageAccountProvider("fooidity:Storage");
             _tableProvider = new AzureTableProvider(_storageAccountProvider, "test");
         }
 

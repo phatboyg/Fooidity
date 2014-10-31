@@ -1,6 +1,8 @@
 ﻿namespace Fooidity.AzureIntegration
 {
+    using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
@@ -33,26 +35,35 @@
         async Task<IEnumerable<CodeFeatureState>> GetCodeFeatureStates(CloudTable cloudTable,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            TableQuery<CodeFeatureStateEntity> query = new TableQuery<CodeFeatureStateEntity>()
-                .Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, "Current"));
-
-            var codeFeatureStates = new List<CodeFeatureState>();
-
-            TableContinuationToken token = null;
-
-            do
+            try
             {
-                TableQuerySegment<CodeFeatureStateEntity> result =
-                    await cloudTable.ExecuteQuerySegmentedAsync(query, token, cancellationToken);
+                TableQuery<CodeFeatureStateEntity> query = new TableQuery<CodeFeatureStateEntity>()
+                    .Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, "Current"));
 
-                codeFeatureStates.AddRange(
-                    result.Select(entity => new CodeFeatureStateImpl(new CodeFeatureId(entity.CodeFeatureId), entity.Enabled)));
+                var codeFeatureStates = new List<CodeFeatureState>();
 
-                token = result.ContinuationToken;
+                TableContinuationToken token = null;
+
+                do
+                {
+                    TableQuerySegment<CodeFeatureStateEntity> result =
+                        cloudTable.ExecuteQuerySegmented(query, token);
+
+                    codeFeatureStates.AddRange(
+                        result.Select(entity => new CodeFeatureStateImpl(new CodeFeatureId(entity.CodeFeatureId), entity.Enabled)));
+
+                    token = result.ContinuationToken;
+                }
+                while (token != null);
+
+                return codeFeatureStates;
             }
-            while (token != null);
+            catch (Exception ex)
+            {
+                Trace.WriteLine(ex.Message);
 
-            return codeFeatureStates;
+                throw;
+            }
         }
     }
 }

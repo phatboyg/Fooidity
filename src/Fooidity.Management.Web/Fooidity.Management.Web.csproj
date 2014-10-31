@@ -153,13 +153,13 @@
     <Compile Include="Contexts\UserContext.cs" />
     <Compile Include="Contexts\UserContextKeyProvider.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\FeaturesController.cs" />
+    <Compile Include="Controllers\CodeFeatureController.cs" />
     <Compile Include="Features\Feature_NewScreen.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Logging\UnhandledExceptionLogger.cs" />
-    <Compile Include="Models\Feature.cs" />
+    <Compile Include="Models\CodeFeatureModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -197,6 +197,14 @@
     <ProjectReference Include="..\Fooidity.AutofacIntegration\Fooidity.AutofacIntegration.csproj">
       <Project>{9a495bbf-d575-4c4e-bd7d-52e5926d180d}</Project>
       <Name>Fooidity.AutofacIntegration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fooidity.AzureIntegration\Fooidity.AzureIntegration.csproj">
+      <Project>{948cf3ff-e0db-4e06-a0b8-8dd1c74a502c}</Project>
+      <Name>Fooidity.AzureIntegration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fooidity.Management.AzureIntegration\Fooidity.Management.AzureIntegration.csproj">
+      <Project>{64b970e0-ff51-46df-9c29-fdba522a126c}</Project>
+      <Name>Fooidity.Management.AzureIntegration</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fooidity.Management\Fooidity.Management.csproj">
       <Project>{a13612e2-cefb-4ffd-85d8-169a957740ec}</Project>
