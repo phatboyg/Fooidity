@@ -2,7 +2,6 @@
 {
     using System;
     using Caching;
-    using Contracts;
     using Management;
     using Management.AzureIntegration;
     using Metadata;

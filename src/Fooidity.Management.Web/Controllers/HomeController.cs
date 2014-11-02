@@ -1,7 +1,7 @@
 ﻿namespace Fooidity.Management.Web.Controllers
 {
     using System.Web.Mvc;
-    using Features;
+    using Switching.Features;
 
 
     public class HomeController :

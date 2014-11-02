@@ -33,6 +33,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fooidity.Management.AzureIn
 EndProject
 Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "Fooidity.CloudService", "Fooidity.CloudService\Fooidity.CloudService.ccproj", "{DAF31B66-88C1-43C8-BA3C-B863643B495D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fooidity.Management.Web.Switching", "Fooidity.Management.Web.Switching\Fooidity.Management.Web.Switching.csproj", "{E1B1E96A-2F2E-4D59-9F18-76BC7432C50B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +85,10 @@ Global
 		{DAF31B66-88C1-43C8-BA3C-B863643B495D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DAF31B66-88C1-43C8-BA3C-B863643B495D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DAF31B66-88C1-43C8-BA3C-B863643B495D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1B1E96A-2F2E-4D59-9F18-76BC7432C50B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1B1E96A-2F2E-4D59-9F18-76BC7432C50B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1B1E96A-2F2E-4D59-9F18-76BC7432C50B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1B1E96A-2F2E-4D59-9F18-76BC7432C50B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

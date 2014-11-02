@@ -1,10 +1,13 @@
 ﻿namespace Fooidity.Management.Web
 {
     using System;
+    using System.Collections.Generic;
     using System.Reflection;
     using Autofac;
     using Autofac.Integration.Mvc;
     using Autofac.Integration.WebApi;
+    using AzureIntegration;
+    using Management.Models;
 
 
     public static class WebAppContainer
@@ -24,6 +27,14 @@
             builder.RegisterControllers(executingAssembly);
 
             builder.RegisterModule<FooidityModule>();
+
+
+            builder.RegisterType<UpdateCodeFeatureStateCommandHandler>()
+                .As<ICommandHandler<UpdateCodeFeatureState>>();
+
+            builder.RegisterType<QueryCodeFeatureStateQueryHandler>()
+                .As<IQueryHandler<QueryCodeFeatureState, IEnumerable<CodeFeatureStateModel>>>();
+
 
             return builder.Build();
         }

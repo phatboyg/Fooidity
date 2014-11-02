@@ -1,11 +1,10 @@
 ﻿namespace Fooidity.Management.Web
 {
     using Autofac;
-    using AzureIntegration;
     using Caching;
-    using Contexts;
-    using Features;
     using Fooidity.AzureIntegration;
+    using Switching.Contexts;
+    using Switching.Features;
 
 
     class FooidityModule :
@@ -41,10 +40,6 @@
 
             builder.RegisterType<AzureContextFeatureStateCacheProvider<UserContext>>()
                 .As<IContextFeatureStateCacheProvider<UserContext>>();
-
-
-            builder.RegisterType<UpdateCodeFeatureStateCommandHandler>()
-                .As<ICommandHandler<UpdateCodeFeatureState>>();
 
             builder.RegisterContextSwitch<Feature_NewScreen, UserContext>();
         }

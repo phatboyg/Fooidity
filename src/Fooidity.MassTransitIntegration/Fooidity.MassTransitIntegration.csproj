@@ -46,8 +46,10 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SolutionVersion.cs">
+      <Link>Properties\SolutionVersion.cs</Link>
+    </Compile>
     <Compile Include="ContextConsumerFactory.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UpdateCodeFeatureCacheConsumer.cs" />
     <Compile Include="UpdateContextFeatureCacheConsumer.cs" />
   </ItemGroup>

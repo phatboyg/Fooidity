@@ -1,4 +1,4 @@
-﻿namespace Fooidity.Management.Web.Contexts
+﻿namespace Fooidity.Management.Web.Switching.Contexts
 {
     public interface UserContext
     {

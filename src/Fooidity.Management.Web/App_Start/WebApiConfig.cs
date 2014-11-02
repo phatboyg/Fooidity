@@ -9,7 +9,7 @@
     {
         public static void Register(HttpConfiguration config)
         {
-            //config.SuppressDefaultHostAuthentication();
+            // config.SuppressDefaultHostAuthentication();
 
             config.MapHttpAttributeRoutes();
 

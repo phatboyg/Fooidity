@@ -69,6 +69,9 @@
     <Reference Include="Microsoft.Owin.Host.SystemWeb">
       <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.0.0\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Owin.Security">
+      <HintPath>..\packages\Microsoft.Owin.Security.2.1.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.WindowsAzure.Configuration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.WindowsAzure.ConfigurationManager.2.0.3\lib\net40\Microsoft.WindowsAzure.Configuration.dll</HintPath>
     </Reference>
@@ -88,6 +91,9 @@
     </Reference>
     <Reference Include="Owin">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin.Security.Providers">
+      <HintPath>..\packages\Owin.Security.Providers.1.9.0\lib\net45\Owin.Security.Providers.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -173,23 +179,25 @@
     <Folder Include="Areas\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SolutionVersion.cs">
+      <Link>Properties\SolutionVersion.cs</Link>
+    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\FooidityModule.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="App_Start\WebAppContainer.cs" />
-    <Compile Include="Contexts\UserContext.cs" />
-    <Compile Include="Contexts\UserContextKeyProvider.cs" />
+    <Compile Include="Controllers\FeaturesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\CodeFeatureController.cs" />
-    <Compile Include="Features\Feature_NewScreen.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Logging\UnhandledExceptionLogger.cs" />
     <Compile Include="Models\CodeFeatureModel.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Models\CodeFeatureStateViewModel.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -221,6 +229,7 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Views\Features\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fooidity.AutofacIntegration\Fooidity.AutofacIntegration.csproj">
@@ -234,6 +243,10 @@
     <ProjectReference Include="..\Fooidity.Management.AzureIntegration\Fooidity.Management.AzureIntegration.csproj">
       <Project>{64b970e0-ff51-46df-9c29-fdba522a126c}</Project>
       <Name>Fooidity.Management.AzureIntegration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fooidity.Management.Web.Switching\Fooidity.Management.Web.Switching.csproj">
+      <Project>{e1b1e96a-2f2e-4d59-9f18-76bc7432c50b}</Project>
+      <Name>Fooidity.Management.Web.Switching</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fooidity.Management\Fooidity.Management.csproj">
       <Project>{a13612e2-cefb-4ffd-85d8-169a957740ec}</Project>
