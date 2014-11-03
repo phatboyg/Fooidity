@@ -3,13 +3,15 @@
     using System.Web.Http;
     using System.Web.Http.ExceptionHandling;
     using Logging;
+    using Microsoft.Owin.Security.OAuth;
 
 
     public static class WebApiConfig
     {
         public static void Register(HttpConfiguration config)
         {
-            // config.SuppressDefaultHostAuthentication();
+            config.SuppressDefaultHostAuthentication();
+            config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
 
             config.MapHttpAttributeRoutes();
 

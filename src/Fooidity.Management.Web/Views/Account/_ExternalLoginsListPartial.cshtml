@@ -1,0 +1,29 @@
+﻿@using Microsoft.Owin.Security
+@model Fooidity.Management.Web.Models.ExternalLoginListViewModel
+
+<h4>Authentication Providers</h4>
+<hr />
+@{
+    AuthenticationDescription[] providers = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes().ToArray();
+    if (providers.Any())
+    {
+        using (Html.BeginForm(Model.Action, "Account", new {Model.ReturnUrl}))
+        {
+            @Html.AntiForgeryToken()
+            <div id="socialLoginList">
+                <p>
+                    @foreach (AuthenticationDescription provider in providers)
+                    {
+                        <button type="submit" class="btn btn-default" id="@provider.AuthenticationType" name="provider" value="@provider.AuthenticationType" title="Log in using your @provider.Caption account">@provider.AuthenticationType</button>
+                    }
+                </p>
+            </div>
+        }
+    }
+    else
+    {
+        <div>
+            <p>There are no external authentication providers configured.</p>
+        </div>
+    }
+}

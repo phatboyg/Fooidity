@@ -8,4 +8,10 @@ namespace Fooidity.Management
     {
         Task Execute(T command, CancellationToken cancellationToken = default(CancellationToken));
     }
+
+
+    public interface ICommandHandler<in T, TResult>
+    {
+        Task<TResult> Execute(T command, CancellationToken cancellationToken = default(CancellationToken));
+    }
 }

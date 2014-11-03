@@ -16,6 +16,8 @@
     </Imports>
     <ConfigurationSettings>
       <Setting name="Fooidity.AzureIntegration.ConnectionString" />
+      <Setting name="GitHub.ClientId" />
+      <Setting name="GitHub.ClientSecret" />
     </ConfigurationSettings>
   </WebRole>
 </ServiceDefinition>

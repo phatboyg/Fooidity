@@ -58,6 +58,8 @@
             readonly Guid _commandId;
             readonly bool _enabled;
             readonly DateTime _timestamp;
+            Uri _organizationId;
+            Uri _environmentId;
 
             public UpdateCommand(string codeFeatureId, bool enabled)
             {
@@ -86,6 +88,16 @@
             public bool Enabled
             {
                 get { return _enabled; }
+            }
+
+            public Uri OrganizationId
+            {
+                get { return _organizationId; }
+            }
+
+            public Uri EnvironmentId
+            {
+                get { return _environmentId; }
             }
         }
 

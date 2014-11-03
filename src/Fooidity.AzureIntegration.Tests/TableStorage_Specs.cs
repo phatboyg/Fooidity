@@ -77,13 +77,18 @@
             readonly CodeFeatureId _codeFeatureId;
             readonly Guid _commandId;
             readonly bool _enabled;
+            readonly Uri _environmentId;
+            readonly Uri _organizationId;
             readonly DateTime _timestamp;
 
-            public Update(CodeFeatureId codeFeatureId, DateTime timestamp, bool enabled, Guid? commandId = null)
+            public Update(CodeFeatureId codeFeatureId, DateTime timestamp, bool enabled, Uri organizationId = null, Uri environmentId = null,
+                Guid? commandId = null)
             {
                 _codeFeatureId = codeFeatureId;
                 _commandId = commandId ?? Guid.NewGuid();
                 _enabled = enabled;
+                _organizationId = organizationId;
+                _environmentId = environmentId;
                 _timestamp = timestamp;
             }
 
@@ -105,6 +110,16 @@
             public bool Enabled
             {
                 get { return _enabled; }
+            }
+
+            public Uri OrganizationId
+            {
+                get { return _organizationId; }
+            }
+
+            public Uri EnvironmentId
+            {
+                get { return _environmentId; }
             }
         }
     }

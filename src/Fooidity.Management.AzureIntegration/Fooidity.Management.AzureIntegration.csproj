@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.1.0\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Data.Edm, Version=5.6.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.Data.Edm.5.6.2\lib\net40\Microsoft.Data.Edm.dll</HintPath>
@@ -67,8 +70,44 @@
     <Compile Include="..\SolutionVersion.cs">
       <Link>Properties\SolutionVersion.cs</Link>
     </Compile>
+    <Compile Include="AzureManagementSettings.cs" />
+    <Compile Include="Commands\CreateApplicationCommandHandler.cs" />
+    <Compile Include="Commands\CreateOrganizationCommandHandler.cs" />
+    <Compile Include="DefaultAzureManagementSettings.cs" />
+    <Compile Include="Entities\ApplicationEntity.cs" />
+    <Compile Include="Entities\OrganizationApplicationIndexEntity.cs" />
+    <Compile Include="Entities\OrganizationEntity.cs" />
+    <Compile Include="Entities\OrganizationUserEntity.cs" />
+    <Compile Include="Entities\UserApplicationIndexEntity.cs" />
+    <Compile Include="Entities\UserOrganizationIndexEntity.cs" />
+    <Compile Include="Exceptions\DuplicateEmailException.cs" />
+    <Compile Include="Exceptions\DuplicateUsernameException.cs" />
+    <Compile Include="Exceptions\OrganizationNotFoundException.cs" />
+    <Compile Include="Queries\GetOrganizationQueryHandler.cs" />
+    <Compile Include="Queries\ListApplicationsQueryHandler.cs" />
+    <Compile Include="Queries\ListOrganizationsQueryHandler.cs" />
     <Compile Include="QueryCodeFeatureStateQueryHandler.cs" />
+    <Compile Include="TableQueryExtensions.cs" />
     <Compile Include="UpdateCodeFeatureStateCommandHandler.cs" />
+    <Compile Include="UserStore\Encoding\Base32BinaryEncodingFormatter.cs" />
+    <Compile Include="UserStore\Encoding\Base32BinaryEncodingParser.cs" />
+    <Compile Include="UserStore\Encoding\HashedHexBinaryEncodingFormatter.cs" />
+    <Compile Include="UserStore\Encoding\HexBinaryEncodingFormatter.cs" />
+    <Compile Include="UserStore\Encoding\HexBinaryEncodingParser.cs" />
+    <Compile Include="UserStore\Encoding\IBinaryEncodingFormatter.cs" />
+    <Compile Include="UserStore\Encoding\IBinaryEncodingParser.cs" />
+    <Compile Include="UserStore\NonSerializedTableStoreAttribute.cs" />
+    <Compile Include="UserStore\UserEntity.cs" />
+    <Compile Include="UserStore\EncodingExtensions.cs" />
+    <Compile Include="UserStore\UserClaimEntity.cs" />
+    <Compile Include="UserStore\UserEmailIndexEntity.cs" />
+    <Compile Include="UserStore\UserLoginEntity.cs" />
+    <Compile Include="UserStore\UserNameIndexEntity.cs" />
+    <Compile Include="UserStore\UserLoginProviderKeyIndexEntity.cs" />
+    <Compile Include="UserStore\UserRoleEntity.cs" />
+    <Compile Include="UserStore\TableUserStore.cs" />
+    <Compile Include="UserStore\Encoding\ZBase32BinaryEncodingFormatter.cs" />
+    <Compile Include="UserStore\Encoding\ZBase32BinaryEncodingParser.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fooidity.AzureIntegration\Fooidity.AzureIntegration.csproj">

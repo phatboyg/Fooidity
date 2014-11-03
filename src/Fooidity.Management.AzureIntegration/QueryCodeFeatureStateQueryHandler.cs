@@ -3,11 +3,9 @@
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
-    using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
     using Fooidity.AzureIntegration;
-    using Microsoft.WindowsAzure.Storage;
     using Microsoft.WindowsAzure.Storage.Table;
     using Models;
 
@@ -30,7 +28,7 @@
             return GetCodeFeatureStates(cloudTable, cancellationToken);
         }
 
-        async Task<IEnumerable<CodeFeatureStateModel>> GetCodeFeatureStates(CloudTable cloudTable,
+        Task<IEnumerable<CodeFeatureStateModel>> GetCodeFeatureStates(CloudTable cloudTable,
             CancellationToken cancellationToken = default(CancellationToken))
         {
             try
@@ -38,28 +36,10 @@
                 TableQuery<CodeFeatureStateEntity> query = new TableQuery<CodeFeatureStateEntity>()
                     .Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, "Current"));
 
-                var codeFeatureStates = new List<CodeFeatureStateModel>();
-
-                TableContinuationToken token = null;
-                var options = new TableRequestOptions();
-                var context = new OperationContext
-                {
-                    ClientRequestID = Guid.NewGuid().ToString(),
-                };
-                do
-                {
-                    TableQuerySegment<CodeFeatureStateEntity> result =
-                        await cloudTable.ExecuteQuerySegmentedAsync(query, token, options, context, cancellationToken);
-
-                    codeFeatureStates.AddRange(result.Select(
-                        entity => new CodeFeatureStateImpl(new CodeFeatureId(entity.CodeFeatureId), entity.Timestamp.UtcDateTime,
-                            entity.Enabled)));
-
-                    token = result.ContinuationToken;
-                }
-                while (token != null);
-
-                return codeFeatureStates;
+                return cloudTable.ExecuteQueryAsync(query,
+                    entity => (CodeFeatureStateModel)new CodeFeatureStateImpl(new CodeFeatureId(entity.CodeFeatureId),
+                        entity.Timestamp.UtcDateTime, entity.Enabled),
+                    cancellationToken);
             }
             catch (Exception ex)
             {

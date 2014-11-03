@@ -12,5 +12,9 @@
         CodeFeatureId CodeFeatureId { get; }
 
         bool Enabled { get; }
+
+        Uri OrganizationId { get; }
+
+        Uri EnvironmentId { get; }
     }
 }
