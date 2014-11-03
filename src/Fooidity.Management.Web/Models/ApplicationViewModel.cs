@@ -13,6 +13,8 @@
 
         public string OrganizationId { get; set; }
 
+        public List<string> Keys { get; set; }
+
         public List<OrganizationViewModel> Organizations { get; set; }
 
         public IEnumerable<SelectListItem> OrganizationItems

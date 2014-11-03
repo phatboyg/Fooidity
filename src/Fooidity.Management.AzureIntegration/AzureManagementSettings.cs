@@ -9,5 +9,7 @@ namespace Fooidity.Management.AzureIntegration
         string UserOrganizationIndexTableName { get; }
         string OrganizationApplicationIndexTableName { get; }
         string UserApplicationIndexTableName { get; }
+        string OrganizationApplicationKeyTableName { get; }
+        string KeyOrganizationApplicationIndexTableName { get; }
     }
 }

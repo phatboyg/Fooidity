@@ -8,6 +8,16 @@ namespace Fooidity.Management.AzureIntegration
             get { return "userAppIndex"; }
         }
 
+        public string OrganizationApplicationKeyTableName
+        {
+            get { return "orgAppKey"; }
+        }
+
+        public string KeyOrganizationApplicationIndexTableName
+        {
+            get { return "keyApp"; }
+        }
+
         public string ApplicationTableName
         {
             get { return "app"; }

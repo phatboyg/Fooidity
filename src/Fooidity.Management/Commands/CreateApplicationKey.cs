@@ -3,7 +3,7 @@
     using System;
 
 
-    public interface CreateApplication
+    public interface CreateApplicationKey
     {
         Guid CommandId { get; }
 
@@ -13,6 +13,6 @@
 
         string OrganizationId { get; }
 
-        string ApplicationName { get; }
+        string ApplicationId { get; }
     }
 }

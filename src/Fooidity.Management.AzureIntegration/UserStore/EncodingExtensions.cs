@@ -17,6 +17,16 @@
             }
         }
 
+        public static string ToSha256(this byte[] data)
+        {
+            using (var hasher = new SHA256Managed())
+            {
+                byte[] hash = hasher.ComputeHash(data, 0, data.Length);
+
+                return hash.ToBase32();
+            }
+        }
+
         /// <summary>
         /// Encode the byte array as a ZBase32 string
         /// </summary>

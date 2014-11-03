@@ -33,8 +33,34 @@
         <dd>
             @Html.DisplayFor(model => model.OrganizationId)
         </dd>
-
     </dl>
+
+    <h4>Application Keys</h4>
+    <hr />
+    <p>
+        @Html.ActionLink("Create New", "CreateKey", new { organizationId = Model.OrganizationId, applicationId = Model.Id })
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                Key
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (string key in Model.Keys)
+        {
+            <tr>
+                <td>
+                    @key
+                </td>
+                <td>
+                    @*                        @Html.ActionLink("Details", "Details", new { id = item.Id })*@
+                </td>
+            </tr>
+        }
+
+    </table>
 </div>
 <p>
     @Html.ActionLink("Back to List", "Index")

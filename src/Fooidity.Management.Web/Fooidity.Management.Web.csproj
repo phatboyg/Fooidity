@@ -220,6 +220,7 @@
     <Compile Include="Models\ApplicationViewModel.cs" />
     <Compile Include="Models\CodeFeatureModel.cs" />
     <Compile Include="Models\CodeFeatureStateViewModel.cs" />
+    <Compile Include="Models\CreateApplicationKeyViewModel.cs" />
     <Compile Include="Models\ExternalLoginListViewModel.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\LoginViewModel.cs" />

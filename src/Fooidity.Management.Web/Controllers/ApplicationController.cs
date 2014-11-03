@@ -18,22 +18,31 @@
         Controller
     {
         readonly ICommandHandler<CreateApplication, UserOrganizationApplication> _createApplication;
+        readonly ICommandHandler<CreateApplicationKey, OrganizationApplicationKey> _createApplicationKey;
+        readonly IQueryHandler<GetApplication, UserOrganizationApplication> _getApplication;
+        readonly IQueryHandler<ListApplications, IEnumerable<UserOrganizationApplication>> _getApplications;
+        readonly IQueryHandler<ListApplicationKeys, IEnumerable<OrganizationApplicationKey>> _listApplicationKeys;
         readonly IQueryHandler<ListOrganizations, IEnumerable<Organization>> _listOrganizations;
-        readonly IQueryHandler<ListApplications, IEnumerable<UserOrganizationApplication>> _queryHandler;
 
-        public ApplicationController(IQueryHandler<ListApplications, IEnumerable<UserOrganizationApplication>> queryHandler,
+        public ApplicationController(IQueryHandler<ListApplications, IEnumerable<UserOrganizationApplication>> getApplications,
             IQueryHandler<ListOrganizations, IEnumerable<Organization>> listOrganizations,
-            ICommandHandler<CreateApplication, UserOrganizationApplication> createApplication)
+            ICommandHandler<CreateApplication, UserOrganizationApplication> createApplication,
+            IQueryHandler<GetApplication, UserOrganizationApplication> getApplication,
+            IQueryHandler<ListApplicationKeys, IEnumerable<OrganizationApplicationKey>> listApplicationKeys,
+            ICommandHandler<CreateApplicationKey, OrganizationApplicationKey> createApplicationKey)
         {
-            _queryHandler = queryHandler;
+            _getApplications = getApplications;
             _listOrganizations = listOrganizations;
             _createApplication = createApplication;
+            _getApplication = getApplication;
+            _listApplicationKeys = listApplicationKeys;
+            _createApplicationKey = createApplicationKey;
         }
 
         public async Task<ActionResult> Index(CancellationToken cancellationToken = default(CancellationToken))
         {
             IEnumerable<UserOrganizationApplication> results =
-                await _queryHandler.Execute(new ListApplicationsQuery(User.Identity.GetUserId()), cancellationToken);
+                await _getApplications.Execute(new ListApplicationsQuery(User.Identity.GetUserId()), cancellationToken);
 
             return View(results.Select(x => new ApplicationViewModel
             {
@@ -43,9 +52,21 @@
             }));
         }
 
-        public ActionResult Details(string id)
+        public async Task<ActionResult> Details(string id, CancellationToken cancellationToken)
         {
-            return View();
+            var query = new GetApplicationQuery(User.Identity.GetUserId(), id);
+
+            UserOrganizationApplication application = await _getApplication.Execute(query, cancellationToken);
+
+            IEnumerable<OrganizationApplicationKey> applicationKeys = await _listApplicationKeys.Execute(query, cancellationToken);
+
+            return View(new ApplicationViewModel
+            {
+                Id = application.ApplicationId,
+                Name = application.ApplicationName,
+                OrganizationId = application.OrganizationId,
+                Keys = applicationKeys.Select(x => x.Key).ToList(),
+            });
         }
 
         public async Task<ActionResult> Create(CancellationToken cancellationToken)
@@ -72,6 +93,20 @@
             }
 
             return View();
+        }
+
+        public async Task<ActionResult> CreateKey(CreateApplicationKeyViewModel model, CancellationToken cancellationToken)
+        {
+            if (ModelState.IsValid)
+            {
+                var command = new CreateApplicationKeyCommand(User.Identity.GetUserId(), model.OrganizationId, model.ApplicationId);
+
+                OrganizationApplicationKey key = await _createApplicationKey.Execute(command, cancellationToken);
+
+                return RedirectToAction("Details", new {id = model.ApplicationId});
+            }
+
+            return RedirectToAction("Index");
         }
 
 
@@ -117,6 +152,77 @@
             public string ApplicationName
             {
                 get { return _applicationName; }
+            }
+        }
+
+
+        class CreateApplicationKeyCommand :
+            CreateApplicationKey
+        {
+            readonly string _applicationId;
+            readonly Guid _commandId;
+            readonly string _organizationId;
+            readonly DateTime _timestamp;
+            readonly string _userId;
+
+            public CreateApplicationKeyCommand(string userId, string organizationId, string applicationId)
+            {
+                _commandId = Guid.NewGuid();
+                _timestamp = DateTime.UtcNow;
+
+                _userId = userId;
+                _organizationId = organizationId;
+                _applicationId = applicationId;
+            }
+
+            public string ApplicationId
+            {
+                get { return _applicationId; }
+            }
+
+            public Guid CommandId
+            {
+                get { return _commandId; }
+            }
+
+            public DateTime Timestamp
+            {
+                get { return _timestamp; }
+            }
+
+            public string UserId
+            {
+                get { return _userId; }
+            }
+
+            public string OrganizationId
+            {
+                get { return _organizationId; }
+            }
+        }
+
+
+        class GetApplicationQuery :
+            GetApplication,
+            ListApplicationKeys
+        {
+            readonly string _applicationId;
+            readonly string _userId;
+
+            public GetApplicationQuery(string userId, string applicationId)
+            {
+                _userId = userId;
+                _applicationId = applicationId;
+            }
+
+            public string UserId
+            {
+                get { return _userId; }
+            }
+
+            public string ApplicationId
+            {
+                get { return _applicationId; }
             }
         }
 

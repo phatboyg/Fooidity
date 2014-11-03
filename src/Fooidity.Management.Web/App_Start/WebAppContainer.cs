@@ -59,12 +59,20 @@
             builder.RegisterType<GetOrganizationQueryHandler>()
                 .As<IQueryHandler<GetOrganization, Organization>>();
 
+            builder.RegisterType<GetApplicationQueryHandler>()
+                .As<IQueryHandler<GetApplication, UserOrganizationApplication>>();
+
             builder.RegisterType<CreateOrganizationCommandHandler>()
                 .As<ICommandHandler<CreateOrganization, Organization>>();
 
             builder.RegisterType<CreateApplicationCommandHandler>()
                 .As<ICommandHandler<CreateApplication, UserOrganizationApplication>>();
 
+            builder.RegisterType<CreateApplicationKeyCommandHandler>()
+                .As<ICommandHandler<CreateApplicationKey, OrganizationApplicationKey>>();
+
+            builder.RegisterType<ListApplicationKeysQueryHandler>()
+                .As<IQueryHandler<ListApplicationKeys, IEnumerable<OrganizationApplicationKey>>>();
 
             builder.RegisterType<DefaultAzureManagementSettings>()
                 .As<AzureManagementSettings>()
