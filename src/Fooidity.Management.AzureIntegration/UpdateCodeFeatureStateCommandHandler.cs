@@ -22,10 +22,8 @@
         {
             CloudTable cloudTable = _tableProvider.GetTable("codeFeatureState");
 
-            var entity = new CodeFeatureStateEntity(update.CodeFeatureId, update.Timestamp, update.Enabled, update.OrganizationId,
-                update.EnvironmentId, update.CommandId);
-            var current = new CodeFeatureStateEntity(update.CodeFeatureId, update.Timestamp, update.Enabled, update.OrganizationId,
-                update.EnvironmentId, update.CommandId);
+            var entity = new CodeFeatureStateEntity(update.CodeFeatureId, update.Timestamp, update.Enabled, update.CommandId);
+            var current = new CodeFeatureStateEntity(update.CodeFeatureId, update.Timestamp, update.Enabled, update.CommandId);
             current.RowKey = current.PartitionKey;
             current.PartitionKey = "Current";
 

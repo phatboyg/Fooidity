@@ -1,53 +1,48 @@
-﻿namespace Fooidity.Contracts
+namespace Fooidity.Contracts
 {
     using System;
+    using Metadata;
 
 
-    /// <summary>
-    /// Observable when the state cache is loaded
-    /// </summary>
-    public interface ContextCodeFeatureStateCacheUpdated
+    public class ContextCodeFeatureStateCacheUpdated :
+        IContextCodeFeatureStateCacheUpdated
     {
-        Guid EventId { get; }
+        public ContextCodeFeatureStateCacheUpdated()
+        {
+        }
 
-        /// <summary>
-        /// The time the cache update started
-        /// </summary>
-        DateTime Timestamp { get; }
+        public ContextCodeFeatureStateCacheUpdated(Uri contextId, string contextKey, Uri codeFeatureId, bool enabled, Guid? commandId = null)
+        {
+            EventId = Guid.NewGuid();
+            Timestamp = DateTime.UtcNow;
 
-        /// <summary>
-        /// The time taken to update the cache
-        /// </summary>
-        TimeSpan Duration { get; }
+            CommandId = commandId;
+            ContextId = contextId;
+            ContextKey = contextKey;
+            CodeFeatureId = codeFeatureId;
+            Enabled = enabled;
+            Host = HostMetadata.Host;
+        }
 
-        /// <summary>
-        /// The command identifier that triggered the update
-        /// </summary>
-        Guid? CommandId { get; }
+        public Host Host { get; private set; }
 
-        /// <summary>
-        /// The context that was updated
-        /// </summary>
-        Uri ContextId { get; }
+        public bool Enabled { get; private set; }
 
-        /// <summary>
-        /// The key that was updated
-        /// </summary>
-        string ContextKey { get; }
+        public Guid EventId { get; private set; }
 
-        /// <summary>
-        /// The FeatureId that was updated
-        /// </summary>
-        Uri CodeFeatureId { get; }
+        public DateTime Timestamp { get; private set; }
 
-        /// <summary>
-        /// The updated state of the feature
-        /// </summary>
-        bool Enabled { get; }
+        public Guid? CommandId { get; private set; }
 
-        /// <summary>
-        /// The host that loaded the cache
-        /// </summary>
-        Host Host { get; }
+        public Uri ContextId { get; private set; }
+
+        public string ContextKey { get; private set; }
+
+        public Uri CodeFeatureId { get; private set; }
+
+        IHost IContextCodeFeatureStateCacheUpdated.Host
+        {
+            get { return Host; }
+        }
     }
 }

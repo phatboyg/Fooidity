@@ -8,7 +8,7 @@
     /// Obtain a list of evaluated code switches during execution
     /// </summary>
     public interface ICodeSwitchesEvaluated :
-        IEnumerable<CodeSwitchEvaluated>
+        IEnumerable<ICodeSwitchEvaluated>
     {
     }
 }

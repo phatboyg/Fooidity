@@ -9,6 +9,6 @@
     /// </summary>
     public interface ICodeSwitchEvaluationObserver
     {
-        IEnumerable<CodeSwitchEvaluated> GetEvaluatedSwitches();
+        IEnumerable<ICodeSwitchEvaluated> GetEvaluatedSwitches();
     }
 }

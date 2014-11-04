@@ -1,42 +1,46 @@
 ﻿namespace Fooidity.Contracts
 {
     using System;
+    using Metadata;
 
 
-    /// <summary>
-    /// Published when a code switch is evaluated, such that the state of the switch can be
-    /// captured for use in later activations
-    /// </summary>
-    public interface CodeSwitchEvaluated
+    public class CodeSwitchEvaluated :
+        ICodeSwitchEvaluated
     {
-        /// <summary>
-        /// The time at which the feature state was evaluated
-        /// </summary>
-        DateTime Timestamp { get; }
+        public CodeSwitchEvaluated()
+        {
+        }
 
-        /// <summary>
-        /// The feature identifier connected to the code switch
-        /// </summary>
-        Uri CodeFeatureId { get; }
+        public CodeSwitchEvaluated(CodeFeatureId codeFeatureId, bool enabled)
+        {
+            Timestamp = DateTime.UtcNow;
+            CodeFeatureId = codeFeatureId;
+            Enabled = enabled;
+            Host = HostMetadata.Host;
+        }
 
-        /// <summary>
-        /// Whether the feature was enabled or disabled after evaluation
-        /// </summary>
-        bool Enabled { get; }
+        public CodeSwitchEvaluated(CodeFeatureId codeFeatureId, ContextId contextId, string contextKey, bool enabled)
+            : this(codeFeatureId, enabled)
+        {
+            ContextId = contextId;
+            ContextKey = contextKey;
+        }
 
-        /// <summary>
-        /// If context was used to evaluate the switch, the context id
-        /// </summary>
-        Uri ContextId { get; }
+        public Host Host { get; set; }
 
-        /// <summary>
-        /// The key used to select the context if a context is used
-        /// </summary>
-        string ContextKey { get; }
+        public DateTime Timestamp { get; set; }
 
-        /// <summary>
-        /// The host on which the switch was evaluated
-        /// </summary>
-        Host Host { get; }
+        public Uri CodeFeatureId { get; set; }
+
+        public bool Enabled { get; set; }
+
+        public Uri ContextId { get; set; }
+
+        public string ContextKey { get; set; }
+
+        IHost ICodeSwitchEvaluated.Host
+        {
+            get { return Host; }
+        }
     }
 }

@@ -62,30 +62,30 @@
 //            return View(model);
 //        }
 
-        [AllowAnonymous]
-        public ActionResult Register()
-        {
-            return View();
-        }
-
-        [HttpPost, AllowAnonymous, ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var user = new ApplicationUser {UserName = model.Email, Email = model.Email};
-                IdentityResult result = await _userManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
-                {
-                    await SignInAsync(user, false);
-
-                    return RedirectToAction("Index", "Home");
-                }
-                AddErrors(result);
-            }
-
-            return View(model);
-        }
+//        [AllowAnonymous]
+//        public ActionResult Register()
+//        {
+//            return View();
+//        }
+//
+//        [HttpPost, AllowAnonymous, ValidateAntiForgeryToken]
+//        public async Task<ActionResult> Register(RegisterViewModel model)
+//        {
+//            if (ModelState.IsValid)
+//            {
+//                var user = new ApplicationUser {UserName = model.Email, Email = model.Email};
+//                IdentityResult result = await _userManager.CreateAsync(user, model.Password);
+//                if (result.Succeeded)
+//                {
+//                    await SignInAsync(user, false);
+//
+//                    return RedirectToAction("Index", "Home");
+//                }
+//                AddErrors(result);
+//            }
+//
+//            return View(model);
+//        }
 
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<ActionResult> Disassociate(string loginProvider, string providerKey)

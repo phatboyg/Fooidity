@@ -71,7 +71,6 @@
     <Compile Include="AzureContextFeatureStateCacheProvider.cs" />
     <Compile Include="AzureStorageAccountProvider.cs" />
     <Compile Include="AzureTableProvider.cs" />
-    <Compile Include="CodeFeatureEntity.cs" />
     <Compile Include="CodeFeatureStateEntity.cs" />
     <Compile Include="CodeFeatureStateImpl.cs" />
     <Compile Include="ContextFeatureStateEntity.cs" />

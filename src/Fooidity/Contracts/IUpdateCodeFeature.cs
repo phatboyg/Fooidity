@@ -1,4 +1,4 @@
-﻿namespace Fooidity.Caching
+namespace Fooidity.Contracts
 {
     using System;
 
@@ -6,7 +6,7 @@
     /// <summary>
     /// Sent to the cache when the state of code feature is updated, so that the cache can be updated
     /// </summary>
-    public interface UpdateCodeFeature
+    public interface IUpdateCodeFeature
     {
         Guid CommandId { get; }
 

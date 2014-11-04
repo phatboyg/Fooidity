@@ -3,6 +3,7 @@
     using Autofac;
     using Caching;
     using Configuration;
+    using Contracts;
 
 
     /// <summary>

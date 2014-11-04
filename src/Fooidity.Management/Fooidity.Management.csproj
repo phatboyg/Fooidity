@@ -37,11 +37,10 @@
     <Compile Include="..\SolutionVersion.cs">
       <Link>Properties\SolutionVersion.cs</Link>
     </Compile>
-    <Compile Include="CodeFeatureDisabled.cs" />
-    <Compile Include="CodeFeatureEnabled.cs" />
     <Compile Include="Commands\CreateApplication.cs" />
     <Compile Include="Commands\CreateApplicationKey.cs" />
     <Compile Include="Commands\CreateOrganization.cs" />
+    <Compile Include="Commands\RegisterCodeFeature.cs" />
     <Compile Include="CreateCodeFeature.cs" />
     <Compile Include="CreateContextCodeFeature.cs" />
     <Compile Include="ICommandHandler.cs" />
@@ -54,6 +53,7 @@
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserOrganizationApplication.cs" />
     <Compile Include="Queries\GetApplication.cs" />
+    <Compile Include="Queries\GetApplicationKey.cs" />
     <Compile Include="Queries\GetOrganization.cs" />
     <Compile Include="Queries\GetUser.cs" />
     <Compile Include="Queries\ListApplicationKeys.cs" />

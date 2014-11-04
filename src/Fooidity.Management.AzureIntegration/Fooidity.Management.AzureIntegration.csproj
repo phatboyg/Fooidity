@@ -74,7 +74,9 @@
     <Compile Include="Commands\CreateApplicationCommandHandler.cs" />
     <Compile Include="Commands\CreateApplicationKeyCommandHandler.cs" />
     <Compile Include="Commands\CreateOrganizationCommandHandler.cs" />
+    <Compile Include="Commands\RegisterCodeFeatureCommandHandler.cs" />
     <Compile Include="DefaultAzureManagementSettings.cs" />
+    <Compile Include="Entities\ApplicationCodeFeatureEntity.cs" />
     <Compile Include="Entities\ApplicationEntity.cs" />
     <Compile Include="Entities\OrganizationApplicationKeyEntity.cs" />
     <Compile Include="Entities\KeyOrganizationApplicationIndexEntity.cs" />
@@ -87,6 +89,7 @@
     <Compile Include="Exceptions\DuplicateEmailException.cs" />
     <Compile Include="Exceptions\DuplicateUsernameException.cs" />
     <Compile Include="Exceptions\OrganizationNotFoundException.cs" />
+    <Compile Include="Queries\ApplicationKeyQuery.cs" />
     <Compile Include="Queries\GetApplicationQueryHandler.cs" />
     <Compile Include="Queries\GetOrganizationQueryHandler.cs" />
     <Compile Include="Queries\ListApplicationKeysQueryHandler.cs" />

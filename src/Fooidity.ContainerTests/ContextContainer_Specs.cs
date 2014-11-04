@@ -43,9 +43,9 @@
 
                 Assert.AreEqual("No", repository.IsDbEnabled);
 
-                IEnumerable<CodeSwitchEvaluated> codeSwitchesEvaluated = scope.GetCodeSwitchesEvaluated();
+                IEnumerable<ICodeSwitchEvaluated> codeSwitchesEvaluated = scope.GetCodeSwitchesEvaluated();
 
-                foreach (CodeSwitchEvaluated evaluated in codeSwitchesEvaluated)
+                foreach (ICodeSwitchEvaluated evaluated in codeSwitchesEvaluated)
                     Console.WriteLine("{0}: {1}", evaluated.CodeFeatureId, evaluated.Enabled);
             }
         }
@@ -61,9 +61,9 @@
 
                 Assert.IsFalse(codeSwitch.Enabled);
 
-                IEnumerable<CodeSwitchEvaluated> codeSwitchesEvaluated = scope.GetCodeSwitchesEvaluated();
+                IEnumerable<ICodeSwitchEvaluated> codeSwitchesEvaluated = scope.GetCodeSwitchesEvaluated();
 
-                foreach (CodeSwitchEvaluated evaluated in codeSwitchesEvaluated)
+                foreach (ICodeSwitchEvaluated evaluated in codeSwitchesEvaluated)
                     Console.WriteLine("{0}: {1}", evaluated.CodeFeatureId, evaluated.Enabled);
             }
         }

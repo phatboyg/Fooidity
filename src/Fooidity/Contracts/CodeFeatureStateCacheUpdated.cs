@@ -1,43 +1,45 @@
-﻿namespace Fooidity.Contracts
+namespace Fooidity.Contracts
 {
     using System;
+    using Metadata;
 
 
-    /// <summary>
-    /// Observable when the state cache is loaded
-    /// </summary>
-    public interface CodeFeatureStateCacheUpdated
+    class CodeFeatureStateCacheUpdated :
+        ICodeFeatureStateCacheUpdated
     {
-        Guid EventId { get; }
+        public CodeFeatureStateCacheUpdated()
+        {
+        }
 
-        /// <summary>
-        /// The time the cache update started
-        /// </summary>
-        DateTime Timestamp { get; }
+        public CodeFeatureStateCacheUpdated(DateTime timestamp, TimeSpan duration, CodeFeatureId codeFeatureId, bool enabled,
+            Guid? commandId = null)
+        {
+            EventId = Guid.NewGuid();
+            Timestamp = timestamp;
+            Duration = duration;
+            CodeFeatureId = codeFeatureId;
+            Enabled = enabled;
+            CommandId = commandId;
+            Host = HostMetadata.Host;
+        }
 
-        /// <summary>
-        /// The time taken to update the cache
-        /// </summary>
-        TimeSpan Duration { get; }
+        public Host Host { get; set; }
 
-        /// <summary>
-        /// The command identifier that triggered the update
-        /// </summary>
-        Guid? CommandId { get; }
+        public Guid EventId { get; set; }
 
-        /// <summary>
-        /// The FeatureId that was updated
-        /// </summary>
-        Uri CodeFeatureId { get; }
+        public DateTime Timestamp { get; set; }
 
-        /// <summary>
-        /// The updated state of the feature
-        /// </summary>
-        bool Enabled { get; }
+        public Guid? CommandId { get; set; }
 
-        /// <summary>
-        /// The host that loaded the cache
-        /// </summary>
-        Host Host { get; }
+        public TimeSpan Duration { get; set; }
+
+        public Uri CodeFeatureId { get; set; }
+
+        public bool Enabled { get; set; }
+
+        IHost ICodeFeatureStateCacheUpdated.Host
+        {
+            get { return Host; }
+        }
     }
 }

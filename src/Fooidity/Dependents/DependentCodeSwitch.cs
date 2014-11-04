@@ -27,7 +27,7 @@
             get { return _enabled.Value; }
         }
 
-        public IDisposable Subscribe(IObserver<CodeSwitchEvaluated> observer)
+        public IDisposable Subscribe(IObserver<ICodeSwitchEvaluated> observer)
         {
             return _evaluated.Connect(observer);
         }
@@ -77,7 +77,7 @@
             get { return _enabled.Value; }
         }
 
-        public IDisposable Subscribe(IObserver<CodeSwitchEvaluated> observer)
+        public IDisposable Subscribe(IObserver<ICodeSwitchEvaluated> observer)
         {
             return _evaluated.Connect(observer);
         }
@@ -135,7 +135,7 @@
             get { return _enabled.Value; }
         }
 
-        public IDisposable Subscribe(IObserver<CodeSwitchEvaluated> observer)
+        public IDisposable Subscribe(IObserver<ICodeSwitchEvaluated> observer)
         {
             return _evaluated.Connect(observer);
         }
@@ -201,7 +201,7 @@
             get { return _enabled.Value; }
         }
 
-        public IDisposable Subscribe(IObserver<CodeSwitchEvaluated> observer)
+        public IDisposable Subscribe(IObserver<ICodeSwitchEvaluated> observer)
         {
             return _evaluated.Connect(observer);
         }
@@ -275,7 +275,7 @@
             get { return _enabled.Value; }
         }
 
-        public IDisposable Subscribe(IObserver<CodeSwitchEvaluated> observer)
+        public IDisposable Subscribe(IObserver<ICodeSwitchEvaluated> observer)
         {
             return _evaluated.Connect(observer);
         }
@@ -357,7 +357,7 @@
             get { return _enabled.Value; }
         }
 
-        public IDisposable Subscribe(IObserver<CodeSwitchEvaluated> observer)
+        public IDisposable Subscribe(IObserver<ICodeSwitchEvaluated> observer)
         {
             return _evaluated.Connect(observer);
         }
@@ -447,7 +447,7 @@
             get { return _enabled.Value; }
         }
 
-        public IDisposable Subscribe(IObserver<CodeSwitchEvaluated> observer)
+        public IDisposable Subscribe(IObserver<ICodeSwitchEvaluated> observer)
         {
             return _evaluated.Connect(observer);
         }
@@ -545,7 +545,7 @@
             get { return _enabled.Value; }
         }
 
-        public IDisposable Subscribe(IObserver<CodeSwitchEvaluated> observer)
+        public IDisposable Subscribe(IObserver<ICodeSwitchEvaluated> observer)
         {
             return _evaluated.Connect(observer);
         }
@@ -651,7 +651,7 @@
             get { return _enabled.Value; }
         }
 
-        public IDisposable Subscribe(IObserver<CodeSwitchEvaluated> observer)
+        public IDisposable Subscribe(IObserver<ICodeSwitchEvaluated> observer)
         {
             return _evaluated.Connect(observer);
         }
@@ -765,7 +765,7 @@
             get { return _enabled.Value; }
         }
 
-        public IDisposable Subscribe(IObserver<CodeSwitchEvaluated> observer)
+        public IDisposable Subscribe(IObserver<ICodeSwitchEvaluated> observer)
         {
             return _evaluated.Connect(observer);
         }
@@ -887,7 +887,7 @@
             get { return _enabled.Value; }
         }
 
-        public IDisposable Subscribe(IObserver<CodeSwitchEvaluated> observer)
+        public IDisposable Subscribe(IObserver<ICodeSwitchEvaluated> observer)
         {
             return _evaluated.Connect(observer);
         }
@@ -1017,7 +1017,7 @@
             get { return _enabled.Value; }
         }
 
-        public IDisposable Subscribe(IObserver<CodeSwitchEvaluated> observer)
+        public IDisposable Subscribe(IObserver<ICodeSwitchEvaluated> observer)
         {
             return _evaluated.Connect(observer);
         }
@@ -1155,7 +1155,7 @@
             get { return _enabled.Value; }
         }
 
-        public IDisposable Subscribe(IObserver<CodeSwitchEvaluated> observer)
+        public IDisposable Subscribe(IObserver<ICodeSwitchEvaluated> observer)
         {
             return _evaluated.Connect(observer);
         }
@@ -1301,7 +1301,7 @@
             get { return _enabled.Value; }
         }
 
-        public IDisposable Subscribe(IObserver<CodeSwitchEvaluated> observer)
+        public IDisposable Subscribe(IObserver<ICodeSwitchEvaluated> observer)
         {
             return _evaluated.Connect(observer);
         }
@@ -1455,7 +1455,7 @@
             get { return _enabled.Value; }
         }
 
-        public IDisposable Subscribe(IObserver<CodeSwitchEvaluated> observer)
+        public IDisposable Subscribe(IObserver<ICodeSwitchEvaluated> observer)
         {
             return _evaluated.Connect(observer);
         }
@@ -1617,7 +1617,7 @@
             get { return _enabled.Value; }
         }
 
-        public IDisposable Subscribe(IObserver<CodeSwitchEvaluated> observer)
+        public IDisposable Subscribe(IObserver<ICodeSwitchEvaluated> observer)
         {
             return _evaluated.Connect(observer);
         }

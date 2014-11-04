@@ -28,7 +28,7 @@
 
             public void LogError(Exception exception)
             {
-                CodeSwitchEvaluated[] switches = _evaluated.ToArray();
+                ICodeSwitchEvaluated[] switches = _evaluated.ToArray();
 
                 Console.WriteLine("{0}\n{1}", exception.Message, string.Join(Environment.NewLine, switches.Select(x => x.CodeFeatureId)));
             }

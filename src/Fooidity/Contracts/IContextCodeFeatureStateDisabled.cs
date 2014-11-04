@@ -1,14 +1,14 @@
-﻿namespace Fooidity.Caching
+﻿namespace Fooidity.Contracts
 {
     using System;
 
 
-    /// <summary>
-    /// Sent to the cache when the state of code feature is updated, so that the cache can be updated
-    /// </summary>
-    public interface UpdateContextCodeFeature
+    public interface IContextCodeFeatureStateDisabled
     {
-        Guid CommandId { get; }
+        /// <summary>
+        /// Identifies the event uniquely
+        /// </summary>
+        Guid EventId { get; }
 
         /// <summary>
         /// When the feature state was updated
@@ -16,9 +16,14 @@
         DateTime Timestamp { get; }
 
         /// <summary>
+        /// The identifier of the command that enabled the context code feature
+        /// </summary>
+        Guid? CommandId { get; }
+
+        /// <summary>
         /// The FeatureId that was updated
         /// </summary>
-        CodeFeatureId CodeFeatureId { get; }
+        Uri CodeFeatureId { get; }
 
         /// <summary>
         /// The context in which the code feature was updated
@@ -28,11 +33,6 @@
         /// <summary>
         /// The context instance in which the code feature was updated
         /// </summary>
-        string Key { get; }
-
-        /// <summary>
-        /// The updated state of the feature
-        /// </summary>
-        bool Enabled { get; }
+        string ContextKey { get; }
     }
 }

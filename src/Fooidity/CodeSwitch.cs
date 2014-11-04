@@ -10,7 +10,7 @@
     /// </summary>
     /// <typeparam name="TFeature">The code feature that identifies the switch state</typeparam>
     public interface CodeSwitch<TFeature> :
-        IObservable<CodeSwitchEvaluated>
+        IObservable<ICodeSwitchEvaluated>
         where TFeature : struct, CodeFeature
     {
         /// <summary>

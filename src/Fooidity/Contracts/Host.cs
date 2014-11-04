@@ -1,49 +1,22 @@
 ﻿namespace Fooidity.Contracts
 {
-    /// <summary>
-    /// The host where the activity, compensation, or exception occurred while processing
-    /// a routing slip
-    /// </summary>
-    public interface Host
+    public class Host :
+        IHost
     {
-        /// <summary>
-        /// The machine name (or role instance name) of the local machine
-        /// </summary>
-        string MachineName { get; }
+        public string FooidityVersion { get; set; }
 
-        /// <summary>
-        /// The process name hosting the routing slip activity
-        /// </summary>
-        string ProcessName { get; }
+        public string MachineName { get; set; }
 
-        /// <summary>
-        /// The processId of the hosting process
-        /// </summary>
-        int ProcessId { get; }
+        public string ProcessName { get; set; }
 
-        /// <summary>
-        /// The assembly containing the activity
-        /// </summary>
-        string Assembly { get; }
+        public int ProcessId { get; set; }
 
-        /// <summary>
-        /// The assembly version of the assembly containing the activity
-        /// </summary>
-        string AssemblyVersion { get; }
+        public string Assembly { get; set; }
 
-        /// <summary>
-        /// The .NET framework version
-        /// </summary>
-        string FrameworkVersion { get; }
+        public string AssemblyVersion { get; set; }
 
-        /// <summary>
-        /// The version of MassTransit used by the process
-        /// </summary>
-        string FooidityVersion { get; }
+        public string FrameworkVersion { get; set; }
 
-        /// <summary>
-        /// The operating system version hosting the application
-        /// </summary>
-        string OsVersion { get; }
+        public string OsVersion { get; set; }
     }
 }

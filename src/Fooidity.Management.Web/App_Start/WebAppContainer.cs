@@ -12,6 +12,7 @@
     using AzureIntegration.UserStore;
     using Commands;
     using Fooidity.AzureIntegration;
+    using Hubs;
     using Management.Models;
     using Microsoft.AspNet.Identity;
     using Models;
@@ -73,6 +74,14 @@
 
             builder.RegisterType<ListApplicationKeysQueryHandler>()
                 .As<IQueryHandler<ListApplicationKeys, IEnumerable<OrganizationApplicationKey>>>();
+
+            builder.RegisterType<GetApplicationKeyQueryHandler>()
+                .As<IQueryHandler<GetApplicationKey, OrganizationApplicationKey>>();
+
+            builder.RegisterType<RegisterCodeFeatureCommandHandler>()
+                .As<ICommandHandler<RegisterCodeFeature>>();
+
+            builder.RegisterType<ApplicationHub>();
 
             builder.RegisterType<DefaultAzureManagementSettings>()
                 .As<AzureManagementSettings>()

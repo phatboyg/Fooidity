@@ -1,36 +1,38 @@
-﻿namespace Fooidity.Contracts
+namespace Fooidity.Contracts
 {
     using System;
+    using Metadata;
 
 
-    /// <summary>
-    /// Observable when the state cache is loaded
-    /// </summary>
-    public interface ContextCodeFeatureStateCacheLoaded
+    public class ContextCodeFeatureStateCacheLoaded :
+        IContextCodeFeatureStateCacheLoaded
     {
-        /// <summary>
-        /// Identifies the event
-        /// </summary>
-        Guid EventId { get; }
+        public ContextCodeFeatureStateCacheLoaded()
+        {
+        }
 
-        /// <summary>
-        /// The time the cache load started
-        /// </summary>
-        DateTime Timestamp { get; }
+        public ContextCodeFeatureStateCacheLoaded(DateTime timestamp, TimeSpan duration, int contextCount)
+        {
+            EventId = Guid.NewGuid();
+            Timestamp = timestamp;
+            Duration = duration;
+            ContextCount = contextCount;
+            Host = HostMetadata.Host;
+        }
 
-        /// <summary>
-        /// The time taken to load the cache
-        /// </summary>
-        TimeSpan Duration { get; }
+        public Host Host { get; private set; }
 
-        /// <summary>
-        /// The number of context instances
-        /// </summary>
-        int ContextCount { get; }
+        public Guid EventId { get; private set; }
 
-        /// <summary>
-        /// The host that loaded the cache
-        /// </summary>
-        Host Host { get; }
+        public DateTime Timestamp { get; private set; }
+
+        public TimeSpan Duration { get; private set; }
+
+        public int ContextCount { get; private set; }
+
+        IHost IContextCodeFeatureStateCacheLoaded.Host
+        {
+            get { return Host; }
+        }
     }
 }

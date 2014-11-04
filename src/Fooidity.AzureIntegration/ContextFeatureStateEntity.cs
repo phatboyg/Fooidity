@@ -17,9 +17,9 @@
         ContextFeatureStateEntity(Uri codeFeatureId, Uri contextId, string contextKey, DateTime timestamp)
         {
             PartitionKey = string.Join(SeparatorString,
-                codeFeatureId.ToString(),
                 contextId.ToString(),
-                contextKey);
+                contextKey,
+                codeFeatureId.ToString());
             RowKey = timestamp.ToDescendingTimestamp();
             Timestamp = timestamp;
 
@@ -28,7 +28,7 @@
             ContextKey = contextKey;
         }
 
-        public ContextFeatureStateEntity(ContextCodeFeatureStateEnabled message)
+        public ContextFeatureStateEntity(IContextCodeFeatureStateEnabled message)
             : this(message.CodeFeatureId, message.ContextId, message.ContextKey, message.Timestamp)
         {
             Enabled = true;
@@ -37,7 +37,7 @@
             CommandId = message.CommandId;
         }
 
-        public ContextFeatureStateEntity(ContextCodeFeatureStateDisabled message)
+        public ContextFeatureStateEntity(IContextCodeFeatureStateDisabled message)
             : this(message.CodeFeatureId, message.ContextId, message.ContextKey, message.Timestamp)
         {
             Enabled = false;

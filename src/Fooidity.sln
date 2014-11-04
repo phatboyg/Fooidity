@@ -35,6 +35,10 @@ Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "Fooidity.CloudService", "Fo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fooidity.Management.Web.Switching", "Fooidity.Management.Web.Switching\Fooidity.Management.Web.Switching.csproj", "{E1B1E96A-2F2E-4D59-9F18-76BC7432C50B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fooidity.Client", "Fooidity.Client\Fooidity.Client.csproj", "{80329880-7CDE-478A-A3CE-D90C75702AB7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fooidity.Client.Tests", "Fooidity.Client.Tests\Fooidity.Client.Tests.csproj", "{7CD37A42-B21F-4B09-8142-5449A1D87DD2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -89,6 +93,14 @@ Global
 		{E1B1E96A-2F2E-4D59-9F18-76BC7432C50B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E1B1E96A-2F2E-4D59-9F18-76BC7432C50B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E1B1E96A-2F2E-4D59-9F18-76BC7432C50B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80329880-7CDE-478A-A3CE-D90C75702AB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80329880-7CDE-478A-A3CE-D90C75702AB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80329880-7CDE-478A-A3CE-D90C75702AB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80329880-7CDE-478A-A3CE-D90C75702AB7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CD37A42-B21F-4B09-8142-5449A1D87DD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CD37A42-B21F-4B09-8142-5449A1D87DD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CD37A42-B21F-4B09-8142-5449A1D87DD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CD37A42-B21F-4B09-8142-5449A1D87DD2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

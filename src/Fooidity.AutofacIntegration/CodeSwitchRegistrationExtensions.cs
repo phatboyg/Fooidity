@@ -18,7 +18,7 @@ namespace Fooidity
         {
             builder.RegisterGeneric(typeof(DisabledCodeSwitch<>))
                 .As(typeof(CodeSwitch<>))
-                .OnActivating(x => OnCodeSwitchActivation(x.Context, (IObservable<CodeSwitchEvaluated>)x.Instance));
+                .OnActivating(x => OnCodeSwitchActivation(x.Context, (IObservable<ICodeSwitchEvaluated>)x.Instance));
         }
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace Fooidity
         {
             builder.RegisterGeneric(typeof(EnabledCodeSwitch<>))
                 .As(typeof(CodeSwitch<>))
-                .OnActivating(x => OnCodeSwitchActivation(x.Context, (IObservable<CodeSwitchEvaluated>)x.Instance));
+                .OnActivating(x => OnCodeSwitchActivation(x.Context, (IObservable<ICodeSwitchEvaluated>)x.Instance));
         }
 
         /// <summary>
@@ -152,9 +152,9 @@ namespace Fooidity
                 .OnActivating(x => OnCodeSwitchActivation(x.Context, x.Instance));
         }
 
-        static void OnCodeSwitchActivation(IComponentContext context, IObservable<CodeSwitchEvaluated> observable)
+        static void OnCodeSwitchActivation(IComponentContext context, IObservable<ICodeSwitchEvaluated> observable)
         {
-            IEnumerable<IObserver<CodeSwitchEvaluated>> observers;
+            IEnumerable<IObserver<ICodeSwitchEvaluated>> observers;
             if (context.TryResolve(out observers))
             {
                 foreach (var observer in observers)

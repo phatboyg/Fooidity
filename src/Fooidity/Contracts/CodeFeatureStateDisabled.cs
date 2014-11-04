@@ -3,26 +3,27 @@
     using System;
 
 
-    /// <summary>
-    /// Sent to the cache when the state of code feature is updated, so that the cache can be updated
-    /// </summary>
-    public interface CodeFeatureStateDisabled
+    public class CodeFeatureStateDisabled :
+        ICodeFeatureStateDisabled
     {
-        Guid EventId { get; }
+        public CodeFeatureStateDisabled()
+        {
+        }
 
-        /// <summary>
-        /// When the feature state was updated
-        /// </summary>
-        DateTime Timestamp { get; }
+        public CodeFeatureStateDisabled(Uri codeFeatureId, Guid eventId, DateTime timestamp, Guid? commandId = null)
+        {
+            CodeFeatureId = codeFeatureId;
+            CommandId = commandId;
+            EventId = eventId;
+            Timestamp = timestamp;
+        }
 
-        /// <summary>
-        /// The identifier of the command that enabled the context code feature
-        /// </summary>
-        Guid? CommandId { get; }
+        public Guid EventId { get; set; }
 
-        /// <summary>
-        /// The FeatureId that was updated
-        /// </summary>
-        Uri CodeFeatureId { get; }
+        public DateTime Timestamp { get; set; }
+
+        public Guid? CommandId { get; set; }
+
+        public Uri CodeFeatureId { get; set; }
     }
 }

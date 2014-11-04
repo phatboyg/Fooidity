@@ -3,36 +3,34 @@
     using System;
 
 
-    public interface ContextCodeFeatureStateDisabled
+    public class ContextCodeFeatureStateDisabled :
+        IContextCodeFeatureStateDisabled
     {
-        /// <summary>
-        /// Identifies the event uniquely
-        /// </summary>
-        Guid EventId { get; }
+        public ContextCodeFeatureStateDisabled()
+        {
+        }
 
-        /// <summary>
-        /// When the feature state was updated
-        /// </summary>
-        DateTime Timestamp { get; }
+        public ContextCodeFeatureStateDisabled(Uri contextId, string contextKey, Uri codeFeatureId, Guid? commandId = null)
+        {
+            EventId = Guid.NewGuid();
+            Timestamp = DateTime.UtcNow;
 
-        /// <summary>
-        /// The identifier of the command that enabled the context code feature
-        /// </summary>
-        Guid? CommandId { get; }
+            CodeFeatureId = codeFeatureId;
+            CommandId = commandId;
+            ContextId = contextId;
+            ContextKey = contextKey;
+        }
 
-        /// <summary>
-        /// The FeatureId that was updated
-        /// </summary>
-        Uri CodeFeatureId { get; }
+        public Guid EventId { get; set; }
 
-        /// <summary>
-        /// The context in which the code feature was updated
-        /// </summary>
-        Uri ContextId { get; }
+        public DateTime Timestamp { get; set; }
 
-        /// <summary>
-        /// The context instance in which the code feature was updated
-        /// </summary>
-        string ContextKey { get; }
+        public Guid? CommandId { get; set; }
+
+        public Uri CodeFeatureId { get; set; }
+
+        public Uri ContextId { get; set; }
+
+        public string ContextKey { get; set; }
     }
 }
