@@ -1,4 +1,5 @@
-﻿@model Fooidity.Management.Web.Models.ApplicationViewModel
+﻿@using Fooidity.Management.Models
+@model Fooidity.Management.Web.Models.ApplicationViewModel
 
 @{
     ViewBag.Title = "Application Details";
@@ -61,6 +62,44 @@
         }
 
     </table>
+    
+    <h4>Code Features</h4>
+    <hr/>
+    <table class="table">
+        <tr>
+            <th>
+                Code Feature Id
+            </th>
+            <th>
+                Enabled
+            </th>
+            <th>
+                Last Updated (UTC)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.Features)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CodeFeatureId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Enabled)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastUpdated)
+                </td>
+                <td>
+                    @Html.ActionLink("Enable", "Enable", new { applicationId = Model.Id, codeFeatureId = item.CodeFeatureId }) |
+                    @Html.ActionLink("Disable", "Disable", new { applicationId = Model.Id, codeFeatureId = item.CodeFeatureId })
+                </td>
+            </tr>
+        }
+
+    </table>
+
 </div>
 <p>
     @Html.ActionLink("Back to List", "Index")

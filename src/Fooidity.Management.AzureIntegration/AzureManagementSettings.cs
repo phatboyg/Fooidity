@@ -12,5 +12,6 @@ namespace Fooidity.Management.AzureIntegration
         string OrganizationApplicationKeyTableName { get; }
         string KeyOrganizationApplicationIndexTableName { get; }
         string ApplicationCodeFeatureTableName { get; }
+        string ApplicationCodeFeatureStateTableName { get; }
     }
 }

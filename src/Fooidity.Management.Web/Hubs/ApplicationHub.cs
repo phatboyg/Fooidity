@@ -4,6 +4,7 @@
     using System.Threading.Tasks;
     using Commands;
     using Contracts;
+    using Fooidity.Contracts;
     using Management.Models;
     using Microsoft.AspNet.SignalR;
     using Queries;

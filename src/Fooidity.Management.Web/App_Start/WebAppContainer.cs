@@ -49,7 +49,7 @@
                 .As<ICommandHandler<UpdateCodeFeatureState>>();
 
             builder.RegisterType<QueryCodeFeatureStateQueryHandler>()
-                .As<IQueryHandler<QueryCodeFeatureState, IEnumerable<CodeFeatureStateModel>>>();
+                .As<IQueryHandler<QueryCodeFeatureState, IEnumerable<CodeFeatureStateModelDoDie>>>();
 
             builder.RegisterType<ListApplicationsQueryHandler>()
                 .As<IQueryHandler<ListApplications, IEnumerable<UserOrganizationApplication>>>();
@@ -80,6 +80,13 @@
 
             builder.RegisterType<RegisterCodeFeatureCommandHandler>()
                 .As<ICommandHandler<RegisterCodeFeature>>();
+
+
+            builder.RegisterType<UpdateApplicationCodeFeatureStateCommandHandler>()
+                .As<ICommandHandler<IUpdateApplicationCodeFeatureState>>();
+
+            builder.RegisterType<ListApplicationCodeFeaturesQueryHandler>()
+                .As<IQueryHandler<IListApplicationCodeFeatures, IEnumerable<ICodeFeatureState>>>();
 
             builder.RegisterType<ApplicationHub>();
 

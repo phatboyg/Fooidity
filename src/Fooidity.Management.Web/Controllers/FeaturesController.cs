@@ -13,10 +13,10 @@
     public class FeaturesController :
         Controller
     {
-        readonly IQueryHandler<QueryCodeFeatureState, IEnumerable<CodeFeatureStateModel>> _queryHandler;
+        readonly IQueryHandler<QueryCodeFeatureState, IEnumerable<CodeFeatureStateModelDoDie>> _queryHandler;
         readonly ICommandHandler<UpdateCodeFeatureState> _updateHandler;
 
-        public FeaturesController(IQueryHandler<QueryCodeFeatureState, IEnumerable<CodeFeatureStateModel>> queryHandler,
+        public FeaturesController(IQueryHandler<QueryCodeFeatureState, IEnumerable<CodeFeatureStateModelDoDie>> queryHandler,
             ICommandHandler<UpdateCodeFeatureState> updateHandler)
         {
             _queryHandler = queryHandler;
@@ -25,7 +25,7 @@
 
         public async Task<ActionResult> Index(CancellationToken cancellationToken = default(CancellationToken))
         {
-            IEnumerable<CodeFeatureStateModel> results = await _queryHandler.Execute(new Query(), cancellationToken);
+            IEnumerable<CodeFeatureStateModelDoDie> results = await _queryHandler.Execute(new Query(), cancellationToken);
 
             return View(results.Select(x => new CodeFeatureStateViewModel
             {

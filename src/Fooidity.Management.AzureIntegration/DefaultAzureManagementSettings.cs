@@ -23,6 +23,11 @@ namespace Fooidity.Management.AzureIntegration
             get { return "appCodeFeature"; }
         }
 
+        public string ApplicationCodeFeatureStateTableName
+        {
+            get { return "appCodeFeatureState"; }
+        }
+
         public string ApplicationTableName
         {
             get { return "app"; }

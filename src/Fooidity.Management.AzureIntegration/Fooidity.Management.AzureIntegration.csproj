@@ -75,8 +75,10 @@
     <Compile Include="Commands\CreateApplicationKeyCommandHandler.cs" />
     <Compile Include="Commands\CreateOrganizationCommandHandler.cs" />
     <Compile Include="Commands\RegisterCodeFeatureCommandHandler.cs" />
+    <Compile Include="Commands\UpdateApplicationCodeFeatureStateCommandHandler.cs" />
     <Compile Include="DefaultAzureManagementSettings.cs" />
     <Compile Include="Entities\ApplicationCodeFeatureEntity.cs" />
+    <Compile Include="Entities\ApplicationCodeFeatureStateEntity.cs" />
     <Compile Include="Entities\ApplicationEntity.cs" />
     <Compile Include="Entities\OrganizationApplicationKeyEntity.cs" />
     <Compile Include="Entities\KeyOrganizationApplicationIndexEntity.cs" />
@@ -92,6 +94,7 @@
     <Compile Include="Queries\ApplicationKeyQuery.cs" />
     <Compile Include="Queries\GetApplicationQueryHandler.cs" />
     <Compile Include="Queries\GetOrganizationQueryHandler.cs" />
+    <Compile Include="Queries\ListApplicationCodeFeaturesQueryHandler.cs" />
     <Compile Include="Queries\ListApplicationKeysQueryHandler.cs" />
     <Compile Include="Queries\ListApplicationsQueryHandler.cs" />
     <Compile Include="Queries\ListOrganizationsQueryHandler.cs" />

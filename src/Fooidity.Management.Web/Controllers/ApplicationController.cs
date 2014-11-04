@@ -19,8 +19,10 @@
     {
         readonly ICommandHandler<CreateApplication, UserOrganizationApplication> _createApplication;
         readonly ICommandHandler<CreateApplicationKey, OrganizationApplicationKey> _createApplicationKey;
+        readonly ICommandHandler<IUpdateApplicationCodeFeatureState> _updateApplicationCodeFeatureState;
         readonly IQueryHandler<GetApplication, UserOrganizationApplication> _getApplication;
         readonly IQueryHandler<ListApplications, IEnumerable<UserOrganizationApplication>> _getApplications;
+        readonly IQueryHandler<IListApplicationCodeFeatures, IEnumerable<ICodeFeatureState>> _listApplicationCodeFeatures;
         readonly IQueryHandler<ListApplicationKeys, IEnumerable<OrganizationApplicationKey>> _listApplicationKeys;
         readonly IQueryHandler<ListOrganizations, IEnumerable<Organization>> _listOrganizations;
 
@@ -29,7 +31,8 @@
             ICommandHandler<CreateApplication, UserOrganizationApplication> createApplication,
             IQueryHandler<GetApplication, UserOrganizationApplication> getApplication,
             IQueryHandler<ListApplicationKeys, IEnumerable<OrganizationApplicationKey>> listApplicationKeys,
-            ICommandHandler<CreateApplicationKey, OrganizationApplicationKey> createApplicationKey)
+            ICommandHandler<CreateApplicationKey, OrganizationApplicationKey> createApplicationKey,
+            IQueryHandler<IListApplicationCodeFeatures, IEnumerable<ICodeFeatureState>> listApplicationCodeFeatures, ICommandHandler<IUpdateApplicationCodeFeatureState> updateApplicationCodeFeatureState)
         {
             _getApplications = getApplications;
             _listOrganizations = listOrganizations;
@@ -37,6 +40,8 @@
             _getApplication = getApplication;
             _listApplicationKeys = listApplicationKeys;
             _createApplicationKey = createApplicationKey;
+            _listApplicationCodeFeatures = listApplicationCodeFeatures;
+            _updateApplicationCodeFeatureState = updateApplicationCodeFeatureState;
         }
 
         public async Task<ActionResult> Index(CancellationToken cancellationToken = default(CancellationToken))
@@ -60,12 +65,17 @@
 
             IEnumerable<OrganizationApplicationKey> applicationKeys = await _listApplicationKeys.Execute(query, cancellationToken);
 
+            IEnumerable<ICodeFeatureState> codeFeatures =
+                await _listApplicationCodeFeatures.Execute(new ListApplicationCodeFeatures(User.Identity.GetUserId(), id),
+                    cancellationToken);
+
             return View(new ApplicationViewModel
             {
                 Id = application.ApplicationId,
                 Name = application.ApplicationName,
                 OrganizationId = application.OrganizationId,
                 Keys = applicationKeys.Select(x => x.Key).ToList(),
+                Features = codeFeatures.ToList(),
             });
         }
 
@@ -102,6 +112,33 @@
                 var command = new CreateApplicationKeyCommand(User.Identity.GetUserId(), model.OrganizationId, model.ApplicationId);
 
                 OrganizationApplicationKey key = await _createApplicationKey.Execute(command, cancellationToken);
+
+                return RedirectToAction("Details", new {id = model.ApplicationId});
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        public async Task<ActionResult> Enable(EnableCodeFeatureViewModel model, CancellationToken cancellationToken)
+        {
+            return await UpdateCodeFeatureState(model, cancellationToken, true);
+        }
+
+        public async Task<ActionResult> Disable(EnableCodeFeatureViewModel model, CancellationToken cancellationToken)
+        {
+            return await UpdateCodeFeatureState(model, cancellationToken, false);
+        }
+
+        async Task<ActionResult> UpdateCodeFeatureState(EnableCodeFeatureViewModel model, CancellationToken cancellationToken, bool enabled)
+        {
+            if (ModelState.IsValid)
+            {
+                var codeFeatureId = new Uri(model.CodeFeatureId);
+                var timestamp = DateTime.UtcNow;
+
+                var command = new UpdateApplicationCodeFeatureState(model.ApplicationId, codeFeatureId, enabled, timestamp);
+
+                await _updateApplicationCodeFeatureState.Execute(command, cancellationToken);
 
                 return RedirectToAction("Details", new {id = model.ApplicationId});
             }

@@ -11,7 +11,7 @@
 
 
     public class QueryCodeFeatureStateQueryHandler :
-        IQueryHandler<QueryCodeFeatureState, IEnumerable<CodeFeatureStateModel>>
+        IQueryHandler<QueryCodeFeatureState, IEnumerable<CodeFeatureStateModelDoDie>>
     {
         readonly ICloudTableProvider _tableProvider;
 
@@ -20,7 +20,7 @@
             _tableProvider = tableProvider;
         }
 
-        public Task<IEnumerable<CodeFeatureStateModel>> Execute(QueryCodeFeatureState query,
+        public Task<IEnumerable<CodeFeatureStateModelDoDie>> Execute(QueryCodeFeatureState query,
             CancellationToken cancellationToken = new CancellationToken())
         {
             CloudTable cloudTable = _tableProvider.GetTable("codeFeatureState");
@@ -28,7 +28,7 @@
             return GetCodeFeatureStates(cloudTable, cancellationToken);
         }
 
-        Task<IEnumerable<CodeFeatureStateModel>> GetCodeFeatureStates(CloudTable cloudTable,
+        Task<IEnumerable<CodeFeatureStateModelDoDie>> GetCodeFeatureStates(CloudTable cloudTable,
             CancellationToken cancellationToken = default(CancellationToken))
         {
             try
@@ -37,7 +37,7 @@
                     .Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, "Current"));
 
                 return cloudTable.ExecuteQueryAsync(query,
-                    entity => (CodeFeatureStateModel)new CodeFeatureStateImpl(new CodeFeatureId(entity.CodeFeatureId),
+                    entity => (CodeFeatureStateModelDoDie)new CodeFeatureStateImpl(new CodeFeatureId(entity.CodeFeatureId),
                         entity.Timestamp.UtcDateTime, entity.Enabled),
                     cancellationToken);
             }
@@ -51,7 +51,7 @@
 
 
         class CodeFeatureStateImpl :
-            CodeFeatureStateModel
+            CodeFeatureStateModelDoDie
         {
             readonly CodeFeatureId _codeFeatureId;
             readonly bool _enabled;
