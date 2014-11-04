@@ -41,7 +41,7 @@
             builder.RegisterType<AzureContextFeatureStateCacheProvider<UserContext>>()
                 .As<IContextFeatureStateCacheProvider<UserContext>>();
 
-            builder.RegisterContextSwitch<Feature_NewScreen, UserContext>();
+            builder.RegisterContextCodeSwitch<Feature_NewScreen, UserContext>();
         }
     }
 }

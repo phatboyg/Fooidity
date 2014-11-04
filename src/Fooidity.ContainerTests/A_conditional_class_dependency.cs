@@ -15,7 +15,7 @@
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterEnabled<UseNewMethod>();
+            builder.RegisterCodeSwitchEnabled<UseNewMethod>();
 
             builder.RegisterType<ConditionalClass>();
 
@@ -31,7 +31,7 @@
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterDisabled<UseNewMethod>();
+            builder.RegisterCodeSwitchDisabled<UseNewMethod>();
 
             builder.RegisterType<ConditionalClass>();
 
@@ -47,7 +47,7 @@
         {
             var builder = new ContainerBuilder();
 
-            builder.DisableCodeSwitchesByDefault();
+            builder.CodeSwitchesDisabledbyDefault();
 
             builder.RegisterType<ConditionalClass>();
 
@@ -63,7 +63,7 @@
         {
             var builder = new ContainerBuilder();
 
-            builder.EnableCodeSwitchesByDefault();
+            builder.CodeSwitchesEnabledByDefault();
 
             builder.RegisterType<ConditionalClass>();
 
@@ -79,7 +79,7 @@
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterDisabled<UseNewMethod>();
+            builder.RegisterCodeSwitchDisabled<UseNewMethod>();
 
             builder.RegisterType<ConditionalClass>();
 
@@ -89,7 +89,7 @@
 
             Assert.AreEqual("Old: 42, Test", conditionalClass.FunctionCall(42, "Test"));
 
-            container.Enable<UseNewMethod>();
+            container.EnableCodeSwitch<UseNewMethod>();
 
             conditionalClass = container.Resolve<ConditionalClass>();
 
@@ -102,7 +102,7 @@
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterToggle<UseNewMethod>();
+            builder.RegisterCodeSwitchToggle<UseNewMethod>();
             builder.EnableCodeSwitchTracking();
 
             var container = builder.Build();
@@ -111,7 +111,7 @@
             {
                 Assert.IsFalse(scope.Resolve<ICodeSwitch<UseNewMethod>>().Enabled);
 
-                Assert.AreEqual(1, scope.GetCodeSwitchesEvaluated().Count());
+                Assert.AreEqual(1, scope.GetEvaluatedCodeSwitches().Count());
             }
 
             container.Resolve<IToggleCodeSwitch<UseNewMethod>>().Enable();
@@ -120,7 +120,7 @@
             {
                 Assert.IsTrue(scope.Resolve<ICodeSwitch<UseNewMethod>>().Enabled);
 
-                Assert.AreEqual(1, scope.GetCodeSwitchesEvaluated().Count());
+                Assert.AreEqual(1, scope.GetEvaluatedCodeSwitches().Count());
             }
 
         }

@@ -121,8 +121,8 @@
             {
                 var builder = new ContainerBuilder();
 
-                builder.RegisterToggle<UseNewCodePath>();
-                builder.RegisterToggle<UseNewClass>();
+                builder.RegisterCodeSwitchToggle<UseNewCodePath>();
+                builder.RegisterCodeSwitchToggle<UseNewClass>();
                 builder.EnableCodeSwitchTracking();
 
                 builder.RegisterType<Logger>()

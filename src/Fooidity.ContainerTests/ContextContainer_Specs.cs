@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using Autofac;
     using Autofac.Core;
-    using AutofacIntegration;
     using Contexts;
     using Contracts;
     using Features;
@@ -43,7 +42,7 @@
 
                 Assert.AreEqual("No", repository.IsDbEnabled);
 
-                IEnumerable<ICodeSwitchEvaluated> codeSwitchesEvaluated = scope.GetCodeSwitchesEvaluated();
+                IEnumerable<ICodeSwitchEvaluated> codeSwitchesEvaluated = scope.GetEvaluatedCodeSwitches();
 
                 foreach (ICodeSwitchEvaluated evaluated in codeSwitchesEvaluated)
                     Console.WriteLine("{0}: {1}", evaluated.CodeFeatureId, evaluated.Enabled);
@@ -61,7 +60,7 @@
 
                 Assert.IsFalse(codeSwitch.Enabled);
 
-                IEnumerable<ICodeSwitchEvaluated> codeSwitchesEvaluated = scope.GetCodeSwitchesEvaluated();
+                IEnumerable<ICodeSwitchEvaluated> codeSwitchesEvaluated = scope.GetEvaluatedCodeSwitches();
 
                 foreach (ICodeSwitchEvaluated evaluated in codeSwitchesEvaluated)
                     Console.WriteLine("{0}: {1}", evaluated.CodeFeatureId, evaluated.Enabled);
@@ -85,7 +84,7 @@
             builder.RegisterModule<ConfigurationContextFeatureCacheModule<UserContext, UserContextKeyProvider>>();
 
             builder.RegisterCodeSwitch<DbEnabled>();
-            builder.RegisterContextSwitch<UseNewCodePath, UserContext>(true);
+            builder.RegisterContextCodeSwitch<UseNewCodePath, UserContext>(true);
 
             builder.EnableCodeSwitchTracking();
 

@@ -1,4 +1,4 @@
-﻿namespace Fooidity.AutofacIntegration
+﻿namespace Fooidity
 {
     using Autofac;
     using Caching;

@@ -1,7 +1,6 @@
 ﻿namespace Fooidity.ContainerTests.Defaults
 {
     using Autofac;
-    using AutofacIntegration;
     using NUnit.Framework;
 
 

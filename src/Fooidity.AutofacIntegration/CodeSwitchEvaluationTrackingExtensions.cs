@@ -16,7 +16,7 @@
                 .InstancePerLifetimeScope();
         }
 
-        public static IEnumerable<ICodeSwitchEvaluated> GetCodeSwitchesEvaluated(this ILifetimeScope scope)
+        public static IEnumerable<ICodeSwitchEvaluated> GetEvaluatedCodeSwitches(this ILifetimeScope scope)
         {
             ICodeSwitchesEvaluated result;
             if (scope.TryResolve(out result))

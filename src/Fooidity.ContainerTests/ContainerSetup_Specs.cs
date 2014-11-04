@@ -12,7 +12,7 @@
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterEnabled<UseClassAv2>();
+            builder.RegisterCodeSwitchEnabled<UseClassAv2>();
 
             builder.RegisterSwitchedType<UseClassAv2, A, ClassA_V2, ClassA>();
 
@@ -28,7 +28,7 @@
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterDisabled<UseClassAv2>();
+            builder.RegisterCodeSwitchDisabled<UseClassAv2>();
 
             builder.RegisterSwitchedType<UseClassAv2, A, ClassA_V2, ClassA>();
 
@@ -44,7 +44,7 @@
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterEnabled<UseClassAv2>();
+            builder.RegisterCodeSwitchEnabled<UseClassAv2>();
 
             builder.RegisterSwitched<UseClassAv2, A>(context => new ClassA_V2(), context => new ClassA());
 
