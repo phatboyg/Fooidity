@@ -35,7 +35,7 @@
             var host = new Host
             {
                 MachineName = Environment.MachineName,
-                FooidityVersion = typeof(CodeSwitch<>).Assembly.GetName().Version.ToString(),
+                FooidityVersion = typeof(ICodeSwitch<>).Assembly.GetName().Version.ToString(),
                 FrameworkVersion = Environment.Version.ToString(),
                 OsVersion = Environment.OSVersion.ToString()
             };

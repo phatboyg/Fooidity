@@ -3,23 +3,26 @@
     using System;
 
 
-    public class ContextCodeFeatureStateDisabled :
-        IContextCodeFeatureStateDisabled
+    public class ContextCodeFeatureStateUpdated :
+        IContextCodeFeatureStateUpdated
     {
-        public ContextCodeFeatureStateDisabled()
+        public ContextCodeFeatureStateUpdated()
         {
         }
 
-        public ContextCodeFeatureStateDisabled(Uri contextId, string contextKey, Uri codeFeatureId, Guid? commandId = null)
+        public ContextCodeFeatureStateUpdated(Uri contextId, string contextKey, Uri codeFeatureId, bool enabled, Guid? commandId = null)
         {
             EventId = Guid.NewGuid();
             Timestamp = DateTime.UtcNow;
 
             CodeFeatureId = codeFeatureId;
+            Enabled = enabled;
             CommandId = commandId;
             ContextId = contextId;
             ContextKey = contextKey;
         }
+
+        public bool Enabled { get; set; }
 
         public Guid EventId { get; set; }
 

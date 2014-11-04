@@ -5,6 +5,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
+    using System.Threading.Tasks;
 
 
     class Connectable<T>
@@ -49,31 +50,31 @@
         /// </summary>
         /// <param name="callback">The callback</param>
         /// <returns>An awaitable Task for the operation</returns>
-//        public async Task ForEach(Func<T, Task> callback)
-//        {
-//            if (callback == null)
-//                throw new ArgumentNullException("callback");
-//
-//            if (_connections.Count == 0)
-//                return;
-//
-//            var exceptions = new List<Exception>();
-//
-//            foreach (T connection in _connections.Values)
-//            {
-//                try
-//                {
-//                    await callback(connection);
-//                }
-//                catch (Exception ex)
-//                {
-//                    exceptions.Add(ex);
-//                }
-//            }
-//
-//            if (exceptions.Count > 0)
-//                throw new AggregateException(exceptions);
-//        }
+        public async Task ForEach(Func<T, Task> callback)
+        {
+            if (callback == null)
+                throw new ArgumentNullException("callback");
+
+            if (_connections.Count == 0)
+                return;
+
+            var exceptions = new List<Exception>();
+
+            foreach (T connection in _connections.Values)
+            {
+                try
+                {
+                    await callback(connection);
+                }
+                catch (Exception ex)
+                {
+                    exceptions.Add(ex);
+                }
+            }
+
+            if (exceptions.Count > 0)
+                throw new AggregateException(exceptions);
+        }
 
         /// <summary>
         /// Synchronously enumerate the cache and invoke the callback for each item

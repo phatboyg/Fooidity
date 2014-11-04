@@ -5,9 +5,9 @@
 
     public class ConditionalClass
     {
-        readonly CodeSwitch<UseNewMethod> _useNewMethod;
+        readonly ICodeSwitch<UseNewMethod> _useNewMethod;
 
-        public ConditionalClass(CodeSwitch<UseNewMethod> useNewMethod)
+        public ConditionalClass(ICodeSwitch<UseNewMethod> useNewMethod)
         {
             _useNewMethod = useNewMethod;
         }

@@ -9,7 +9,7 @@
 
 
         public struct SampleCodeFeature :
-            CodeFeature
+            ICodeFeature
         {
         }
 
@@ -60,7 +60,7 @@
 
 
     public struct TopLevelCodeFeature :
-        CodeFeature
+        ICodeFeature
     {
     }
 }

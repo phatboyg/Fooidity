@@ -15,6 +15,6 @@
         /// Loads an enumeration of code feature states
         /// </summary>
         /// <returns></returns>
-        Task<IEnumerable<CodeFeatureState>> Load();
+        Task<IEnumerable<ICachedCodeFeatureState>> Load();
     }
 }

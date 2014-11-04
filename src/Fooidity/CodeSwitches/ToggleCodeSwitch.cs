@@ -10,7 +10,7 @@
     /// <typeparam name="TFeature">The code feature</typeparam>
     public class ToggleCodeSwitch<TFeature> :
         IToggleCodeSwitch<TFeature>
-        where TFeature : struct, CodeFeature
+        where TFeature : struct, ICodeFeature
     {
         readonly Lazy<bool> _enabled;
         readonly CodeSwitchEvaluatedObservable<TFeature> _evaluated;

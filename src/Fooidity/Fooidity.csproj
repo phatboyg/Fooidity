@@ -41,8 +41,12 @@
     <Compile Include="..\SolutionVersion.cs">
       <Link>Properties\SolutionVersion.cs</Link>
     </Compile>
+    <Compile Include="Caching\CachedCodeFeatureState.cs" />
+    <Compile Include="Caching\CachedContextFeatureState.cs" />
+    <Compile Include="Caching\ICachedCodeFeatureState.cs" />
     <Compile Include="Caching\CodeFeatureStateCache.cs" />
     <Compile Include="Caching\CodeFeatureStateCacheInstance.cs" />
+    <Compile Include="Caching\ICachedContextFeatureState.cs" />
     <Compile Include="Caching\ContextFeatureStateCache.cs" />
     <Compile Include="Caching\ContextFeatureStateCacheInstance.cs" />
     <Compile Include="Caching\ICodeFeatureStateCacheInstance.cs" />
@@ -63,19 +67,17 @@
     <Compile Include="Caching\IUpdateCodeFeatureCache.cs" />
     <Compile Include="Caching\IUpdateContextFeatureCache.cs" />
     <Compile Include="CodeFeatureId.cs" />
-    <Compile Include="CodeFeatureState.cs" />
-    <Compile Include="CodeFeatureStateImpl.cs" />
-    <Compile Include="ContextFeatureState.cs" />
-    <Compile Include="ContextFeatureStateImpl.cs" />
+    <Compile Include="CodeSwitch.cs" />
     <Compile Include="ContextId.cs" />
-    <Compile Include="ContextProvider.cs" />
-    <Compile Include="Contracts\CodeFeatureStateDisabled.cs" />
-    <Compile Include="Contracts\CodeFeatureStateEnabled.cs" />
+    <Compile Include="IContextProvider.cs" />
+    <Compile Include="Contracts\CodeFeatureStateUpdated.cs" />
+    <Compile Include="Contracts\CodeFeatureState.cs" />
     <Compile Include="Contracts\CodeSwitchEvaluated.cs" />
     <Compile Include="Contracts\ContextCodeFeatureStateCacheLoaded.cs" />
     <Compile Include="Contracts\ContextCodeFeatureStateCacheUpdated.cs" />
-    <Compile Include="Contracts\ContextCodeFeatureStateDisabled.cs" />
-    <Compile Include="Contracts\ContextCodeFeatureStateEnabled.cs" />
+    <Compile Include="Contracts\ContextCodeFeatureStateUpdated.cs" />
+    <Compile Include="Contracts\HeaderNames.cs" />
+    <Compile Include="Contracts\ICodeFeatureState.cs" />
     <Compile Include="Contracts\IContextCodeFeatureStateCacheLoaded.cs" />
     <Compile Include="Contracts\IContextCodeFeatureStateCacheUpdated.cs" />
     <Compile Include="Contracts\Host.cs" />
@@ -87,11 +89,8 @@
     <Compile Include="Contracts\UpdateCodeFeature.cs" />
     <Compile Include="Contracts\UpdateContextCodeFeature.cs" />
     <Compile Include="DefaultContextProvider.cs" />
-    <Compile Include="Contracts\ICodeFeatureStateDisabled.cs" />
-    <Compile Include="Contracts\IContextCodeFeatureStateDisabled.cs" />
-    <Compile Include="Contracts\IContextCodeFeatureStateEnabled.cs" />
+    <Compile Include="Contracts\IContextCodeFeatureStateUpdated.cs" />
     <Compile Include="ICodeSwitchContainerScope.cs" />
-    <Compile Include="ICodeSwitchEvaluationObserver.cs" />
     <Compile Include="Metadata\ContextMetadata.cs" />
     <Compile Include="Metadata\HostMetadata.cs" />
     <Compile Include="Metadata\IContextMetadata.cs" />
@@ -99,7 +98,7 @@
     <Compile Include="ObjectContextProvider.cs" />
     <Compile Include="TypeUrn.cs" />
     <Compile Include="TypeUrnParser.cs" />
-    <Compile Include="CodeSwitch.cs" />
+    <Compile Include="ICodeSwitch.cs" />
     <Compile Include="CodeSwitches\CodeFeatureStateCodeSwitch.cs" />
     <Compile Include="CodeSwitches\CodeSwitchEvaluatedObservable.cs" />
     <Compile Include="CodeSwitches\ContextFeatureStateCodeSwitch.cs" />
@@ -124,8 +123,8 @@
     <Compile Include="Configuration\FeatureStateElement.cs" />
     <Compile Include="Configuration\FeatureStateElementCollection.cs" />
     <Compile Include="Configuration\FooidityConfigurationSection.cs" />
-    <Compile Include="ContextCodeSwitch.cs" />
-    <Compile Include="ContextKeyProvider.cs" />
+    <Compile Include="IContextCodeSwitch.cs" />
+    <Compile Include="IContextKeyProvider.cs" />
     <Compile Include="DateTimeSwitchExtensions.cs" />
     <Compile Include="Dependents\DependentCodeSwitch.cs">
       <DependentUpon>DependentCodeSwitch.tt</DependentUpon>
@@ -144,13 +143,13 @@
     </Compile>
     <Compile Include="Contracts\ICodeFeatureStateCacheLoaded.cs" />
     <Compile Include="Contracts\ICodeFeatureStateCacheUpdated.cs" />
-    <Compile Include="Contracts\ICodeFeatureStateEnabled.cs" />
+    <Compile Include="Contracts\ICodeFeatureStateUpdated.cs" />
     <Compile Include="CodeSwitchOfT.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>CodeSwitchOfT.tt</DependentUpon>
     </Compile>
-    <Compile Include="CodeFeature.cs" />
+    <Compile Include="ICodeFeature.cs" />
     <Compile Include="Contracts\ICodeSwitchEvaluated.cs" />
     <Compile Include="Exceptions\ContextSwitchException.cs" />
     <Compile Include="Exceptions\FooidityException.cs" />

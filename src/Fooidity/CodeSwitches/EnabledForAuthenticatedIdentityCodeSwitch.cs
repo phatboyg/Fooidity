@@ -7,8 +7,8 @@ namespace Fooidity.CodeSwitches
 
 
     public class EnabledForAuthenticatedIdentityCodeSwitch<TFeature> :
-        CodeSwitch<TFeature>
-        where TFeature : struct, CodeFeature
+        ICodeSwitch<TFeature>
+        where TFeature : struct, ICodeFeature
     {
         readonly Lazy<bool> _enabled;
         readonly CodeSwitchEvaluatedObservable<TFeature> _evaluated;
@@ -29,7 +29,7 @@ namespace Fooidity.CodeSwitches
             return _evaluated.Connect(observer);
         }
 
-        bool GetEnabled()
+        static bool GetEnabled()
         {
             IPrincipal principal = Thread.CurrentPrincipal;
             if (principal == null)

@@ -1,7 +1,11 @@
 ﻿namespace Fooidity.Management.Web.Hubs
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading;
     using System.Threading.Tasks;
+    using AzureIntegration.Exceptions;
     using Commands;
     using Contracts;
     using Fooidity.Contracts;
@@ -10,31 +14,79 @@
     using Queries;
 
 
+    public class HubEventHandler :
+        IEventHandler<IApplicationCodeFeatureStateUpdated>
+    {
+        public async Task Handle(Task<IApplicationCodeFeatureStateUpdated> eventTask)
+        {
+            IApplicationCodeFeatureStateUpdated updated = await eventTask;
+
+            IHubContext context = GlobalHost.ConnectionManager.GetHubContext<ApplicationHub>();
+
+            var clientEvent = new CodeFeatureStateUpdated(updated.CodeFeatureId, updated.Enabled, updated.EventId, updated.Timestamp,
+                updated.CommandId);
+
+//            await context.Clients.Group(updated.ApplicationId).codeFeatureStateUpdated(clientEvent);
+
+            await context.Clients.All.notifyCodeFeatureStateUpdated(clientEvent);
+        }
+    }
+
+
     public class ApplicationHub :
         Hub
     {
         static readonly ConnectionIdAppKeyDictionary _appKeys = new ConnectionIdAppKeyDictionary();
         readonly IQueryHandler<GetApplicationKey, OrganizationApplicationKey> _getApplicationKey;
+        readonly IQueryHandler<IListApplicationCodeFeatures, IEnumerable<ICodeFeatureState>> _listApplicationCodeFeatures;
         readonly ICommandHandler<RegisterCodeFeature> _registerCodeFeature;
 
         public ApplicationHub(IQueryHandler<GetApplicationKey, OrganizationApplicationKey> getApplicationKey,
-            ICommandHandler<RegisterCodeFeature> registerCodeFeature)
+            ICommandHandler<RegisterCodeFeature> registerCodeFeature,
+            IQueryHandler<IListApplicationCodeFeatures, IEnumerable<ICodeFeatureState>> listApplicationCodeFeatures)
         {
             _getApplicationKey = getApplicationKey;
             _registerCodeFeature = registerCodeFeature;
+            _listApplicationCodeFeatures = listApplicationCodeFeatures;
         }
 
         public override async Task OnConnected()
         {
-            string appKey = Context.QueryString["appkey"];
+            string appKey = Context.Request.Headers.Get(Headers.FooidityAppKey);
             if (string.IsNullOrWhiteSpace(appKey))
+            {
                 Clients.Caller.notifyMissingAppKey();
+                return;
+            }
 
-            OrganizationApplicationKey application = await _getApplicationKey.Execute(new GetApplicationKeyQuery(appKey));
+            try
+            {
+                OrganizationApplicationKey application = await _getApplicationKey.Execute(new GetApplicationKeyQuery(appKey));
 
-            _appKeys.TryAdd(Context.ConnectionId, application);
+                await Groups.Add(Context.ConnectionId, application.ApplicationId);
+
+                _appKeys.TryAdd(Context.ConnectionId, application);
+            }
+            catch (ApplicationNotFoundException)
+            {
+                Clients.Caller.notifyInvalidAppKey();
+            }
 
             await base.OnConnected();
+        }
+
+        public async Task<IEnumerable<CodeFeatureState>> GetCodeFeatureStates()
+        {
+            OrganizationApplicationKey application;
+            if (_appKeys.TryGetAppKey(Context.ConnectionId, out application))
+            {
+                IEnumerable<ICodeFeatureState> codeFeatureStates =
+                    await _listApplicationCodeFeatures.Execute(new ListApplicationCodeFeatures(null, application.ApplicationId));
+
+                return codeFeatureStates.Cast<CodeFeatureState>().ToList();
+            }
+
+            throw new InvalidOperationException("Unknown application key");
         }
 
         public override async Task OnDisconnected(bool stopCalled)
@@ -42,6 +94,7 @@
             OrganizationApplicationKey application;
             if (_appKeys.TryRemove(Context.ConnectionId, out application))
             {
+                Groups.Remove(Context.ConnectionId, application.ApplicationId);
             }
 
             await base.OnDisconnected(stopCalled);

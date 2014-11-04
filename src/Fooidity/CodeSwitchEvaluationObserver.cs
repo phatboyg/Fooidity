@@ -13,7 +13,6 @@
     /// </summary>
     public class CodeSwitchEvaluationObserver :
         IObserver<ICodeSwitchEvaluated>,
-        ICodeSwitchEvaluationObserver,
         ICodeSwitchesEvaluated
     {
         readonly ConcurrentBag<ICodeSwitchEvaluated> _events;
@@ -33,7 +32,7 @@
             return GetEnumerator();
         }
 
-        public IEnumerable<ICodeSwitchEvaluated> GetEvaluatedSwitches()
+        IEnumerable<ICodeSwitchEvaluated> GetEvaluatedSwitches()
         {
             return _events.OrderBy(x => x.Timestamp).ToArray();
         }

@@ -11,7 +11,7 @@
         {
             IToggleCodeSwitch<Level1> level1 = CodeSwitch.Factory.Toggle<Level1>();
 
-            CodeSwitch<Level2> level2 = CodeSwitch.Factory.Dependent<Level2>(x => x.Upon(level1));
+            ICodeSwitch<Level2> level2 = CodeSwitch.Factory.Dependent<Level2>(x => x.Upon(level1));
 
             Assert.IsFalse(level2.Enabled);
         }
@@ -21,7 +21,7 @@
         {
             IToggleCodeSwitch<Level1> level1 = CodeSwitch.Factory.Toggle<Level1>();
 
-            CodeSwitch<Level2> level2 = CodeSwitch.Factory.Dependent<Level2>(x => x.Upon(level1));
+            ICodeSwitch<Level2> level2 = CodeSwitch.Factory.Dependent<Level2>(x => x.Upon(level1));
 
             level1.Enable();
             Assert.IsTrue(level2.Enabled);
@@ -29,13 +29,13 @@
 
 
         struct Level1 :
-            CodeFeature
+            ICodeFeature
         {
         }
 
 
         struct Level2 :
-            CodeFeature
+            ICodeFeature
         {
         }
     }

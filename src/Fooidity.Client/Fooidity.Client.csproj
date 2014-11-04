@@ -43,6 +43,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationHubProvider.cs" />
     <Compile Include="CodeSwitchEvaluationApplicationReporter.cs" />
     <Compile Include="FooidityClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

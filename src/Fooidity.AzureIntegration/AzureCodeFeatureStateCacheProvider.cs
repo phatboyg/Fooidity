@@ -25,14 +25,14 @@
             return false;
         }
 
-        public async Task<IEnumerable<CodeFeatureState>> Load()
+        public async Task<IEnumerable<ICachedCodeFeatureState>> Load()
         {
             CloudTable cloudTable = _tableProvider.GetTable("codeFeatureState");
 
             return await GetCodeFeatureStates(cloudTable);
         }
 
-        async Task<IEnumerable<CodeFeatureState>> GetCodeFeatureStates(CloudTable cloudTable,
+        async Task<IEnumerable<ICachedCodeFeatureState>> GetCodeFeatureStates(CloudTable cloudTable,
             CancellationToken cancellationToken = default(CancellationToken))
         {
             try
@@ -40,7 +40,7 @@
                 TableQuery<CodeFeatureStateEntity> query = new TableQuery<CodeFeatureStateEntity>()
                     .Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, "Current"));
 
-                var codeFeatureStates = new List<CodeFeatureState>();
+                var codeFeatureStates = new List<ICachedCodeFeatureState>();
 
                 TableContinuationToken token = null;
 
@@ -50,7 +50,7 @@
                         cloudTable.ExecuteQuerySegmented(query, token);
 
                     codeFeatureStates.AddRange(
-                        result.Select(entity => new CodeFeatureStateImpl(new CodeFeatureId(entity.CodeFeatureId), entity.Enabled)));
+                        result.Select(entity => new CachedCodeFeatureState(new CodeFeatureId(entity.CodeFeatureId), entity.Enabled)));
 
                     token = result.ContinuationToken;
                 }

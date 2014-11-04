@@ -21,7 +21,7 @@
             {
                 using (ILifetimeScope scope = _container.BeginLifetimeScope())
                 {
-                    var codeSwitch = scope.Resolve<CodeSwitch<UseNewCodePath>>();
+                    var codeSwitch = scope.Resolve<ICodeSwitch<UseNewCodePath>>();
                 }
             });
 
@@ -35,7 +35,7 @@
                 ILifetimeScope scope =
                     _container.BeginLifetimeScope(x => x.RegisterInstance(new UserContext {Name = "Chris"})))
             {
-                var codeSwitch = scope.Resolve<CodeSwitch<UseNewCodePath>>();
+                var codeSwitch = scope.Resolve<ICodeSwitch<UseNewCodePath>>();
 
                 Assert.IsTrue(codeSwitch.Enabled);
 
@@ -57,7 +57,7 @@
                 ILifetimeScope scope =
                     _container.BeginLifetimeScope(x => x.RegisterInstance(new UserContext {Name = "David"})))
             {
-                var codeSwitch = scope.Resolve<CodeSwitch<UseNewCodePath>>();
+                var codeSwitch = scope.Resolve<ICodeSwitch<UseNewCodePath>>();
 
                 Assert.IsFalse(codeSwitch.Enabled);
 
@@ -97,9 +97,9 @@
 
         class Repository
         {
-            readonly CodeSwitch<DbEnabled> _dbEnabled;
+            readonly ICodeSwitch<DbEnabled> _dbEnabled;
 
-            public Repository(CodeSwitch<DbEnabled> dbEnabled)
+            public Repository(ICodeSwitch<DbEnabled> dbEnabled)
             {
                 _dbEnabled = dbEnabled;
             }

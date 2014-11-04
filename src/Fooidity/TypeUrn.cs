@@ -9,7 +9,7 @@ namespace Fooidity
     public class TypeUrn :
         Uri
     {
-        public TypeUrn(string uriString)
+        protected TypeUrn(string uriString)
             : base(uriString)
         {
         }

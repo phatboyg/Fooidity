@@ -7,6 +7,7 @@
     using System.Threading.Tasks;
     using System.Web.Mvc;
     using Commands;
+    using Fooidity.Contracts;
     using Management.Models;
     using Microsoft.AspNet.Identity;
     using Models;

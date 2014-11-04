@@ -1,12 +1,12 @@
-﻿namespace Fooidity.AzureIntegration
+namespace Fooidity.Caching
 {
-    class CodeFeatureStateImpl :
-        CodeFeatureState
+    public class CachedCodeFeatureState :
+        ICachedCodeFeatureState
     {
         readonly bool _enabled;
         readonly CodeFeatureId _id;
 
-        public CodeFeatureStateImpl(CodeFeatureId id, bool enabled)
+        public CachedCodeFeatureState(CodeFeatureId id, bool enabled)
         {
             _enabled = enabled;
             _id = id;

@@ -10,9 +10,9 @@ namespace Fooidity.Configuration
     public class ConfigurationContextFeatureStateCacheProvider<TContext> :
         IContextFeatureStateCacheProvider<TContext>
     {
-        public async Task<IEnumerable<Tuple<string, CodeFeatureState>>> Load()
+        public async Task<IEnumerable<Tuple<string, ICachedCodeFeatureState>>> Load()
         {
-            var results = new List<Tuple<string, CodeFeatureState>>();
+            var results = new List<Tuple<string, ICachedCodeFeatureState>>();
 
             var configuration = ConfigurationManager.GetSection("fooidity") as FooidityConfiguration;
             if (configuration != null)
@@ -50,7 +50,7 @@ namespace Fooidity.Configuration
                                         if (codeFeatureType == null)
                                             throw new ConfigurationErrorsException("The feature type is not valid: " + feature.Id);
 
-                                        CodeFeatureState codeState = new CodeFeatureStateImpl(featureId, feature.Enabled);
+                                        ICachedCodeFeatureState codeState = new CachedCodeFeatureState(featureId, feature.Enabled);
 
                                         results.Add(Tuple.Create(instance.Key, codeState));
                                     }

@@ -21,7 +21,7 @@
 
             _codeFeatureStateCache.ShouldNotBe(null);
 
-            CodeFeatureState featureState;
+            ICachedCodeFeatureState featureState;
             _codeFeatureStateCache.TryGetState<Feature_CreateUser>(out featureState).ShouldBe(true);
 
             featureState.ShouldNotBe(null);
@@ -126,7 +126,7 @@
 
 
     public struct Feature_CreateUser :
-        CodeFeature
+        ICodeFeature
     {
     }
 
@@ -138,7 +138,7 @@
 
 
     public class UserContextKeyProvider :
-        ContextKeyProvider<UserContext>
+        IContextKeyProvider<UserContext>
     {
         public string GetKey(UserContext context)
         {

@@ -7,9 +7,9 @@
     public class HomeController :
         Controller
     {
-        readonly CodeSwitch<Feature_NewScreen> _newScreenSwitch;
+        readonly ICodeSwitch<Feature_NewScreen> _newScreenSwitch;
 
-        public HomeController(CodeSwitch<Feature_NewScreen> newScreenSwitch)
+        public HomeController(ICodeSwitch<Feature_NewScreen> newScreenSwitch)
         {
             _newScreenSwitch = newScreenSwitch;
         }

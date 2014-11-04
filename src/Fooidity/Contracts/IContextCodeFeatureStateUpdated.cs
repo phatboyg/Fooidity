@@ -3,7 +3,7 @@
     using System;
 
 
-    public interface IContextCodeFeatureStateDisabled
+    public interface IContextCodeFeatureStateUpdated
     {
         /// <summary>
         /// Identifies the event uniquely
@@ -34,5 +34,10 @@
         /// The context instance in which the code feature was updated
         /// </summary>
         string ContextKey { get; }
+
+        /// <summary>
+        /// if the code feature was enabled
+        /// </summary>
+        bool Enabled { get; }
     }
 }

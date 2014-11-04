@@ -8,8 +8,7 @@
 
 
     public class UpdateContextCodeFeatureCacheConsumer :
-        Consumes<IContextCodeFeatureStateEnabled>.All,
-        Consumes<IContextCodeFeatureStateDisabled>.All
+        Consumes<IContextCodeFeatureStateUpdated>.All
     {
         static readonly ILog _log = Logger.Get<UpdateContextCodeFeatureCacheConsumer>();
         readonly IUpdateContextFeatureCache _updateCache;
@@ -19,28 +18,16 @@
             _updateCache = updateCache;
         }
 
-        public void Consume(IContextCodeFeatureStateDisabled message)
+        public void Consume(IContextCodeFeatureStateUpdated message)
         {
-            UpdateCodeFeature(message.CodeFeatureId, message.CommandId ?? message.EventId, message.Timestamp, message.ContextId,
-                message.ContextKey,
-                false);
-        }
-
-        public void Consume(IContextCodeFeatureStateEnabled message)
-        {
-            UpdateCodeFeature(message.CodeFeatureId, message.CommandId ?? message.EventId, message.Timestamp, message.ContextId,
-                message.ContextKey,
-                true);
-        }
-
-        void UpdateCodeFeature(Uri codeFeatureUri, Guid commandId, DateTime timestamp, Uri contextUri, string contextKey, bool enabled)
-        {
+            Uri codeFeatureUri = message.CodeFeatureId;
             try
             {
                 var codeFeatureId = new CodeFeatureId(codeFeatureUri);
-                var contextId = new ContextId(contextUri);
+                var contextId = new ContextId(message.ContextId);
 
-                var update = new UpdateContextCodeFeature(contextId, contextKey, codeFeatureId, enabled, timestamp, commandId);
+                var update = new UpdateContextCodeFeature(contextId, message.ContextKey, codeFeatureId, message.Enabled, message.Timestamp,
+                    message.CommandId ?? message.EventId);
                 _updateCache.UpdateCache(update);
             }
             catch (FormatException ex)

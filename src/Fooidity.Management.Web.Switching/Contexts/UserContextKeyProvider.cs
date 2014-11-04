@@ -1,7 +1,7 @@
 ﻿namespace Fooidity.Management.Web.Switching.Contexts
 {
     public class UserContextKeyProvider :
-        ContextKeyProvider<UserContext>
+        IContextKeyProvider<UserContext>
     {
         public string GetKey(UserContext context)
         {

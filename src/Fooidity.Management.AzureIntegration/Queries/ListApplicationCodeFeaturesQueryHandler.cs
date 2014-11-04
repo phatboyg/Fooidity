@@ -6,6 +6,7 @@
     using System.Threading.Tasks;
     using Entities;
     using Fooidity.AzureIntegration;
+    using Fooidity.Contracts;
     using Management.Queries;
     using Microsoft.WindowsAzure.Storage.Table;
     using Models;
@@ -32,8 +33,8 @@
                 .Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal,
                     ApplicationCodeFeatureStateEntity.GetCurrentPartitionKey(query.ApplicationId)));
 
-            IEnumerable<CodeFeatureStateModel> featureStates = await featureStateTable.ExecuteQueryAsync(featureStateQuery,
-                entity => new CodeFeatureStateModel(new CodeFeatureId(entity.CodeFeatureId), entity.Timestamp.UtcDateTime, entity.Enabled),
+            IEnumerable<CodeFeatureState> featureStates = await featureStateTable.ExecuteQueryAsync(featureStateQuery,
+                entity => new CodeFeatureState(new CodeFeatureId(entity.CodeFeatureId), entity.Timestamp.UtcDateTime, entity.Enabled),
                 cancellationToken);
 
             CloudTable featureTable = _tableProvider.GetTable(_settings.ApplicationCodeFeatureTableName);
@@ -41,8 +42,8 @@
             TableQuery<ApplicationCodeFeatureEntity> featureQuery = new TableQuery<ApplicationCodeFeatureEntity>()
                 .Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, query.ApplicationId));
 
-            IEnumerable<CodeFeatureStateModel> features = await featureTable.ExecuteQueryAsync(featureQuery,
-                entity => new CodeFeatureStateModel(new CodeFeatureId(entity.CodeFeatureId), entity.Timestamp.UtcDateTime, false),
+            IEnumerable<CodeFeatureState> features = await featureTable.ExecuteQueryAsync(featureQuery,
+                entity => new CodeFeatureState(new CodeFeatureId(entity.CodeFeatureId), entity.Timestamp.UtcDateTime, false),
                 cancellationToken);
 
             // include the default (not-enabled) feature states for features which have not been initialized

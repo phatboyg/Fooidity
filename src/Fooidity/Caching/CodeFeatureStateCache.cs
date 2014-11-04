@@ -35,18 +35,16 @@
             _cache = LoadCache().Result;
         }
 
-        public bool TryGetState<TFeature>(out CodeFeatureState featureState)
+        public bool TryGetState<TFeature>(out ICachedCodeFeatureState featureState)
         {
             if (_cache.TryGetState(CodeFeatureMetadata<TFeature>.Id, out featureState))
                 return true;
 
-            if (_cache.DefaultState)
-            {
-                featureState = new DefaultCodeFeatureState<TFeature>(true);
-                return true;
-            }
+            if (!_cache.DefaultState)
+                return false;
 
-            return false;
+            featureState = new DefaultCodeFeatureState<TFeature>(true);
+            return true;
         }
 
         public IDisposable Subscribe(IObserver<ICodeFeatureStateCacheLoaded> observer)
@@ -76,13 +74,13 @@
         {
             CodeFeatureId codeFeatureId = update.CodeFeatureId;
 
-            CodeFeatureState existingFeatureState;
+            ICachedCodeFeatureState existingFeatureState;
             if (_cache.TryGetState(codeFeatureId, out existingFeatureState))
             {
                 if (existingFeatureState.Enabled == update.Enabled)
                     return;
 
-                var updatedFeatureState = new CodeFeatureStateImpl(codeFeatureId, update.Enabled);
+                var updatedFeatureState = new CachedCodeFeatureState(codeFeatureId, update.Enabled);
 
                 DateTime startTime = DateTime.UtcNow;
                 bool updated = _cache.TryUpdate(codeFeatureId, updatedFeatureState, existingFeatureState);
@@ -99,7 +97,7 @@
             }
             else
             {
-                var featureState = new CodeFeatureStateImpl(codeFeatureId, update.Enabled);
+                var featureState = new CachedCodeFeatureState(codeFeatureId, update.Enabled);
 
                 DateTime startTime = DateTime.UtcNow;
                 bool updated = _cache.TryAdd(codeFeatureId, featureState);
@@ -117,10 +115,10 @@
 
         async Task<ICodeFeatureStateCacheInstance> LoadCache()
         {
-            IEnumerable<CodeFeatureState> states = await _cacheProvider.Load();
+            IEnumerable<ICachedCodeFeatureState> states = await _cacheProvider.Load();
 
-            var cache = new InMemoryCache<CodeFeatureId, CodeFeatureState>();
-            foreach (CodeFeatureState state in states)
+            var cache = new InMemoryCache<CodeFeatureId, ICachedCodeFeatureState>();
+            foreach (ICachedCodeFeatureState state in states)
                 cache.TryAdd(state.Id, state);
 
             return new CodeFeatureStateCacheInstance(cache, _cacheProvider.GetDefaultState().Result);

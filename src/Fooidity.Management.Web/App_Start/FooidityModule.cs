@@ -2,7 +2,6 @@
 {
     using Autofac;
     using Caching;
-    using Contracts;
     using Fooidity.AzureIntegration;
     using Switching.Contexts;
     using Switching.Features;
@@ -31,7 +30,7 @@
                 .As<ICodeFeatureStateCacheProvider>();
 
             builder.RegisterType<UserContextKeyProvider>()
-                .As<ContextKeyProvider<UserContext>>();
+                .As<IContextKeyProvider<UserContext>>();
 
             builder.RegisterType<ContextFeatureStateCache<UserContext>>()
                 .As<IContextFeatureStateCache<UserContext>>()

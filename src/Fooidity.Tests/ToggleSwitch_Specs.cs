@@ -6,7 +6,7 @@
 
 
         struct A :
-            CodeFeature
+            ICodeFeature
         {
         }
 

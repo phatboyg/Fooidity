@@ -5,7 +5,7 @@
 
     public interface FooIdContainer<TFoo> :
         IContainer
-        where TFoo : struct, CodeFeature
+        where TFoo : struct, ICodeFeature
     {
         ILifetimeScope EnabledLifetimeScope { get; }
 

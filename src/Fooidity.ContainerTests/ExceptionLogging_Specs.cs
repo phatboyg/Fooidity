@@ -45,9 +45,9 @@
             IClass
         {
             readonly ILogger _logger;
-            readonly CodeSwitch<UseNewCodePath> _useNewCodePath;
+            readonly ICodeSwitch<UseNewCodePath> _useNewCodePath;
 
-            public TestClass(ILogger logger, CodeSwitch<UseNewCodePath> useNewCodePath)
+            public TestClass(ILogger logger, ICodeSwitch<UseNewCodePath> useNewCodePath)
             {
                 _logger = logger;
                 _useNewCodePath = useNewCodePath;
@@ -71,9 +71,9 @@
             IClass
         {
             readonly ILogger _logger;
-            readonly CodeSwitch<UseNewCodePath> _useNewCodePath;
+            readonly ICodeSwitch<UseNewCodePath> _useNewCodePath;
 
-            public TestClassV2(ILogger logger, CodeSwitch<UseNewCodePath> useNewCodePath)
+            public TestClassV2(ILogger logger, ICodeSwitch<UseNewCodePath> useNewCodePath)
             {
                 _logger = logger;
                 _useNewCodePath = useNewCodePath;

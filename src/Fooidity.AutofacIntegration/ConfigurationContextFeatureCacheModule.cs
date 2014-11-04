@@ -12,12 +12,12 @@
     /// <typeparam name="TKeyProvider"></typeparam>
     public class ConfigurationContextFeatureCacheModule<TContext, TKeyProvider> :
         Module
-        where TKeyProvider : class, ContextKeyProvider<TContext>
+        where TKeyProvider : class, IContextKeyProvider<TContext>
     {
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<TKeyProvider>()
-                .As<ContextKeyProvider<TContext>>();
+                .As<IContextKeyProvider<TContext>>();
 
             builder.RegisterType<ContextFeatureStateCache<TContext>>()
                 .As<IContextFeatureStateCache<TContext>>()

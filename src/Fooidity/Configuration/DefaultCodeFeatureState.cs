@@ -1,10 +1,11 @@
 ﻿namespace Fooidity.Configuration
 {
+    using Caching;
     using Metadata;
 
 
     public class DefaultCodeFeatureState<TFeature> :
-        CodeFeatureState
+        ICachedCodeFeatureState
     {
         readonly bool _enabled;
 

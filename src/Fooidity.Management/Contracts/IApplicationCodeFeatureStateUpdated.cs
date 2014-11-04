@@ -29,5 +29,10 @@
         /// The FeatureId that was updated
         /// </summary>
         Uri CodeFeatureId { get; }
+
+        /// <summary>
+        /// If the feature is enabled
+        /// </summary>
+        bool Enabled { get; }
     }
 }

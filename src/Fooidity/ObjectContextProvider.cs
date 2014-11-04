@@ -9,7 +9,7 @@ namespace Fooidity
     /// <typeparam name="TInput"></typeparam>
     /// <typeparam name="TContext"></typeparam>
     public class ObjectContextProvider<TInput, TContext> :
-        ContextProvider<TInput, TContext>
+        IContextProvider<TInput, TContext>
         where TContext : class
     {
         readonly Func<TInput, TContext> _provider;
@@ -19,21 +19,21 @@ namespace Fooidity
             _provider = provider;
         }
 
-        Type ContextProvider<TContext>.InputType
+        Type IContextProvider<TContext>.InputType
         {
             get { return typeof(TInput); }
         }
 
-        bool ContextProvider<TContext>.TryGetContext<T>(T input, out TContext context)
+        bool IContextProvider<TContext>.TryGetContext<T>(T input, out TContext context)
         {
-            var self = this as ContextProvider<TInput, TContext>;
+            var self = this as IContextProvider<TInput, TContext>;
             if (self == null)
                 throw new ArgumentException("The input type is not supported: " + typeof(TInput).Name);
 
             return self.TryGetContext(input, out context);
         }
 
-        bool ContextProvider<TInput, TContext>.TryGetContext(TInput input, out TContext context)
+        bool IContextProvider<TInput, TContext>.TryGetContext(TInput input, out TContext context)
         {
             context = _provider(input);
 

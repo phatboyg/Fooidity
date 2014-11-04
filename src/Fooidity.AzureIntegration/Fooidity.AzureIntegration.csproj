@@ -72,7 +72,6 @@
     <Compile Include="AzureStorageAccountProvider.cs" />
     <Compile Include="AzureTableProvider.cs" />
     <Compile Include="CodeFeatureStateEntity.cs" />
-    <Compile Include="CodeFeatureStateImpl.cs" />
     <Compile Include="ContextFeatureStateEntity.cs" />
     <Compile Include="ICloudStorageAccountProvider.cs" />
     <Compile Include="ICloudTableProvider.cs" />

@@ -15,19 +15,12 @@ namespace Fooidity.Metadata
 
         ContextMetadata()
         {
-            Type type = typeof(TContext);
-
             _id = new ContextId(typeof(TContext));
         }
 
         public static ContextId Id
         {
             get { return Cached.Instance.Value.Id; }
-        }
-
-        public Type ContextType
-        {
-            get { return typeof(TContext); }
         }
 
         ContextId IContextMetadata<TContext>.Id

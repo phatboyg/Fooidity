@@ -14,7 +14,7 @@
         public static void RegisterDefaultContextProvider(this ContainerBuilder builder)
         {
             builder.RegisterGeneric(typeof(DefaultContextProvider<,>))
-                .As(typeof(ContextProvider<,>));
+                .As(typeof(IContextProvider<,>));
         }
 
         /// <summary>
@@ -28,7 +28,7 @@
             where TContext : struct
         {
             builder.Register(context => new ValueTypeContextProvider<TInput, TContext>(selector))
-                .As<ContextProvider<TInput, TContext>>();
+                .As<IContextProvider<TInput, TContext>>();
         }
 
         /// <summary>
@@ -42,7 +42,7 @@
             where TContext : class
         {
             builder.Register(context => new ObjectContextProvider<TInput, TContext>(selector))
-                .As<ContextProvider<TInput, TContext>>();
+                .As<IContextProvider<TInput, TContext>>();
         }
     }
 }

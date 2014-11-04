@@ -1,7 +1,7 @@
 ﻿namespace Fooidity.CodeSwitches
 {
     using System;
-    using Configuration;
+    using Caching;
     using Contracts;
     using Metadata;
 
@@ -12,8 +12,8 @@
     /// <typeparam name="TFeature">The feature</typeparam>
     /// <typeparam name="TContext">The context type for this code switch</typeparam>
     public class ContextFeatureStateCodeSwitch<TFeature, TContext> :
-        ContextCodeSwitch<TFeature, TContext>
-        where TFeature : struct, CodeFeature
+        IContextCodeSwitch<TFeature, TContext>
+        where TFeature : struct, ICodeFeature
     {
         readonly ICodeFeatureStateCache _cache;
         readonly TContext _context;
@@ -44,8 +44,8 @@
 
         bool Evaluate()
         {
-            CodeFeatureState codeFeatureState;
-            ContextFeatureState contextFeatureState;
+            ICachedCodeFeatureState codeFeatureState;
+            ICachedContextFeatureState contextFeatureState;
             if (_contextCache.TryGetContextFeatureState(_context, out contextFeatureState))
             {
                 if (contextFeatureState.TryGetCodeFeatureState(CodeFeatureMetadata<TFeature>.Id, out codeFeatureState))

@@ -23,11 +23,11 @@
         readonly Connectable<IObserver<IContextCodeFeatureStateCacheLoaded>> _cacheLoaded;
         readonly IContextFeatureStateCacheProvider<TContext> _cacheProvider;
         readonly Connectable<IObserver<IContextCodeFeatureStateCacheUpdated>> _cacheUpdated;
-        readonly ContextKeyProvider<TContext> _keyProvider;
+        readonly IContextKeyProvider<TContext> _keyProvider;
         IContextFeatureStateCacheInstance<TContext> _cache;
 
         public ContextFeatureStateCache(IContextFeatureStateCacheProvider<TContext> cacheProvider,
-            ContextKeyProvider<TContext> keyProvider)
+            IContextKeyProvider<TContext> keyProvider)
         {
             _cacheProvider = cacheProvider;
             _keyProvider = keyProvider;
@@ -38,7 +38,7 @@
             _cache = LoadCache().Result;
         }
 
-        public bool TryGetContextFeatureState(TContext context, out ContextFeatureState featureState)
+        public bool TryGetContextFeatureState(TContext context, out ICachedContextFeatureState featureState)
         {
             string key = _keyProvider.GetKey(context);
 
@@ -76,10 +76,10 @@
 
             CodeFeatureId codeFeatureId = update.CodeFeatureId;
 
-            ContextFeatureState existingContext;
+            ICachedContextFeatureState existingContext;
             if (_cache.TryGetContextFeatureState(update.ContextKey, out existingContext))
             {
-                CodeFeatureState existingCode;
+                ICachedCodeFeatureState existingCode;
                 if (existingContext.TryGetCodeFeatureState(codeFeatureId, out existingCode))
                 {
                     if (existingCode.Enabled == update.Enabled)
@@ -96,34 +96,29 @@
 
         async Task<IContextFeatureStateCacheInstance<TContext>> LoadCache()
         {
-            IEnumerable<Tuple<string, CodeFeatureState>> states = await _cacheProvider.Load();
+            IEnumerable<Tuple<string, ICachedCodeFeatureState>> states = await _cacheProvider.Load();
 
-            var contextCache = new InMemoryCache<string, ContextFeatureState>();
+            var contextCache = new InMemoryCache<string, ICachedContextFeatureState>();
             foreach (var context in states.GroupBy(x => x.Item1))
-            {
-                var cache = new InMemoryCache<CodeFeatureId, CodeFeatureState>();
-                foreach (CodeFeatureState state in context.Select(x => x.Item2))
-                    cache.TryAdd(state.Id, state);
-
-                contextCache.TryAdd(context.Key, new ContextFeatureStateImpl(cache, context.Key));
-            }
+                contextCache.TryAdd(context.Key, new CachedContextFeatureState(context.Select(x => x.Item2), context.Key));
 
             return new ContextFeatureStateCacheInstance<TContext>(contextCache);
         }
 
-        void UpdateExistingCodeFeature(IUpdateContextCodeFeature update, CodeFeatureId codeFeatureId, ContextFeatureState existingContext,
-            CodeFeatureState existingCode)
+        void UpdateExistingCodeFeature(IUpdateContextCodeFeature update, CodeFeatureId codeFeatureId,
+            ICachedContextFeatureState existingContext,
+            ICachedCodeFeatureState existingCode)
         {
-            var featureState = new CodeFeatureStateImpl(codeFeatureId, update.Enabled);
+            var featureState = new CachedCodeFeatureState(codeFeatureId, update.Enabled);
 
             bool updated = existingContext.TryUpdate(codeFeatureId, featureState, existingCode);
             if (updated)
                 NotifyUpdated(update, featureState);
         }
 
-        void AddCodeFeatureState(IUpdateContextCodeFeature update, CodeFeatureId codeFeatureId, ContextFeatureState existingContext)
+        void AddCodeFeatureState(IUpdateContextCodeFeature update, CodeFeatureId codeFeatureId, ICachedContextFeatureState existingContext)
         {
-            var featureState = new CodeFeatureStateImpl(codeFeatureId, update.Enabled);
+            var featureState = new CachedCodeFeatureState(codeFeatureId, update.Enabled);
 
             bool updated = existingContext.TryAdd(codeFeatureId, featureState);
             if (updated)
@@ -132,17 +127,15 @@
 
         void AddContextFeatureState(IUpdateContextCodeFeature update, CodeFeatureId codeFeatureId)
         {
-            var featureState = new CodeFeatureStateImpl(codeFeatureId, update.Enabled);
-            var cache = new InMemoryCache<CodeFeatureId, CodeFeatureState>();
-            cache.TryAdd(codeFeatureId, featureState);
-            var contextFeatureState = new ContextFeatureStateImpl(cache, update.ContextKey);
+            var featureState = new CachedCodeFeatureState(codeFeatureId, update.Enabled);
+            var contextFeatureState = new CachedContextFeatureState(Enumerable.Repeat(featureState, 1), update.ContextKey);
 
             bool updated = _cache.TryAdd(update.ContextKey, contextFeatureState);
             if (updated)
                 NotifyUpdated(update, featureState);
         }
 
-        void NotifyUpdated(IUpdateContextCodeFeature update, CodeFeatureStateImpl updatedFeatureState)
+        void NotifyUpdated(IUpdateContextCodeFeature update, ICachedCodeFeatureState updatedFeatureState)
         {
             var updatedEvent = new ContextCodeFeatureStateCacheUpdated(update.ContextId, update.ContextKey, updatedFeatureState.Id,
                 updatedFeatureState.Enabled, update.CommandId);

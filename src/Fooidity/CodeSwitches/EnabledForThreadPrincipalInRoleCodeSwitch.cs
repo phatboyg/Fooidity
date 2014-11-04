@@ -7,8 +7,8 @@ namespace Fooidity.CodeSwitches
 
 
     public class EnabledForThreadPrincipalInRoleCodeSwitch<TFeature> :
-        CodeSwitch<TFeature>
-        where TFeature : struct, CodeFeature
+        ICodeSwitch<TFeature>
+        where TFeature : struct, ICodeFeature
     {
         readonly Lazy<bool> _enabled;
         readonly CodeSwitchEvaluatedObservable<TFeature> _evaluated;

@@ -6,7 +6,7 @@
     /// </summary>
     /// <typeparam name="TFeature"></typeparam>
     public interface IToggleSwitchState<TFeature>
-        where TFeature : struct, CodeFeature
+        where TFeature : struct, ICodeFeature
     {
         bool Enabled { get; set; }
     }

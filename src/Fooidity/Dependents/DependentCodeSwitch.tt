@@ -6,21 +6,21 @@ namespace Fooidity.Dependents
 {
     using System;
     using CodeSwitches;
-    using Events;
+    using Contracts;
 <# for(int i=1; i<=16; i++){
     var tActionArgs = String.Join(", ",Enumerable.Range(1,i).Select(it=>String.Format("T{0}",it)));
 #>
 
     public class DependentCodeSwitch<T, <#=tActionArgs#>> :
-        CodeSwitch<T, <#=tActionArgs#>>
-        where T : struct, CodeFeature
-        <#= String.Join(Environment.NewLine + "        ", Enumerable.Range(1, i).Select(x => String.Format("where T{0} : struct, CodeFeature", x))) #>
+        ICodeSwitch<T, <#=tActionArgs#>>
+        where T : struct, ICodeFeature
+        <#= String.Join(Environment.NewLine + "        ", Enumerable.Range(1, i).Select(x => String.Format("where T{0} : struct, ICodeFeature", x))) #>
     {
         readonly Lazy<bool> _enabled;
         readonly CodeSwitchEvaluatedObservable<T> _evaluated;
-        <#= String.Join(Environment.NewLine + "        ", Enumerable.Range(1, i).Select(x => String.Format("readonly CodeSwitch<T{0}> _codeSwitch{0};", x))) #>
+        <#= String.Join(Environment.NewLine + "        ", Enumerable.Range(1, i).Select(x => String.Format("readonly ICodeSwitch<T{0}> _codeSwitch{0};", x))) #>
 
-        public DependentCodeSwitch(<#= String.Join(", ", Enumerable.Range(1, i).Select(x => String.Format("CodeSwitch<T{0}> codeSwitch{0}", x))) #>)
+        public DependentCodeSwitch(<#= String.Join(", ", Enumerable.Range(1, i).Select(x => String.Format("ICodeSwitch<T{0}> codeSwitch{0}", x))) #>)
         {
             _evaluated = new CodeSwitchEvaluatedObservable<T>();
             _enabled = new Lazy<bool>(Evaluate);
@@ -33,7 +33,7 @@ namespace Fooidity.Dependents
             get { return _enabled.Value; }
         }
 
-        public IDisposable Subscribe(IObserver<CodeSwitchEvaluated> observer)
+        public IDisposable Subscribe(IObserver<ICodeSwitchEvaluated> observer)
         {
             return _evaluated.Connect(observer);
         }
@@ -54,7 +54,7 @@ namespace Fooidity.Dependents
         <# for(int j = 1; j <= i; j++) { 
         #>
 
-        public CodeSwitch<T<#=j#>> Switch<#=j#>
+        public ICodeSwitch<T<#=j#>> Switch<#=j#>
         {
             get { return _codeSwitch<#=j#>; }
         }

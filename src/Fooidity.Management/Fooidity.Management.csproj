@@ -43,14 +43,14 @@
     <Compile Include="Commands\RegisterCodeFeature.cs" />
     <Compile Include="Commands\IUpdateApplicationCodeFeatureState.cs" />
     <Compile Include="Commands\UpdateApplicationCodeFeatureState.cs" />
+    <Compile Include="Contracts\ApplicationCodeFeatureStateUpdated.cs" />
     <Compile Include="Contracts\IApplicationCodeFeatureStateUpdated.cs" />
     <Compile Include="CreateCodeFeature.cs" />
     <Compile Include="CreateContextCodeFeature.cs" />
     <Compile Include="ICommandHandler.cs" />
+    <Compile Include="IEventHandler.cs" />
     <Compile Include="IQueryHandler.cs" />
     <Compile Include="Models\Application.cs" />
-    <Compile Include="Models\CodeFeatureStateModel.cs" />
-    <Compile Include="Models\ICodeFeatureState.cs" />
     <Compile Include="Models\OrganizationApplicationKey.cs" />
     <Compile Include="Models\CodeFeatureStateModelDoDie.cs" />
     <Compile Include="Models\Organization.cs" />

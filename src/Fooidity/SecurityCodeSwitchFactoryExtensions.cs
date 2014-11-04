@@ -12,9 +12,9 @@
         /// <param name="factory"></param>
         /// <param name="role">The role required to enable the switch</param>
         /// <returns></returns>
-        public static CodeSwitch<TFeature> EnabledForPrincipalInRole<TFeature>(this ICodeSwitchFactory factory,
+        public static ICodeSwitch<TFeature> EnabledForPrincipalInRole<TFeature>(this ICodeSwitchFactory factory,
             string role)
-            where TFeature : struct, CodeFeature
+            where TFeature : struct, ICodeFeature
         {
             return new EnabledForThreadPrincipalInRoleCodeSwitch<TFeature>(role);
         }
@@ -24,8 +24,8 @@
         /// </summary>
         /// <typeparam name="TFeature">The code feature</typeparam>
         /// <returns></returns>
-        public static CodeSwitch<TFeature> EnabledForAuthenticatedIdentity<TFeature>(this ICodeSwitchFactory factory)
-            where TFeature : struct, CodeFeature
+        public static ICodeSwitch<TFeature> EnabledForAuthenticatedIdentity<TFeature>(this ICodeSwitchFactory factory)
+            where TFeature : struct, ICodeFeature
         {
             return new EnabledForAuthenticatedIdentityCodeSwitch<TFeature>();
         }

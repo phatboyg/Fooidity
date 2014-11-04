@@ -1,11 +1,11 @@
-﻿namespace Fooidity.Management.Models
+﻿namespace Fooidity.Contracts
 {
     using System;
 
 
     public interface ICodeFeatureState
     {
-        CodeFeatureId CodeFeatureId { get; }
+        Uri CodeFeatureId { get; }
 
         DateTime LastUpdated { get; }
 

@@ -10,13 +10,13 @@
 
 
         struct Off :
-            CodeFeature
+            ICodeFeature
         {
         }
 
 
         struct On :
-            CodeFeature
+            ICodeFeature
         {
         }
 
@@ -45,7 +45,7 @@
 
 
         class UserContextKeyProvider :
-            ContextKeyProvider<UserContext>
+            IContextKeyProvider<UserContext>
         {
             public string GetKey(UserContext context)
             {
@@ -63,7 +63,7 @@
             [Test]
             public void Should_read_the_default_feature_state()
             {
-                CodeFeatureState featureState;
+                ICachedCodeFeatureState featureState;
                 Assert.IsTrue(_featureCache.TryGetState<On>(out featureState));
 
                 Assert.IsTrue(featureState.Enabled);
@@ -72,7 +72,7 @@
             [Test]
             public void Should_read_the_specified_feature_state()
             {
-                CodeFeatureState featureState;
+                ICachedCodeFeatureState featureState;
                 Assert.IsTrue(_featureCache.TryGetState<Off>(out featureState));
 
                 Assert.IsFalse(featureState.Enabled);
@@ -96,7 +96,7 @@
             [Test]
             public void Should_read_the_default_feature_state()
             {
-                CodeFeatureState featureState;
+                ICachedCodeFeatureState featureState;
                 Assert.IsTrue(_featureCache.TryGetState<On>(out featureState));
 
                 Assert.IsTrue(featureState.Enabled);
@@ -105,7 +105,7 @@
             [Test]
             public void Should_read_the_specified_feature_state()
             {
-                CodeFeatureState featureState;
+                ICachedCodeFeatureState featureState;
                 Assert.IsTrue(_featureCache.TryGetState<Off>(out featureState));
 
                 Assert.IsFalse(featureState.Enabled);
@@ -114,7 +114,7 @@
             [Test]
             public void Should_override_based_on_user_context()
             {
-                CodeFeatureState featureState;
+                ICachedCodeFeatureState featureState;
                 Assert.IsTrue(_featureCache.TryGetState<Off>(out featureState));
 
                 Assert.IsFalse(featureState.Enabled);

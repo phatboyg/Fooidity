@@ -8,7 +8,7 @@
 
     class CodeSwitchEvaluatedObservable<TFeature> :
         Connectable<IObserver<ICodeSwitchEvaluated>>
-        where TFeature : struct, CodeFeature
+        where TFeature : struct, ICodeFeature
     {
         public void Evaluated(bool enabled)
         {

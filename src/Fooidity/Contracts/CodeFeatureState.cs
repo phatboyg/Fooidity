@@ -1,24 +1,24 @@
-﻿namespace Fooidity.Management.Models
+﻿namespace Fooidity.Contracts
 {
     using System;
 
 
-    public class CodeFeatureStateModel :
+    public class CodeFeatureState :
         ICodeFeatureState,
-        IEquatable<CodeFeatureStateModel>
+        IEquatable<CodeFeatureState>
     {
-        public CodeFeatureStateModel(CodeFeatureId codeFeatureId, DateTime lastUpdated, bool enabled)
+        public CodeFeatureState(Uri codeFeatureId, DateTime lastUpdated, bool enabled)
         {
             CodeFeatureId = codeFeatureId;
             LastUpdated = lastUpdated;
             Enabled = enabled;
         }
 
-        public CodeFeatureId CodeFeatureId { get; set; }
+        public Uri CodeFeatureId { get; set; }
         public DateTime LastUpdated { get; set; }
         public bool Enabled { get; set; }
 
-        public bool Equals(CodeFeatureStateModel other)
+        public bool Equals(CodeFeatureState other)
         {
             if (ReferenceEquals(null, other))
                 return false;
@@ -37,7 +37,7 @@
             if (obj.GetType() != GetType())
                 return false;
 
-            return Equals((CodeFeatureStateModel)obj);
+            return Equals((CodeFeatureState)obj);
         }
 
         public override int GetHashCode()

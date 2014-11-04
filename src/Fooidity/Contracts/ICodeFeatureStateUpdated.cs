@@ -6,7 +6,7 @@
     /// <summary>
     /// Sent to the cache when the state of code feature is updated, so that the cache can be updated
     /// </summary>
-    public interface ICodeFeatureStateEnabled
+    public interface ICodeFeatureStateUpdated
     {
         Guid EventId { get; }
 
@@ -24,5 +24,10 @@
         /// The FeatureId that was updated
         /// </summary>
         Uri CodeFeatureId { get; }
+
+        /// <summary>
+        /// The new state of the code feature
+        /// </summary>
+        bool Enabled { get; }
     }
 }

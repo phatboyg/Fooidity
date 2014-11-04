@@ -16,7 +16,7 @@
 
             IContainer container = builder.Build();
 
-            var fooId = container.Resolve<CodeSwitch<Active>>();
+            var fooId = container.Resolve<ICodeSwitch<Active>>();
 
             Assert.IsFalse(fooId.Enabled);
         }
@@ -32,7 +32,7 @@
 
             IContainer container = builder.Build();
 
-            var fooId = container.Resolve<CodeSwitch<Active>>();
+            var fooId = container.Resolve<ICodeSwitch<Active>>();
 
             Assert.IsTrue(fooId.Enabled);
         }
@@ -46,20 +46,20 @@
 
             IContainer container = builder.Build();
 
-            var fooId = container.Resolve<CodeSwitch<Active>>();
+            var fooId = container.Resolve<ICodeSwitch<Active>>();
 
             Assert.IsFalse(fooId.Enabled);
 
             container.Enable<Active>();
 
-            fooId = container.Resolve<CodeSwitch<Active>>();
+            fooId = container.Resolve<ICodeSwitch<Active>>();
 
             Assert.IsTrue(fooId.Enabled);
         }
 
 
         struct Active :
-            CodeFeature
+            ICodeFeature
         {
         }
     }

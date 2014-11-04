@@ -13,7 +13,7 @@
         [Test]
         public void Enabled_and_correct_dates()
         {
-            CodeSwitch<SpecialDiscount> x = CodeSwitch.Factory.EnableBetween<SpecialDiscount>(start, end,
+            ICodeSwitch<SpecialDiscount> x = CodeSwitch.Factory.EnableBetween<SpecialDiscount>(start, end,
                 () => new DateTime(2014, 1, 15));
 
             x.Enabled.ShouldBe(true);
@@ -32,7 +32,7 @@
         [Test]
         public void Disabled_if_date_is_incorrect()
         {
-            CodeSwitch<SpecialDiscount> x = CodeSwitch.Factory.EnableBetween<SpecialDiscount>(start, end,
+            ICodeSwitch<SpecialDiscount> x = CodeSwitch.Factory.EnableBetween<SpecialDiscount>(start, end,
                 () => new DateTime(2014, 3, 15));
 
             x.Enabled.ShouldBe(false);
@@ -40,7 +40,7 @@
 
 
         struct SpecialDiscount :
-            CodeFeature
+            ICodeFeature
         {
         }
     }

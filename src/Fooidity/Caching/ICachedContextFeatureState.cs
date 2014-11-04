@@ -1,10 +1,10 @@
-namespace Fooidity
+namespace Fooidity.Caching
 {
-    public interface ContextFeatureState
+    public interface ICachedContextFeatureState
     {
         string Key { get; }
 
-        bool TryGetCodeFeatureState(CodeFeatureId codeFeatureId, out CodeFeatureState featureState);
+        bool TryGetCodeFeatureState(CodeFeatureId codeFeatureId, out ICachedCodeFeatureState featureState);
 
         /// <summary>
         /// Attempt to update the code feature state to the new value
@@ -13,7 +13,7 @@ namespace Fooidity
         /// <param name="updated"></param>
         /// <param name="existing"></param>
         /// <returns></returns>
-        bool TryUpdate(CodeFeatureId codeFeatureId, CodeFeatureState updated, CodeFeatureState existing);
+        bool TryUpdate(CodeFeatureId codeFeatureId, ICachedCodeFeatureState updated, ICachedCodeFeatureState existing);
 
         /// <summary>
         /// Try to add a new code feature state to the context
@@ -21,6 +21,6 @@ namespace Fooidity
         /// <param name="codeFeatureId"></param>
         /// <param name="featureState"></param>
         /// <returns></returns>
-        bool TryAdd(CodeFeatureId codeFeatureId, CodeFeatureState featureState);
+        bool TryAdd(CodeFeatureId codeFeatureId, ICachedCodeFeatureState featureState);
     }
 }

@@ -1,8 +1,8 @@
 namespace Fooidity
 {
     using System;
-    using CodeSwitches;
     using Dependents;
+
 
     /// <summary>
     /// Methods to create code switches based on the internal types available. Can
@@ -15,16 +15,16 @@ namespace Fooidity
         /// </summary>
         /// <typeparam name="T">The CodeSwitch type</typeparam>
         /// <returns></returns>
-        CodeSwitch<T> Enabled<T>()
-            where T : struct, CodeFeature;
+        ICodeSwitch<T> Enabled<T>()
+            where T : struct, ICodeFeature;
 
         /// <summary>
         /// Returns a CodeSwitch that is always disabled
         /// </summary>
         /// <typeparam name="T">The CodeSwitch type</typeparam>
         /// <returns></returns>
-        CodeSwitch<T> Disabled<T>()
-            where T : struct, CodeFeature;
+        ICodeSwitch<T> Disabled<T>()
+            where T : struct, ICodeFeature;
 
         /// <summary>
         /// Creates a CodeSwitch that can be toggled from enabled to disabled (and back, of course)
@@ -33,7 +33,7 @@ namespace Fooidity
         /// <param name="initial">The initial state of the CodeSwitch</param>
         /// <returns></returns>
         IToggleCodeSwitch<T> Toggle<T>(bool initial = false)
-            where T : struct, CodeFeature;
+            where T : struct, ICodeFeature;
 
         /// <summary>
         /// Returns the dependent code switch build by the factory
@@ -41,7 +41,7 @@ namespace Fooidity
         /// <typeparam name="T"></typeparam>
         /// <param name="factoryMethod"></param>
         /// <returns></returns>
-        CodeSwitch<T> Dependent<T>(Func<IDependentCodeSwitchFactory<T>, CodeSwitch<T>> factoryMethod)
-            where T : struct, CodeFeature;
+        ICodeSwitch<T> Dependent<T>(Func<IDependentCodeSwitchFactory<T>, ICodeSwitch<T>> factoryMethod)
+            where T : struct, ICodeFeature;
     }
 }

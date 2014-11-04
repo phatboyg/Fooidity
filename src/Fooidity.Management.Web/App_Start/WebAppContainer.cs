@@ -11,7 +11,9 @@
     using AzureIntegration.Queries;
     using AzureIntegration.UserStore;
     using Commands;
+    using Contracts;
     using Fooidity.AzureIntegration;
+    using Fooidity.Contracts;
     using Hubs;
     using Management.Models;
     using Microsoft.AspNet.Identity;
@@ -87,6 +89,9 @@
 
             builder.RegisterType<ListApplicationCodeFeaturesQueryHandler>()
                 .As<IQueryHandler<IListApplicationCodeFeatures, IEnumerable<ICodeFeatureState>>>();
+
+            builder.RegisterType<HubEventHandler>()
+                .As<IEventHandler<IApplicationCodeFeatureStateUpdated>>();
 
             builder.RegisterType<ApplicationHub>();
 

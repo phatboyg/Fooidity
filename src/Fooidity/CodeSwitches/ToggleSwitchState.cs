@@ -2,7 +2,7 @@
 {
     public class ToggleSwitchState<TFeature> :
         IToggleSwitchState<TFeature>
-        where TFeature : struct, CodeFeature
+        where TFeature : struct, ICodeFeature
     {
         public ToggleSwitchState()
         {

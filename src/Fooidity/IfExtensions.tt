@@ -8,22 +8,22 @@ namespace Fooidity
 
     public static class IfExtensions
     {
-        public static void If<TFeature>(this CodeSwitch<TFeature> codeSwitch, Action enabledMethod)
-            where TFeature : struct, CodeFeature
+        public static void If<TFeature>(this ICodeSwitch<TFeature> codeSwitch, Action enabledMethod)
+            where TFeature : struct, ICodeFeature
         {
             if (codeSwitch.Enabled)
                 enabledMethod();
         }    
 
-        public static void Unless<TFeature>(this CodeSwitch<TFeature> codeSwitch, Action disabledMethod)
-             where TFeature : struct, CodeFeature
+        public static void Unless<TFeature>(this ICodeSwitch<TFeature> codeSwitch, Action disabledMethod)
+             where TFeature : struct, ICodeFeature
        {
             if (!codeSwitch.Enabled)
                 disabledMethod();
         }    
 
-        public static void If<TFeature>(this CodeSwitch<TFeature> codeSwitch, Action enabledMethod, Action disabledMethod)
-            where TFeature : struct, CodeFeature
+        public static void If<TFeature>(this ICodeSwitch<TFeature> codeSwitch, Action enabledMethod, Action disabledMethod)
+            where TFeature : struct, ICodeFeature
         {
             if (codeSwitch.Enabled)
                 enabledMethod();
@@ -40,22 +40,22 @@ namespace Fooidity
     var tClose = (i > 1) ? "#endif" : "";
 #>
 <#=tOpen#>
-        public static void If<<#=tGenericArgs#>>(this CodeSwitch<TFeature> codeSwitch, Action<<#=tActionArgs#>> enabledMethod<#=tMethodArgs#>)
-            where TFeature : struct, CodeFeature
+        public static void If<<#=tGenericArgs#>>(this ICodeSwitch<TFeature> codeSwitch, Action<<#=tActionArgs#>> enabledMethod<#=tMethodArgs#>)
+            where TFeature : struct, ICodeFeature
         {
             if (codeSwitch.Enabled)
                 enabledMethod(<#=tCallArgs#>);
         }    
 
-        public static void Unless<<#=tGenericArgs#>>(this CodeSwitch<TFeature> codeSwitch, Action<<#=tActionArgs#>> disabledMethod<#=tMethodArgs#>)
-            where TFeature : struct, CodeFeature
+        public static void Unless<<#=tGenericArgs#>>(this ICodeSwitch<TFeature> codeSwitch, Action<<#=tActionArgs#>> disabledMethod<#=tMethodArgs#>)
+            where TFeature : struct, ICodeFeature
         {
             if (!codeSwitch.Enabled)
                 disabledMethod(<#=tCallArgs#>);
         }    
 
-        public static void If<<#=tGenericArgs#>>(this CodeSwitch<TFeature> codeSwitch, Action<<#=tActionArgs#>> enabledMethod, Action<<#=tActionArgs#>> disabledMethod<#=tMethodArgs#>)
-              where TFeature : struct, CodeFeature
+        public static void If<<#=tGenericArgs#>>(this ICodeSwitch<TFeature> codeSwitch, Action<<#=tActionArgs#>> enabledMethod, Action<<#=tActionArgs#>> disabledMethod<#=tMethodArgs#>)
+              where TFeature : struct, ICodeFeature
       {
             if (codeSwitch.Enabled)
                 enabledMethod(<#=tCallArgs#>);
@@ -67,8 +67,8 @@ namespace Fooidity
     }
 #>   
 
-        public static T Iff<TFeature, T>(this CodeSwitch<TFeature> codeSwitch, Func<T> enabledFunction, Func<T> disabledFunction)
-            where TFeature : struct, CodeFeature
+        public static T Iff<TFeature, T>(this ICodeSwitch<TFeature> codeSwitch, Func<T> enabledFunction, Func<T> disabledFunction)
+            where TFeature : struct, ICodeFeature
         {
             if (codeSwitch.Enabled)
                 return enabledFunction();
@@ -84,8 +84,8 @@ namespace Fooidity
     var tClose = (i > 1) ? "#endif" : "";
 #>
 <#=tOpen#>
-        public static T Iff<TFeature, <#=tActionArgs#>T>(this CodeSwitch<TFeature> codeSwitch, Func<<#=tActionArgs#>T> enabledFunction, Func<<#=tActionArgs#>T> disabledFunction<#=tMethodArgs#>)
-            where TFeature : struct, CodeFeature
+        public static T Iff<TFeature, <#=tActionArgs#>T>(this ICodeSwitch<TFeature> codeSwitch, Func<<#=tActionArgs#>T> enabledFunction, Func<<#=tActionArgs#>T> disabledFunction<#=tMethodArgs#>)
+            where TFeature : struct, ICodeFeature
         {
             if (codeSwitch.Enabled)
                 return enabledFunction(<#=tCallArgs#>);
@@ -112,8 +112,8 @@ namespace Fooidity
         public delegate T OFunc<<#=tInArgs.Replace("in ", "")#><#=tOutArg#>, T>(<#=tInMethodArgs#><#=tOutMethodArg#>);
 #endif
 
-        public static T Iff<TFeature, <#=tActionArgs#>T>(this CodeSwitch<TFeature> codeSwitch, OFunc<<#=tActionArgs#>T> enabledFunction, OFunc<<#=tActionArgs#>T> disabledFunction, <#=tInMethodArgs#><#=tOutMethodArg#>)
-            where TFeature : struct, CodeFeature
+        public static T Iff<TFeature, <#=tActionArgs#>T>(this ICodeSwitch<TFeature> codeSwitch, OFunc<<#=tActionArgs#>T> enabledFunction, OFunc<<#=tActionArgs#>T> disabledFunction, <#=tInMethodArgs#><#=tOutMethodArg#>)
+            where TFeature : struct, ICodeFeature
         {
             if (codeSwitch.Enabled)
                 return enabledFunction(<#=tInCallArgs#><#=tOutCallArg#>);

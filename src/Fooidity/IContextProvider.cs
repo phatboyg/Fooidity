@@ -7,7 +7,7 @@
     /// Supports returning a context (TContext) from an input (message, model, etc)
     /// </summary>
     /// <typeparam name="TContext"></typeparam>
-    public interface ContextProvider<TContext>
+    public interface IContextProvider<TContext>
     {
         Type InputType { get; }
 
@@ -20,8 +20,8 @@
     /// </summary>
     /// <typeparam name="TInput"></typeparam>
     /// <typeparam name="TContext"></typeparam>
-    public interface ContextProvider<in TInput, TContext> :
-        ContextProvider<TContext>
+    public interface IContextProvider<in TInput, TContext> :
+        IContextProvider<TContext>
     {
         bool TryGetContext(TInput input, out TContext context);
     }

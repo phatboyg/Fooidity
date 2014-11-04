@@ -46,7 +46,7 @@
         }
 
         struct BigOn :
-            CodeFeature{}
+            ICodeFeature{}
 
 
         interface A

@@ -19,7 +19,7 @@ namespace Fooidity.AzureIntegration
             _tableProvider = tableProvider;
         }
 
-        public async Task<IEnumerable<Tuple<string, CodeFeatureState>>> Load()
+        public async Task<IEnumerable<Tuple<string, ICachedCodeFeatureState>>> Load()
         {
             CloudTable cloudTable = _tableProvider.GetTable("contextFeatureState");
 
@@ -31,13 +31,13 @@ namespace Fooidity.AzureIntegration
             return false;
         }
 
-        async Task<IEnumerable<Tuple<string, CodeFeatureState>>> GetContextFeatureStates(CloudTable cloudTable,
+        async Task<IEnumerable<Tuple<string, ICachedCodeFeatureState>>> GetContextFeatureStates(CloudTable cloudTable,
             CancellationToken cancellationToken = default(CancellationToken))
         {
             TableQuery<ContextFeatureStateEntity> query = new TableQuery<ContextFeatureStateEntity>()
                 .Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, "Current"));
 
-            var featureStates = new List<Tuple<string, CodeFeatureState>>();
+            var featureStates = new List<Tuple<string, ICachedCodeFeatureState>>();
 
             TableContinuationToken token = null;
 
@@ -48,7 +48,7 @@ namespace Fooidity.AzureIntegration
 
                 featureStates.AddRange(result.Select(entity =>
                     Tuple.Create(entity.ContextKey,
-                        (CodeFeatureState)new CodeFeatureStateImpl(new CodeFeatureId(entity.CodeFeatureId), entity.Enabled))));
+                        (ICachedCodeFeatureState)new CachedCodeFeatureState(new CodeFeatureId(entity.CodeFeatureId), entity.Enabled))));
 
                 token = result.ContinuationToken;
             }

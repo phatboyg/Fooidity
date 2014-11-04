@@ -15,10 +15,11 @@ namespace Fooidity
         /// <typeparam name="T"></typeparam>
         /// <param name="factory"></param>
         /// <param name="dateTime"></param>
+        /// <param name="currentTimeProvider"></param>
         /// <returns></returns>
         public static IToggleCodeSwitch<T> EnableAfter<T>(this ICodeSwitchFactory factory, DateTime dateTime,
             CurrentTimeProvider currentTimeProvider = null)
-            where T : struct, CodeFeature
+            where T : struct, ICodeFeature
         {
             return new DateRangeCodeSwitch<T>(true, dateTime, null, currentTimeProvider ?? DefaultTimeProvider);
         }
@@ -34,7 +35,7 @@ namespace Fooidity
         /// <returns></returns>
         public static IToggleCodeSwitch<T> EnableBetween<T>(this ICodeSwitchFactory factory, DateTime startDateTime,
             DateTime endDateTime, CurrentTimeProvider currentTimeProvider = null)
-            where T : struct, CodeFeature
+            where T : struct, ICodeFeature
         {
             return new DateRangeCodeSwitch<T>(true, startDateTime, endDateTime,
                 currentTimeProvider ?? DefaultTimeProvider);
@@ -46,10 +47,11 @@ namespace Fooidity
         /// <typeparam name="T"></typeparam>
         /// <param name="factory"></param>
         /// <param name="dateTime"></param>
+        /// <param name="currentTimeProvider"></param>
         /// <returns></returns>
         public static IToggleCodeSwitch<T> EnableUntil<T>(this ICodeSwitchFactory factory, DateTime dateTime,
             CurrentTimeProvider currentTimeProvider = null)
-            where T : struct, CodeFeature
+            where T : struct, ICodeFeature
         {
             return new DateRangeCodeSwitch<T>(true, null, dateTime, currentTimeProvider ?? DefaultTimeProvider);
         }

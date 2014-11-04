@@ -1,6 +1,6 @@
 ﻿namespace Fooidity
 {
-    using Configuration;
+    using Caching;
 
 
     /// <summary>
@@ -9,6 +9,6 @@
     /// <typeparam name="TContext"></typeparam>
     public interface IContextFeatureStateCache<in TContext>
     {
-        bool TryGetContextFeatureState(TContext context, out ContextFeatureState featureState);
+        bool TryGetContextFeatureState(TContext context, out ICachedContextFeatureState featureState);
     }
 }

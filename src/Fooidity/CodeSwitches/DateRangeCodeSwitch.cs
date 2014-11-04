@@ -6,7 +6,7 @@
 
     public class DateRangeCodeSwitch<TFeature> :
         IToggleCodeSwitch<TFeature>
-        where TFeature : struct, CodeFeature
+        where TFeature : struct, ICodeFeature
     {
         readonly CurrentTimeProvider _currentTimeProvider;
         readonly Lazy<bool> _enabled;

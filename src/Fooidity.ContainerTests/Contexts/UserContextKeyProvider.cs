@@ -1,7 +1,7 @@
 ﻿namespace Fooidity.ContainerTests.Contexts
 {
     public class UserContextKeyProvider :
-        ContextKeyProvider<UserContext>
+        IContextKeyProvider<UserContext>
     {
         public string GetKey(UserContext context)
         {

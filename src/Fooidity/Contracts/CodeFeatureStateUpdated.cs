@@ -3,16 +3,17 @@
     using System;
 
 
-    public class CodeFeatureStateDisabled :
-        ICodeFeatureStateDisabled
+    public class CodeFeatureStateUpdated :
+        ICodeFeatureStateUpdated
     {
-        public CodeFeatureStateDisabled()
+        public CodeFeatureStateUpdated()
         {
         }
 
-        public CodeFeatureStateDisabled(Uri codeFeatureId, Guid eventId, DateTime timestamp, Guid? commandId = null)
+        public CodeFeatureStateUpdated(Uri codeFeatureId, bool enabled, Guid eventId, DateTime timestamp, Guid? commandId = null)
         {
             CodeFeatureId = codeFeatureId;
+            Enabled = enabled;
             CommandId = commandId;
             EventId = eventId;
             Timestamp = timestamp;
@@ -25,5 +26,7 @@
         public Guid? CommandId { get; set; }
 
         public Uri CodeFeatureId { get; set; }
+
+        public bool Enabled { get; set; }
     }
 }

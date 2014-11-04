@@ -4,6 +4,7 @@
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
+    using Contracts;
     using Entities;
     using Fooidity.AzureIntegration;
     using Management.Commands;
@@ -13,13 +14,16 @@
     public class UpdateApplicationCodeFeatureStateCommandHandler :
         ICommandHandler<IUpdateApplicationCodeFeatureState>
     {
+        readonly IEnumerable<IEventHandler<IApplicationCodeFeatureStateUpdated>> _eventHandlers;
         readonly AzureManagementSettings _settings;
         readonly ICloudTableProvider _tableProvider;
 
-        public UpdateApplicationCodeFeatureStateCommandHandler(ICloudTableProvider tableProvider, AzureManagementSettings settings)
+        public UpdateApplicationCodeFeatureStateCommandHandler(ICloudTableProvider tableProvider, AzureManagementSettings settings,
+            IEnumerable<IEventHandler<IApplicationCodeFeatureStateUpdated>> eventHandlers)
         {
             _tableProvider = tableProvider;
             _settings = settings;
+            _eventHandlers = eventHandlers;
         }
 
         public async Task Execute(IUpdateApplicationCodeFeatureState command,
@@ -37,6 +41,13 @@
                 .Select(x => cloudTable.ExecuteAsync(TableOperation.InsertOrReplace(x), cancellationToken));
 
             await Task.WhenAll(writeTasks);
+
+            var updateEvent = new ApplicationCodeFeatureStateUpdated(command.ApplicationId, command.CodeFeatureId, command.Enabled,
+                command.Timestamp, command.CommandId);
+
+            Task<IApplicationCodeFeatureStateUpdated> eventTask = Task.FromResult<IApplicationCodeFeatureStateUpdated>(updateEvent);
+
+            await Task.WhenAll(_eventHandlers.Select(x => x.Handle(eventTask)));
         }
     }
 }

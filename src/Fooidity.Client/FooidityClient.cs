@@ -1,7 +1,7 @@
 ﻿namespace Fooidity.Client
 {
     using System;
-    using System.Collections.Generic;
+    using System.Globalization;
     using System.Threading.Tasks;
     using Caching;
     using Contracts;
@@ -10,7 +10,8 @@
 
     public class FooidityClient :
         IObserver<ICodeSwitchEvaluated>,
-        IDisposable
+        IDisposable,
+        ICodeFeatureStateCache
     {
         readonly string _applicationKey;
         IHubProxy _applicationHub;
@@ -22,6 +23,15 @@
         public FooidityClient(string applicationKey)
         {
             _applicationKey = applicationKey;
+        }
+
+        public bool TryGetState<TFeature>(out Caching.ICachedCodeFeatureState featureState)
+        {
+            if (_cache != null)
+                return _cache.TryGetState<TFeature>(out featureState);
+
+            featureState = default(Caching.ICachedCodeFeatureState);
+            return false;
         }
 
         public void Dispose()
@@ -59,37 +69,56 @@
 
         public async Task Connect(string hostAddress)
         {
-            IDictionary<string, string> parameters = new Dictionary<string, string>
-            {
-                {"appKey", _applicationKey}
-            };
-            var hubConnection = new HubConnection(hostAddress, parameters);
-            hubConnection.Headers.Add("X-Fooidity-AppKey", _applicationKey);
+            var hubConnection = new HubConnection(hostAddress);
+
+            hubConnection.Headers.Add(Headers.FooidityAppKey, _applicationKey);
+
+
+            hubConnection.Error += x => Console.WriteLine(x.Message);
+            hubConnection.ConnectionSlow += () => Console.WriteLine("Connection is slow");
+            hubConnection.StateChanged += x => Console.WriteLine("state changed from {0} to {1}",x.OldState, x.NewState);
+            hubConnection.Closed += () => Console.WriteLine("connection closed");
+            hubConnection.Received += x => Console.WriteLine("received: {0}", x);
 
             IHubProxy applicationHub = hubConnection.CreateHubProxy("ApplicationHub");
 
-            applicationHub.On<ICodeFeatureStateEnabled>("CodeFeatureStateEnabled", OnCodeFeatureStateEnabled);
-            applicationHub.On<ICodeFeatureStateDisabled>("CodeFeatureStateDisabled", OnCodeFeatureStateDisabled);
+            applicationHub.On("notifyMissingAppKey", OnMissingAppKey);
+            applicationHub.On("notifyInvalidAppKey", OnInvalidAppKey);
+
+            applicationHub.On<CodeFeatureStateUpdated>("notifyCodeFeatureStateUpdated", OnCodeFeatureStateUpdated);
 
             await hubConnection.Start();
 
             _hubConnection = hubConnection;
             _applicationHub = applicationHub;
             _reporter = new CodeSwitchEvaluationApplicationReporter(_applicationHub);
+
+            await Task.Run(() =>
+            {
+                var cache = new CodeFeatureStateCache(new ApplicationHubProvider(applicationHub));
+
+                _cache = cache;
+                _updateCache = cache;
+            });
         }
 
-        void OnCodeFeatureStateEnabled(ICodeFeatureStateEnabled message)
+        void OnInvalidAppKey()
         {
-            IUpdateCodeFeature update = new UpdateCodeFeature(new CodeFeatureId(message.CodeFeatureId), true,
-                message.Timestamp, message.CommandId ?? Guid.NewGuid());
-            _updateCache.UpdateCache(update);
+            _hubConnection.Stop();
         }
 
-        void OnCodeFeatureStateDisabled(ICodeFeatureStateDisabled message)
+        void OnMissingAppKey()
         {
-            IUpdateCodeFeature update = new UpdateCodeFeature(new CodeFeatureId(message.CodeFeatureId), true,
+            _hubConnection.Stop();
+        }
+
+        void OnCodeFeatureStateUpdated(ICodeFeatureStateUpdated message)
+        {
+            IUpdateCodeFeature update = new UpdateCodeFeature(new CodeFeatureId(message.CodeFeatureId), message.Enabled,
                 message.Timestamp, message.CommandId ?? Guid.NewGuid());
             _updateCache.UpdateCache(update);
+
+            Console.WriteLine("Updated: {0} to {1}", message.CodeFeatureId, message.Enabled);
         }
     }
 }

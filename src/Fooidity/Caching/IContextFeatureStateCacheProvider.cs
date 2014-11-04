@@ -7,6 +7,6 @@
 
     public interface IContextFeatureStateCacheProvider<in TContext>
     {
-        Task<IEnumerable<Tuple<string, CodeFeatureState>>> Load();
+        Task<IEnumerable<Tuple<string, ICachedCodeFeatureState>>> Load();
     }
 }

@@ -28,19 +28,10 @@
             ContextKey = contextKey;
         }
 
-        public ContextFeatureStateEntity(IContextCodeFeatureStateEnabled message)
+        public ContextFeatureStateEntity(IContextCodeFeatureStateUpdated message)
             : this(message.CodeFeatureId, message.ContextId, message.ContextKey, message.Timestamp)
         {
-            Enabled = true;
-
-            EventId = message.EventId;
-            CommandId = message.CommandId;
-        }
-
-        public ContextFeatureStateEntity(IContextCodeFeatureStateDisabled message)
-            : this(message.CodeFeatureId, message.ContextId, message.ContextKey, message.Timestamp)
-        {
-            Enabled = false;
+            Enabled = message.Enabled;
 
             EventId = message.EventId;
             CommandId = message.CommandId;

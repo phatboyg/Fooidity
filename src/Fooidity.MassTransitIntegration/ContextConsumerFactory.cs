@@ -46,7 +46,7 @@
         ICodeSwitchContainerScope CreateContainerScope<TMessage>(IConsumeContext<TMessage> context)
             where TMessage : class
         {
-            ContextProvider<TMessage, TContext> provider;
+            IContextProvider<TMessage, TContext> provider;
             if (_scope.TryResolve(out provider))
             {
                 TContext switchContext;

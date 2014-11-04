@@ -18,11 +18,11 @@
         /// <returns></returns>
         public static IRegistrationBuilder<T, SimpleActivatorData, SingleRegistrationStyle> RegisterSwitched<TFeature, T>(
             this ContainerBuilder builder, Func<IComponentContext, T> enabledFactory, Func<IComponentContext, T> disabledFactory)
-            where TFeature : struct, CodeFeature
+            where TFeature : struct, ICodeFeature
         {
             return builder.Register(context =>
             {
-                var codeSwitch = context.Resolve<CodeSwitch<TFeature>>();
+                var codeSwitch = context.Resolve<ICodeSwitch<TFeature>>();
                 return codeSwitch.Enabled
                     ? enabledFactory(context)
                     : disabledFactory(context);
@@ -40,7 +40,7 @@
         /// <returns>The registration builder for the container, already configured for the specified types</returns>
         public static IRegistrationBuilder<T, SimpleActivatorData, SingleRegistrationStyle> RegisterSwitchedType
             <TFeature, T, TEnabled, TDisabled>(this ContainerBuilder builder)
-            where TFeature : struct, CodeFeature
+            where TFeature : struct, ICodeFeature
             where T : class
             where TEnabled : T
             where TDisabled : T
@@ -50,7 +50,7 @@
 
             return builder.Register(context =>
             {
-                var codeSwitch = context.Resolve<CodeSwitch<TFeature>>();
+                var codeSwitch = context.Resolve<ICodeSwitch<TFeature>>();
 
                 return codeSwitch.Enabled ? (T)context.Resolve<TEnabled>() : (T)context.Resolve<TDisabled>();
             }).As<T>();

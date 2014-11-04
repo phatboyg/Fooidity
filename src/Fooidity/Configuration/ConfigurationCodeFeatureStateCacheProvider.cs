@@ -10,9 +10,9 @@
     public class ConfigurationCodeFeatureStateCacheProvider :
         ICodeFeatureStateCacheProvider
     {
-        public async Task<IEnumerable<CodeFeatureState>> Load()
+        public async Task<IEnumerable<ICachedCodeFeatureState>> Load()
         {
-            var codeFeatureStates = new List<CodeFeatureState>();
+            var codeFeatureStates = new List<ICachedCodeFeatureState>();
 
             var configuration = ConfigurationManager.GetSection("fooidity") as FooidityConfiguration;
             if (configuration != null)
@@ -52,7 +52,7 @@
 
 
         class FeatureState :
-            CodeFeatureState
+            ICachedCodeFeatureState
         {
             readonly bool _enabled;
             readonly CodeFeatureId _id;

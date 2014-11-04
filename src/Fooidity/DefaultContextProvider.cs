@@ -10,20 +10,20 @@
     /// <typeparam name="TInput"></typeparam>
     /// <typeparam name="TContext"></typeparam>
     public class DefaultContextProvider<TInput, TContext> :
-        ContextProvider<TInput, TContext>
+        IContextProvider<TInput, TContext>
     {
-        Type ContextProvider<TContext>.InputType
+        Type IContextProvider<TContext>.InputType
         {
             get { return typeof(TInput); }
         }
 
-        bool ContextProvider<TContext>.TryGetContext<T>(T input, out TContext context)
+        bool IContextProvider<TContext>.TryGetContext<T>(T input, out TContext context)
         {
             context = default(TContext);
             return false;
         }
 
-        bool ContextProvider<TInput, TContext>.TryGetContext(TInput input, out TContext context)
+        bool IContextProvider<TInput, TContext>.TryGetContext(TInput input, out TContext context)
         {
             context = default(TContext);
             return false;

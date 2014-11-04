@@ -9,8 +9,8 @@
     /// </summary>
     /// <typeparam name="TFeature"></typeparam>
     public class DisabledCodeSwitch<TFeature> :
-        CodeSwitch<TFeature>
-        where TFeature : struct, CodeFeature
+        ICodeSwitch<TFeature>
+        where TFeature : struct, ICodeFeature
     {
         readonly CodeSwitchEvaluatedObservable<TFeature> _evaluated;
         bool _evaluationComplete;
@@ -20,7 +20,7 @@
             _evaluated = new CodeSwitchEvaluatedObservable<TFeature>();
         }
 
-        bool CodeSwitch<TFeature>.Enabled
+        bool ICodeSwitch<TFeature>.Enabled
         {
             get
             {

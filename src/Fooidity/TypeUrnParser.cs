@@ -113,20 +113,21 @@ namespace Fooidity
                 string[] nameParts = ContentBuilder.ToString().Split(':');
                 string netTypeName = String.Empty;
 
-                if (nameParts.Length == 1)
+                switch (nameParts.Length)
                 {
-                    // ClassName -> ClassName`Tn[T1, T2, ..., Tn]
-                    netTypeName = nameParts[0] + GenericParameters + GenericArguments;
-                }
-                else if (nameParts.Length == 2)
-                {
-                    // Namespace:ClassName -> Namespace.ClassName`Tn[T1, T2, ..., Tn], Namespace
-                    netTypeName = nameParts[1] + "." + nameParts[0] + GenericParameters + GenericArguments + ", " + nameParts[1];
-                }
-                else if (nameParts.Length >= 3)
-                {
-                    // Namespace:ClassName:AssemblyName -> Namespace.ClassName`Tn[T1, T2, ..., Tn], AssemblyName
-                    netTypeName = nameParts[1] + "." + nameParts[0] + GenericParameters + GenericArguments + ", " + nameParts[2];
+                    case 1:
+                        netTypeName = nameParts[0] + GenericParameters + GenericArguments;
+                        break;
+                    case 2:
+                        netTypeName = nameParts[1] + "." + nameParts[0] + GenericParameters + GenericArguments + ", " + nameParts[1];
+                        break;
+                    default:
+                        if (nameParts.Length >= 3)
+                        {
+                            // Namespace:ClassName:AssemblyName -> Namespace.ClassName`Tn[T1, T2, ..., Tn], AssemblyName
+                            netTypeName = nameParts[1] + "." + nameParts[0] + GenericParameters + GenericArguments + ", " + nameParts[2];
+                        }
+                        break;
                 }
 
                 return netTypeName;

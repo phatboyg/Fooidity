@@ -68,7 +68,7 @@
 
 
         struct UseClassAv2 :
-            CodeFeature
+            ICodeFeature
         {
         }
 

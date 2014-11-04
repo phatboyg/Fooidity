@@ -171,7 +171,7 @@ namespace Fooidity.Caching.Internals
         }
 
 
-        public class CacheItemUpdatedImpl :
+        class CacheItemUpdatedImpl :
             CacheItemUpdated<TValue>
         {
             public CacheItemUpdatedImpl(TValue value)

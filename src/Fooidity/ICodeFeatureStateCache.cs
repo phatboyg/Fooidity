@@ -1,6 +1,6 @@
 ﻿namespace Fooidity
 {
-    using Configuration;
+    using Caching;
 
 
     /// <summary>
@@ -14,6 +14,6 @@
         /// <typeparam name="TFeature"></typeparam>
         /// <param name="featureState"></param>
         /// <returns></returns>
-        bool TryGetState<TFeature>(out CodeFeatureState featureState);
+        bool TryGetState<TFeature>(out ICachedCodeFeatureState featureState);
     }
 }

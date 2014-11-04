@@ -13,8 +13,8 @@
         /// </summary>
         /// <typeparam name="T">The CodeSwitch type</typeparam>
         /// <returns></returns>
-        public CodeSwitch<T> Enabled<T>()
-            where T : struct, CodeFeature
+        public ICodeSwitch<T> Enabled<T>()
+            where T : struct, ICodeFeature
         {
             return Cached<T>.EnabledCodeSwitch;
         }
@@ -24,8 +24,8 @@
         /// </summary>
         /// <typeparam name="T">The CodeSwitch type</typeparam>
         /// <returns></returns>
-        public CodeSwitch<T> Disabled<T>()
-            where T : struct, CodeFeature
+        public ICodeSwitch<T> Disabled<T>()
+            where T : struct, ICodeFeature
         {
             return Cached<T>.DisabledCodeSwitch;
         }
@@ -37,7 +37,7 @@
         /// <param name="initial">The initial state of the CodeSwitch</param>
         /// <returns></returns>
         public IToggleCodeSwitch<T> Toggle<T>(bool initial = false)
-            where T : struct, CodeFeature
+            where T : struct, ICodeFeature
         {
             var state = new ToggleSwitchState<T>(initial);
             return new ToggleCodeSwitch<T>(state);
@@ -49,18 +49,18 @@
         /// <typeparam name="T"></typeparam>
         /// <param name="factoryMethod"></param>
         /// <returns></returns>
-        public CodeSwitch<T> Dependent<T>(Func<IDependentCodeSwitchFactory<T>, CodeSwitch<T>> factoryMethod)
-            where T : struct, CodeFeature
+        public ICodeSwitch<T> Dependent<T>(Func<IDependentCodeSwitchFactory<T>, ICodeSwitch<T>> factoryMethod)
+            where T : struct, ICodeFeature
         {
             return factoryMethod(Cached<T>.Factory);
         }
 
 
         static class Cached<TFeature>
-            where TFeature : struct, CodeFeature
+            where TFeature : struct, ICodeFeature
         {
-            internal static readonly CodeSwitch<TFeature> DisabledCodeSwitch = new DisabledCodeSwitch<TFeature>();
-            internal static readonly CodeSwitch<TFeature> EnabledCodeSwitch = new EnabledCodeSwitch<TFeature>();
+            internal static readonly ICodeSwitch<TFeature> DisabledCodeSwitch = new DisabledCodeSwitch<TFeature>();
+            internal static readonly ICodeSwitch<TFeature> EnabledCodeSwitch = new EnabledCodeSwitch<TFeature>();
 
             internal static readonly IDependentCodeSwitchFactory<TFeature> Factory =
                 new DependentCodeSwitchFactory<TFeature>();

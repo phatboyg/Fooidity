@@ -11,7 +11,7 @@
         {
         }
 
-        public CodeSwitchEvaluated(CodeFeatureId codeFeatureId, bool enabled)
+        public CodeSwitchEvaluated(Uri codeFeatureId, bool enabled)
         {
             Timestamp = DateTime.UtcNow;
             CodeFeatureId = codeFeatureId;
@@ -19,7 +19,7 @@
             Host = HostMetadata.Host;
         }
 
-        public CodeSwitchEvaluated(CodeFeatureId codeFeatureId, ContextId contextId, string contextKey, bool enabled)
+        public CodeSwitchEvaluated(Uri codeFeatureId, Uri contextId, string contextKey, bool enabled)
             : this(codeFeatureId, enabled)
         {
             ContextId = contextId;

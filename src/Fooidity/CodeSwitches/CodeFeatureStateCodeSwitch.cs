@@ -1,7 +1,7 @@
 ﻿namespace Fooidity.CodeSwitches
 {
     using System;
-    using Configuration;
+    using Caching;
     using Contracts;
 
 
@@ -10,8 +10,8 @@
     /// </summary>
     /// <typeparam name="TFeature"></typeparam>
     public class CodeFeatureStateCodeSwitch<TFeature> :
-        CodeSwitch<TFeature>
-        where TFeature : struct, CodeFeature
+        ICodeSwitch<TFeature>
+        where TFeature : struct, ICodeFeature
     {
         readonly ICodeFeatureStateCache _cache;
         readonly Lazy<bool> _enabled;
@@ -35,7 +35,6 @@
             return _evaluated.Connect(observer);
         }
 
-
         bool Evaluate()
         {
             bool enabled = GetEnabled();
@@ -47,7 +46,7 @@
 
         bool GetEnabled()
         {
-            CodeFeatureState featureState;
+            ICachedCodeFeatureState featureState;
             return _cache.TryGetState<TFeature>(out featureState) && featureState.Enabled;
         }
     }

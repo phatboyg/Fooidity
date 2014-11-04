@@ -11,7 +11,7 @@ namespace Fooidity.Contracts
         {
         }
 
-        public CodeFeatureStateCacheUpdated(DateTime timestamp, TimeSpan duration, CodeFeatureId codeFeatureId, bool enabled,
+        public CodeFeatureStateCacheUpdated(DateTime timestamp, TimeSpan duration, Uri codeFeatureId, bool enabled,
             Guid? commandId = null)
         {
             EventId = Guid.NewGuid();

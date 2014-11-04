@@ -1,8 +1,5 @@
 ﻿namespace Fooidity.Caching
 {
-    using Configuration;
-
-
     public interface ICodeFeatureStateCacheInstance
     {
         /// <summary>
@@ -21,7 +18,7 @@
         /// <param name="id"></param>
         /// <param name="featureState"></param>
         /// <returns></returns>
-        bool TryGetState(CodeFeatureId id, out CodeFeatureState featureState);
+        bool TryGetState(CodeFeatureId id, out ICachedCodeFeatureState featureState);
 
         /// <summary>
         /// Add/Update an existing feature state to the specified value
@@ -29,7 +26,7 @@
         /// <param name="id"></param>
         /// <param name="featureState"></param>
         /// <param name="previousFeatureState"></param>
-        bool TryUpdate(CodeFeatureId id, CodeFeatureState featureState, CodeFeatureState previousFeatureState);
+        bool TryUpdate(CodeFeatureId id, ICachedCodeFeatureState featureState, ICachedCodeFeatureState previousFeatureState);
 
         /// <summary>
         /// Add a new feature state
@@ -37,6 +34,6 @@
         /// <param name="id"></param>
         /// <param name="featureState"></param>
         /// <returns></returns>
-        bool TryAdd(CodeFeatureId id, CodeFeatureState featureState);
+        bool TryAdd(CodeFeatureId id, ICachedCodeFeatureState featureState);
     }
 }
