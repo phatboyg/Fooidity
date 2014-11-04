@@ -35,7 +35,7 @@
             _cacheLoaded = new Connectable<IObserver<IContextCodeFeatureStateCacheLoaded>>();
             _cacheUpdated = new Connectable<IObserver<IContextCodeFeatureStateCacheUpdated>>();
 
-            _cache = LoadCache().Result;
+            _cache = Task.Run(async () => await LoadCache()).Result;
         }
 
         public bool TryGetContextFeatureState(TContext context, out ICachedContextFeatureState featureState)

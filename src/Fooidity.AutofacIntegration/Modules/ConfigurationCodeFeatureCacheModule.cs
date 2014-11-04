@@ -1,4 +1,4 @@
-﻿namespace Fooidity
+﻿namespace Fooidity.Modules
 {
     using Autofac;
     using Caching;

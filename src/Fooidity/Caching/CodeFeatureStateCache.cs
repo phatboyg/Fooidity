@@ -32,7 +32,7 @@
             _cacheLoaded = new Connectable<IObserver<ICodeFeatureStateCacheLoaded>>();
             _cacheUpdated = new Connectable<IObserver<ICodeFeatureStateCacheUpdated>>();
 
-            _cache = LoadCache().Result;
+            _cache = Task.Run(async () => await LoadCache()).Result;
         }
 
         public bool TryGetState<TFeature>(out ICachedCodeFeatureState featureState)

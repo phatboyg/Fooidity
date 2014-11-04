@@ -15,7 +15,7 @@
         [Test]
         public void Should_be_able_to_load_the_cache()
         {
-            var codeFeatureStateCacheProvider = new AzureCodeFeatureStateCacheProvider(_tableProvider);
+            var codeFeatureStateCacheProvider = new CloudCodeFeatureStateCacheProvider(_tableProvider);
 
             _codeFeatureStateCache = new CodeFeatureStateCache(codeFeatureStateCacheProvider);
 
@@ -31,7 +31,7 @@
         [Test]
         public void Should_be_able_to_load_the_context_cache()
         {
-            var contextFeatureStateCacheProvider = new AzureContextFeatureStateCacheProvider<UserContext>(_tableProvider);
+            var contextFeatureStateCacheProvider = new CloudContextFeatureStateCacheProvider<UserContext>(_tableProvider);
 
             _contextFeatureStateCache = new ContextFeatureStateCache<UserContext>(contextFeatureStateCacheProvider,
                 new UserContextKeyProvider());
@@ -55,14 +55,14 @@
 
         CodeFeatureStateCache _codeFeatureStateCache;
         ContextFeatureStateCache<UserContext> _contextFeatureStateCache;
-        AzureTableProvider _tableProvider;
-        AzureStorageAccountProvider _storageAccountProvider;
+        CloudTableProvider _tableProvider;
+        ConfigurationCloudStorageAccountProvider _storageAccountProvider;
 
         [TestFixtureSetUp]
         public void Setup()
         {
-            _storageAccountProvider = new AzureStorageAccountProvider("fooidity:Storage");
-            _tableProvider = new AzureTableProvider(_storageAccountProvider, "test");
+            _storageAccountProvider = new ConfigurationCloudStorageAccountProvider("fooidity:Storage");
+            _tableProvider = new CloudTableProvider(_storageAccountProvider, "test");
         }
 
         [TestFixtureTearDown]

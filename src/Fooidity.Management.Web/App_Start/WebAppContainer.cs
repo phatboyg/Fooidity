@@ -83,7 +83,6 @@
             builder.RegisterType<RegisterCodeFeatureCommandHandler>()
                 .As<ICommandHandler<RegisterCodeFeature>>();
 
-
             builder.RegisterType<UpdateApplicationCodeFeatureStateCommandHandler>()
                 .As<ICommandHandler<IUpdateApplicationCodeFeatureState>>();
 

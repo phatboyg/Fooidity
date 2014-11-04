@@ -67,14 +67,15 @@
     <Compile Include="..\SolutionVersion.cs">
       <Link>Properties\SolutionVersion.cs</Link>
     </Compile>
-    <Compile Include="AzureCodeFeatureStateCacheProvider.cs" />
-    <Compile Include="AzureContextFeatureStateCacheProvider.cs" />
-    <Compile Include="AzureStorageAccountProvider.cs" />
-    <Compile Include="AzureTableProvider.cs" />
-    <Compile Include="CodeFeatureStateEntity.cs" />
-    <Compile Include="ContextFeatureStateEntity.cs" />
+    <Compile Include="CloudCodeFeatureStateCacheProvider.cs" />
+    <Compile Include="CloudContextFeatureStateCacheProvider.cs" />
+    <Compile Include="ConfigurationCloudStorageAccountProvider.cs" />
+    <Compile Include="CloudTableProvider.cs" />
+    <Compile Include="Entities\CodeFeatureStateEntity.cs" />
+    <Compile Include="Entities\ContextFeatureStateEntity.cs" />
     <Compile Include="ICloudStorageAccountProvider.cs" />
     <Compile Include="ICloudTableProvider.cs" />
+    <Compile Include="TableQueryExtensions.cs" />
     <Compile Include="TimestampExtensions.cs" />
   </ItemGroup>
   <ItemGroup>

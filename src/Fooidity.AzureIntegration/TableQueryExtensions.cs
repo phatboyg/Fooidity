@@ -1,7 +1,8 @@
-﻿namespace Fooidity.Management.AzureIntegration
+namespace Fooidity.AzureIntegration
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
@@ -22,25 +23,34 @@
             Func<TQuery, TResult> selector, CancellationToken cancellationToken = default(CancellationToken))
             where TQuery : class, ITableEntity, new()
         {
-            var results = new List<TResult>();
-
-            TableContinuationToken token = null;
-            var options = new TableRequestOptions();
-            var context = new OperationContext
+            try
             {
-                ClientRequestID = Guid.NewGuid().ToString(),
-            };
-            do
-            {
-                TableQuerySegment<TQuery> result = await table.ExecuteQuerySegmentedAsync(query, token, options, context, cancellationToken);
+                var results = new List<TResult>();
 
-                results.AddRange(result.Select(selector));
+                TableContinuationToken token = null;
+                var options = new TableRequestOptions();
+                var context = new OperationContext
+                {
+                    ClientRequestID = Guid.NewGuid().ToString(),
+                };
+                do
+                {
+                    TableQuerySegment<TQuery> result = await table.ExecuteQuerySegmentedAsync(query, token, options, context, cancellationToken);
 
-                token = result.ContinuationToken;
+                    results.AddRange(result.Select(selector));
+
+                    token = result.ContinuationToken;
+                }
+                while (token != null);
+
+                return results;
             }
-            while (token != null);
+            catch (Exception ex)
+            {
+                Trace.TraceError(ex.Message);
 
-            return results;
+                throw;
+            }
         }
     }
 }

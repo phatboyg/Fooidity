@@ -1,4 +1,4 @@
-﻿namespace Fooidity.AzureIntegration
+﻿namespace Fooidity.AzureIntegration.Entities
 {
     using System;
     using Microsoft.WindowsAzure.Storage.Table;
@@ -11,7 +11,7 @@
         {
         }
 
-        public CodeFeatureStateEntity(CodeFeatureId codeFeatureId, DateTime timestamp, bool enabled, Guid? commandId = null)
+        public CodeFeatureStateEntity(Uri codeFeatureId, DateTime timestamp, bool enabled, Guid? commandId = null)
         {
             if (codeFeatureId == null)
                 throw new ArgumentNullException("codeFeatureId");

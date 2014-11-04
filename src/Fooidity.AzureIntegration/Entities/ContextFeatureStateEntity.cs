@@ -1,7 +1,6 @@
-﻿namespace Fooidity.AzureIntegration
+﻿namespace Fooidity.AzureIntegration.Entities
 {
     using System;
-    using Contracts;
     using Microsoft.WindowsAzure.Storage.Table;
 
 
@@ -14,7 +13,8 @@
         {
         }
 
-        ContextFeatureStateEntity(Uri codeFeatureId, Uri contextId, string contextKey, DateTime timestamp)
+        public ContextFeatureStateEntity(Uri codeFeatureId, Uri contextId, string contextKey, bool enabled, DateTime timestamp,
+            Guid? eventId = null, Guid? commandId = null)
         {
             PartitionKey = string.Join(SeparatorString,
                 contextId.ToString(),
@@ -23,18 +23,13 @@
             RowKey = timestamp.ToDescendingTimestamp();
             Timestamp = timestamp;
 
+            EventId = eventId.HasValue ? eventId.Value : Guid.NewGuid();
+            CommandId = commandId;
+
             CodeFeatureId = codeFeatureId.ToString();
             ContextId = contextId.ToString();
             ContextKey = contextKey;
-        }
-
-        public ContextFeatureStateEntity(IContextCodeFeatureStateUpdated message)
-            : this(message.CodeFeatureId, message.ContextId, message.ContextKey, message.Timestamp)
-        {
-            Enabled = message.Enabled;
-
-            EventId = message.EventId;
-            CommandId = message.CommandId;
+            Enabled = enabled;
         }
 
         public string CodeFeatureId { get; set; }

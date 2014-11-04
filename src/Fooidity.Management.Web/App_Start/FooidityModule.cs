@@ -12,11 +12,11 @@
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<AzureStorageAccountProvider>()
+            builder.RegisterType<ConfigurationCloudStorageAccountProvider>()
                 .WithParameter("connectionName", "Fooidity.AzureIntegration.ConnectionString")
                 .As<ICloudStorageAccountProvider>();
 
-            builder.RegisterType<AzureTableProvider>()
+            builder.RegisterType<CloudTableProvider>()
                 .As<ICloudTableProvider>()
                 .SingleInstance();
 
@@ -26,7 +26,7 @@
                 .As<IUpdateCodeFeatureCache>()
                 .SingleInstance();
 
-            builder.RegisterType<AzureCodeFeatureStateCacheProvider>()
+            builder.RegisterType<CloudCodeFeatureStateCacheProvider>()
                 .As<ICodeFeatureStateCacheProvider>();
 
             builder.RegisterType<UserContextKeyProvider>()
@@ -38,7 +38,7 @@
                 .As<IUpdateContextFeatureCache>()
                 .SingleInstance();
 
-            builder.RegisterType<AzureContextFeatureStateCacheProvider<UserContext>>()
+            builder.RegisterType<CloudContextFeatureStateCacheProvider<UserContext>>()
                 .As<IContextFeatureStateCacheProvider<UserContext>>();
 
             builder.RegisterContextCodeSwitch<Feature_NewScreen, UserContext>();

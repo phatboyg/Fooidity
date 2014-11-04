@@ -99,7 +99,6 @@
     <Compile Include="Queries\ListApplicationsQueryHandler.cs" />
     <Compile Include="Queries\ListOrganizationsQueryHandler.cs" />
     <Compile Include="QueryCodeFeatureStateQueryHandler.cs" />
-    <Compile Include="TableQueryExtensions.cs" />
     <Compile Include="UpdateCodeFeatureStateCommandHandler.cs" />
     <Compile Include="UserStore\Encoding\Base32BinaryEncodingFormatter.cs" />
     <Compile Include="UserStore\Encoding\Base32BinaryEncodingParser.cs" />

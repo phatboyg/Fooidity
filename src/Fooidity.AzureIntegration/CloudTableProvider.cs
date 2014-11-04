@@ -7,20 +7,20 @@
     using Microsoft.WindowsAzure.Storage.Table;
 
 
-    public class AzureTableProvider :
+    public class CloudTableProvider :
         ICloudTableProvider
     {
         readonly ICloudStorageAccountProvider _storageAccountProvider;
         readonly string _tablePrefix;
         readonly ConcurrentDictionary<string, CloudTable> _tables = new ConcurrentDictionary<string, CloudTable>();
 
-        public AzureTableProvider(ICloudStorageAccountProvider storageAccountProvider)
+        public CloudTableProvider(ICloudStorageAccountProvider storageAccountProvider)
         {
             _storageAccountProvider = storageAccountProvider;
             _tablePrefix = "";
         }
 
-        public AzureTableProvider(ICloudStorageAccountProvider storageAccountProvider, string tablePrefix)
+        public CloudTableProvider(ICloudStorageAccountProvider storageAccountProvider, string tablePrefix)
         {
             _storageAccountProvider = storageAccountProvider;
             _tablePrefix = tablePrefix;

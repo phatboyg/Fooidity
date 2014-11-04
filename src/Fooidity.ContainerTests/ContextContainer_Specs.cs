@@ -7,6 +7,7 @@
     using Contexts;
     using Contracts;
     using Features;
+    using Modules;
     using NUnit.Framework;
 
 

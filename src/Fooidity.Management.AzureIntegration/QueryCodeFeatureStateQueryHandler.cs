@@ -6,6 +6,7 @@
     using System.Threading;
     using System.Threading.Tasks;
     using Fooidity.AzureIntegration;
+    using Fooidity.AzureIntegration.Entities;
     using Microsoft.WindowsAzure.Storage.Table;
     using Models;
 
