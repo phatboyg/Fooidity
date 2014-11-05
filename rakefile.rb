@@ -60,6 +60,8 @@ task :copy4 => [:build4] do
   copyOutputFiles File.join(props[:src], "Fooidity.AutofacIntegration/bin/Release"), "Fooidity.AutofacIntegration.{dll,pdb,xml}", File.join(props[:output], 'net-4.5')
   copyOutputFiles File.join(props[:src], "Fooidity.AzureIntegration/bin/Release"), "Fooidity.AzureIntegration.{dll,pdb,xml}", File.join(props[:output], 'net-4.5')
   copyOutputFiles File.join(props[:src], "Fooidity.MassTransitIntegration/bin/Release"), "Fooidity.MassTransitIntegration.{dll,pdb,xml}", File.join(props[:output], 'net-4.5')
+  copyOutputFiles File.join(props[:src], "Fooidity.Client/bin/Release"), "Fooidity.Client.{dll,pdb,xml}", File.join(props[:output], 'net-4.5')
+  copyOutputFiles File.join(props[:src], "Fooidity.Client.AutofacIntegration/bin/Release"), "Fooidity.Client.AutofacIntegration.{dll,pdb,xml}", File.join(props[:output], 'net-4.5')
 end
 
 desc "Only compiles the application."
@@ -104,6 +106,27 @@ desc "restores missing packages"
 msbuild :nuget_restore do |msb|
   msb.use :net4
   msb.targets :RestorePackages
+  msb.solution = File.join(props[:src], "Fooidity.Client.AutofacIntegration", "Fooidity.Client.AutofacIntegration.csproj")
+end
+
+desc "restores missing packages"
+msbuild :nuget_restore do |msb|
+  msb.use :net4
+  msb.targets :RestorePackages
+  msb.solution = File.join(props[:src], "Fooidity.Client", "Fooidity.Client.csproj")
+end
+
+desc "restores missing packages"
+msbuild :nuget_restore do |msb|
+  msb.use :net4
+  msb.targets :RestorePackages
+  msb.solution = File.join(props[:src], "Fooidity.Client.Tests", "Fooidity.Client.Tests.csproj")
+end
+
+desc "restores missing packages"
+msbuild :nuget_restore do |msb|
+  msb.use :net4
+  msb.targets :RestorePackages
   msb.solution = File.join(props[:src], "Fooidity.AzureIntegration", "Fooidity.AzureIntegration.csproj")
 end
 
@@ -127,6 +150,8 @@ task :nuget => [:versioning, :create_nuspec] do
   sh "#{props[:nuget]} pack #{props[:artifacts]}/Fooidity.Autofac.nuspec /Symbols /OutputDirectory #{props[:artifacts]}"
   sh "#{props[:nuget]} pack #{props[:artifacts]}/Fooidity.AzureIntegration.nuspec /Symbols /OutputDirectory #{props[:artifacts]}"
   sh "#{props[:nuget]} pack #{props[:artifacts]}/Fooidity.MassTransitIntegration.nuspec /Symbols /OutputDirectory #{props[:artifacts]}"
+  sh "#{props[:nuget]} pack #{props[:artifacts]}/Fooidity.Client.nuspec /Symbols /OutputDirectory #{props[:artifacts]}"
+  sh "#{props[:nuget]} pack #{props[:artifacts]}/Fooidity.Client.Autofac.nuspec /Symbols /OutputDirectory #{props[:artifacts]}"
 end
 
 nuspec :create_nuspec do |nuspec|
@@ -161,6 +186,44 @@ nuspec :create_nuspec do |nuspec|
   nuspec.output_file = File.join(props[:artifacts], 'Fooidity.Autofac.nuspec')
   add_files File.join(props[:output]), 'Fooidity.AutofacIntegration.{dll,pdb,xml}', nuspec
   nuspec.file(File.join(props[:src], "Fooidity.AutofacIntegration\\**\\*.cs").gsub("/","\\"), "src")
+end
+
+nuspec :create_nuspec do |nuspec|
+  nuspec.id = 'Fooidity.Client'
+  nuspec.version = NUGET_VERSION
+  nuspec.authors = ['Chris Patterson']
+  nuspec.summary = 'Fooidity Client to integrate with the Fooidity Switchyard'
+  nuspec.description = 'Adds support for connecting to the Fooidity Switchyard for feature control'
+  nuspec.title = 'Fooidity.Client'
+  nuspec.project_url = 'http://github.com/phatboyg/Fooidity'
+  nuspec.language = "en-US"
+  nuspec.license_url = "http://www.apache.org/licenses/LICENSE-2.0"
+  nuspec.require_license_acceptance
+  nuspec.dependency "Fooidity", NUGET_VERSION
+  nuspec.dependency "Microsoft.AspNet.SignalR.Client", "2.1.2"
+  nuspec.output_file = File.join(props[:artifacts], 'Fooidity.Client.nuspec')
+  add_files File.join(props[:output]), 'Fooidity.Client.{dll,pdb,xml}', nuspec
+  nuspec.file(File.join(props[:src], "Fooidity.Client\\**\\*.cs").gsub("/","\\"), "src")
+end
+
+nuspec :create_nuspec do |nuspec|
+  nuspec.id = 'Fooidity.Client.Autofac'
+  nuspec.version = NUGET_VERSION
+  nuspec.authors = ['Chris Patterson']
+  nuspec.summary = 'Fooidity integration with Autofac'
+  nuspec.description = 'Adds support for Autofac, including automatic implementation selection based on FooId state at resolution time'
+  nuspec.title = 'Fooidity.Client.Autofac'
+  nuspec.project_url = 'http://github.com/phatboyg/Fooidity'
+  nuspec.language = "en-US"
+  nuspec.license_url = "http://www.apache.org/licenses/LICENSE-2.0"
+  nuspec.require_license_acceptance
+  nuspec.dependency "Fooidity", NUGET_VERSION
+  nuspec.dependency "Fooidity.Client", NUGET_VERSION
+  nuspec.dependency "Fooidity.Autofac", NUGET_VERSION
+  nuspec.dependency "Autofac", "3.5.2"
+  nuspec.output_file = File.join(props[:artifacts], 'Fooidity.Client.Autofac.nuspec')
+  add_files File.join(props[:output]), 'Fooidity.Client.AutofacIntegration.{dll,pdb,xml}', nuspec
+  nuspec.file(File.join(props[:src], "Fooidity.Client.AutofacIntegration\\**\\*.cs").gsub("/","\\"), "src")
 end
 
 nuspec :create_nuspec do |nuspec|

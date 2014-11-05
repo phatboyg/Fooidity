@@ -39,10 +39,12 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SolutionVersion.cs">
+      <Link>Properties\SolutionVersion.cs</Link>
+    </Compile>
     <Compile Include="AutofacClientConfigurator.cs" />
     <Compile Include="FooidityClientModule.cs" />
     <Compile Include="FooidityClientRegistrationExtensions.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fooidity.AutofacIntegration\Fooidity.AutofacIntegration.csproj">

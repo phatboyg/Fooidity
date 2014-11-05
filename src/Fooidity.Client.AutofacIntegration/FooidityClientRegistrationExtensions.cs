@@ -1,8 +1,9 @@
-namespace Fooidity.Client.AutofacIntegration
+namespace Fooidity
 {
     using System;
     using Autofac;
-    using Configuration;
+    using Client.AutofacIntegration;
+    using Client.Configuration;
 
 
     public static class FooidityClientRegistrationExtensions
