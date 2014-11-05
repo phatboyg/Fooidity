@@ -46,6 +46,7 @@
     <Compile Include="..\SolutionVersion.cs">
       <Link>Properties\SolutionVersion.cs</Link>
     </Compile>
+    <Compile Include="CodeSwitchContainerScope.cs" />
     <Compile Include="CodeSwitchEvaluationTrackingExtensions.cs" />
     <Compile Include="CodeSwitchRegistrationExtensions.cs" />
     <Compile Include="ContainerBuilderExtensions.cs" />

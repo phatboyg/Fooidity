@@ -39,6 +39,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fooidity.Client", "Fooidity
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fooidity.Client.Tests", "Fooidity.Client.Tests\Fooidity.Client.Tests.csproj", "{7CD37A42-B21F-4B09-8142-5449A1D87DD2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fooidity.Client.AutofacIntegration", "Fooidity.Client.AutofacIntegration\Fooidity.Client.AutofacIntegration.csproj", "{EAEB0CD0-FD06-4F84-BEF5-EF4759B7A2DA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -129,6 +131,12 @@ Global
 		{7CD37A42-B21F-4B09-8142-5449A1D87DD2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7CD37A42-B21F-4B09-8142-5449A1D87DD2}.ReleaseBuild|Any CPU.ActiveCfg = Release|Any CPU
 		{7CD37A42-B21F-4B09-8142-5449A1D87DD2}.ReleaseBuild|Any CPU.Build.0 = Release|Any CPU
+		{EAEB0CD0-FD06-4F84-BEF5-EF4759B7A2DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAEB0CD0-FD06-4F84-BEF5-EF4759B7A2DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAEB0CD0-FD06-4F84-BEF5-EF4759B7A2DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAEB0CD0-FD06-4F84-BEF5-EF4759B7A2DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAEB0CD0-FD06-4F84-BEF5-EF4759B7A2DA}.ReleaseBuild|Any CPU.ActiveCfg = Release|Any CPU
+		{EAEB0CD0-FD06-4F84-BEF5-EF4759B7A2DA}.ReleaseBuild|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

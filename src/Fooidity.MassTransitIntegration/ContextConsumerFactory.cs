@@ -18,6 +18,7 @@
     public class ContextConsumerFactory<TConsumer, TContext> :
         IConsumerFactory<TConsumer>
         where TConsumer : class
+        where TContext : class
     {
         readonly ICodeSwitchContainerScope _scope;
 

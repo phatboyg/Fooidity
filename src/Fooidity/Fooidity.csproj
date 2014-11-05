@@ -69,6 +69,8 @@
     <Compile Include="CodeFeatureId.cs" />
     <Compile Include="CodeSwitch.cs" />
     <Compile Include="ContextId.cs" />
+    <Compile Include="DistinctCodeSwitchEvaluationObserver.cs" />
+    <Compile Include="Exceptions\CacheProviderSourceException.cs" />
     <Compile Include="IContextProvider.cs" />
     <Compile Include="Contracts\CodeFeatureStateUpdated.cs" />
     <Compile Include="Contracts\CodeFeatureState.cs" />
@@ -91,6 +93,7 @@
     <Compile Include="DefaultContextProvider.cs" />
     <Compile Include="Contracts\IContextCodeFeatureStateUpdated.cs" />
     <Compile Include="ICodeSwitchContainerScope.cs" />
+    <Compile Include="ICodeSwitchEventHandler.cs" />
     <Compile Include="Metadata\ContextMetadata.cs" />
     <Compile Include="Metadata\HostMetadata.cs" />
     <Compile Include="Metadata\IContextMetadata.cs" />

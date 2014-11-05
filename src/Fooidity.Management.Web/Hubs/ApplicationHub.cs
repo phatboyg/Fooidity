@@ -7,30 +7,10 @@
     using System.Threading.Tasks;
     using AzureIntegration.Exceptions;
     using Commands;
-    using Contracts;
     using Fooidity.Contracts;
     using Management.Models;
     using Microsoft.AspNet.SignalR;
     using Queries;
-
-
-    public class HubEventHandler :
-        IEventHandler<IApplicationCodeFeatureStateUpdated>
-    {
-        public async Task Handle(Task<IApplicationCodeFeatureStateUpdated> eventTask)
-        {
-            IApplicationCodeFeatureStateUpdated updated = await eventTask;
-
-            IHubContext context = GlobalHost.ConnectionManager.GetHubContext<ApplicationHub>();
-
-            var clientEvent = new CodeFeatureStateUpdated(updated.CodeFeatureId, updated.Enabled, updated.EventId, updated.Timestamp,
-                updated.CommandId);
-
-//            await context.Clients.Group(updated.ApplicationId).codeFeatureStateUpdated(clientEvent);
-
-            await context.Clients.All.notifyCodeFeatureStateUpdated(clientEvent);
-        }
-    }
 
 
     public class ApplicationHub :

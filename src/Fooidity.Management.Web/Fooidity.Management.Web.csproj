@@ -228,6 +228,7 @@
     </Compile>
     <Compile Include="Hubs\ApplicationHub.cs" />
     <Compile Include="Hubs\ConnectionIdAppKeyDictionary.cs" />
+    <Compile Include="Hubs\ApplicationHubEventHandler.cs" />
     <Compile Include="Logging\UnhandledExceptionLogger.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationViewModel.cs" />

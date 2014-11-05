@@ -22,7 +22,8 @@
         /// <typeparam name="TContext">The context type</typeparam>
         /// <param name="context">The context to add to the container</param>
         /// <returns></returns>
-        ICodeSwitchContainerScope CreateContainerScope<TContext>(TContext context);
+        ICodeSwitchContainerScope CreateContainerScope<TContext>(TContext context)
+            where TContext : class;
 
         /// <summary>
         /// Try to resolve an object of the specified type, returning that instance if available
@@ -30,6 +31,7 @@
         /// <typeparam name="T"></typeparam>
         /// <param name="instance"></param>
         /// <returns></returns>
-        bool TryResolve<T>(out T instance);
+        bool TryResolve<T>(out T instance)
+            where T : class;
     }
 }

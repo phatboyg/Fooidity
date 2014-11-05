@@ -89,7 +89,7 @@
             builder.RegisterType<ListApplicationCodeFeaturesQueryHandler>()
                 .As<IQueryHandler<IListApplicationCodeFeatures, IEnumerable<ICodeFeatureState>>>();
 
-            builder.RegisterType<HubEventHandler>()
+            builder.RegisterType<ApplicationHubEventHandler>()
                 .As<IEventHandler<IApplicationCodeFeatureStateUpdated>>();
 
             builder.RegisterType<ApplicationHub>();

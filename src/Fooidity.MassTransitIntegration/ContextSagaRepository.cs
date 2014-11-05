@@ -10,6 +10,7 @@
     public class ContextSagaRepository<TSaga, TContext> :
         ISagaRepository<TSaga>
         where TSaga : class, ISaga
+        where TContext : class
     {
         readonly ISagaRepository<TSaga> _repository;
         readonly ICodeSwitchContainerScope _scope;

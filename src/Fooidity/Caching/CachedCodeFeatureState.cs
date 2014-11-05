@@ -1,5 +1,8 @@
 namespace Fooidity.Caching
 {
+    using System;
+
+
     public class CachedCodeFeatureState :
         ICachedCodeFeatureState
     {
@@ -8,8 +11,14 @@ namespace Fooidity.Caching
 
         public CachedCodeFeatureState(CodeFeatureId id, bool enabled)
         {
-            _enabled = enabled;
             _id = id;
+            _enabled = enabled;
+        }
+
+        public CachedCodeFeatureState(Uri id, bool enabled)
+        {
+            _id = new CodeFeatureId(id);
+            _enabled = enabled;
         }
 
         public CodeFeatureId Id
