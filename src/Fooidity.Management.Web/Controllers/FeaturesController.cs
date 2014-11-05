@@ -61,7 +61,7 @@
 
         public ActionResult Details()
         {
-            throw new NotImplementedException();
+            return View("Details", new CodeFeatureStateViewModel());
         }
 
 
