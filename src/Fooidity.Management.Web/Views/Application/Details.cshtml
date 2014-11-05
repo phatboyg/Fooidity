@@ -12,14 +12,6 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Id)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Id)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.Name)
         </dt>
 
@@ -28,11 +20,19 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.OrganizationId)
+            @Html.DisplayNameFor(model => model.Id)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.OrganizationId)
+            <code>@Html.DisplayFor(model => model.Id)</code>
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OrganizationName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OrganizationName)
         </dd>
     </dl>
 
@@ -53,7 +53,7 @@
         {
             <tr>
                 <td>
-                    @key
+                    <code>@key</code>
                 </td>
                 <td>
                     @*                        @Html.ActionLink("Details", "Details", new { id = item.Id })*@
@@ -79,11 +79,35 @@
             <th></th>
         </tr>
 
-        @foreach (var item in Model.Features)
+        @foreach (var item in Model.Features.OrderBy(x => x.CodeFeatureId.Name))
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.CodeFeatureId)
+                    <dl class="dl-horizontal">
+                        <dt>
+                            Name
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(modelItem => item.CodeFeatureId.Name)
+                        </dd>
+
+                        <dt>
+                            Namespace
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(modelItem => item.CodeFeatureId.Namespace)
+                        </dd>
+
+                        <dt>
+                            Assembly
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(modelItem => item.CodeFeatureId.Assembly)
+                        </dd>
+                    </dl>
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Enabled)

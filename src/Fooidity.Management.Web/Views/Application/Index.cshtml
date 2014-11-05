@@ -7,7 +7,9 @@
 
 <h2>Applications</h2>
 <p>
-    Applications contain code features that can be managed together.
+    An application defines a scope of managed features. Applications connect to the portal using the Fooidity Client, which 
+    automatically adds features to the application as they are evaluated. Once added, users can toggle features on and off.
+    If a switch uses a context, the context is also reported, allowing the configuration of context-specific feature states.
 </p>
 
 <p>
@@ -19,19 +21,19 @@
             @Html.DisplayNameFor(model => model.Name)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.OrganizationId)
+            @Html.DisplayNameFor(model => model.OrganizationName)
         </th>
         <th></th>
     </tr>
 
-    @foreach (ApplicationViewModel item in Model)
+    @foreach (ApplicationViewModel item in Model.OrderBy(x => x.OrganizationName).ThenBy(x => x.Name))
     {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.OrganizationId)
+                @Html.DisplayFor(modelItem => item.OrganizationName)
             </td>
             <td>
                 @Html.ActionLink("Details", "Details", new {id = item.Id})

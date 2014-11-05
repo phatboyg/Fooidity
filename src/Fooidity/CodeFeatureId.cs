@@ -1,6 +1,7 @@
 ﻿namespace Fooidity
 {
     using System;
+    using System.Linq;
     using System.Runtime.Serialization;
     using System.Text;
 
@@ -35,6 +36,21 @@
         {
             if (!Scheme.Equals("urn", StringComparison.OrdinalIgnoreCase))
                 throw new FormatException("A CodeFeatureId must be a URN");
+        }
+
+        public string Name
+        {
+            get { return AbsolutePath.Split(':').Skip(1).First(); }
+        }
+
+        public string Namespace
+        {
+            get { return AbsolutePath.Split(':').Skip(2).DefaultIfEmpty("").FirstOrDefault(); }
+        }
+
+        public string Assembly
+        {
+            get { return AbsolutePath.Split(':').Skip(3).DefaultIfEmpty(Namespace).FirstOrDefault(); }
         }
 
         static string GetCodeFeatureId(Type type)

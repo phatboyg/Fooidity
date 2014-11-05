@@ -1,19 +1,22 @@
 ﻿namespace Fooidity.Management.Web.Models
 {
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using System.Linq;
     using System.Web.Mvc;
-    using Fooidity.Contracts;
-    using Management.Models;
 
 
     public class ApplicationViewModel
     {
+        [Display(Name = "Application Id")]
         public string Id { get; set; }
 
         public string Name { get; set; }
 
         public string OrganizationId { get; set; }
+
+        [Display(Name = "Organization")]
+        public string OrganizationName { get; set; }
 
         public List<string> Keys { get; set; }
 
@@ -24,6 +27,6 @@
             get { return Organizations.Select(x => new SelectListItem {Value = x.Id, Text = x.Name}); }
         }
 
-        public IEnumerable<ICodeFeatureState> Features { get; set; }
+        public IEnumerable<CodeFeatureStateViewModel> Features { get; set; }
     }
 }

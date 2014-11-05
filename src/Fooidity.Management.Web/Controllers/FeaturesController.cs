@@ -9,7 +9,10 @@
     using Management.Models;
     using Models;
 
-
+    /// <summary>
+    /// This controller is for managing local code features only, and is not part of the Azure property.
+    /// Not deprecated, but left as an example for now.
+    /// </summary>
     public class FeaturesController :
         Controller
     {

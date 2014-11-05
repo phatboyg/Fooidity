@@ -22,7 +22,6 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Organizations", "Index", "Organization", new { area = "" }, null)</li>
                     <li>@Html.ActionLink("Applications", "Index", "Application", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("Features", "Index", "Features", new { area = "" }, null)</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -32,7 +31,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - Fooidity</p>
+            <p>Fooidity - &copy; @DateTime.Now.Year - Chris Patterson (@@PhatBoyG)</p>
         </footer>
     </div>
 

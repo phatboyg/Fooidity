@@ -55,6 +55,7 @@
                 Id = x.ApplicationId,
                 Name = x.ApplicationName,
                 OrganizationId = x.OrganizationId,
+                OrganizationName = x.OrganizationName,
             }));
         }
 
@@ -75,8 +76,14 @@
                 Id = application.ApplicationId,
                 Name = application.ApplicationName,
                 OrganizationId = application.OrganizationId,
+                OrganizationName = application.OrganizationName,
                 Keys = applicationKeys.Select(x => x.Key).ToList(),
-                Features = codeFeatures.ToList(),
+                Features = codeFeatures.Select(x => new CodeFeatureStateViewModel
+                {
+                    CodeFeatureId = new CodeFeatureId(x.CodeFeatureId),
+                    Enabled = x.Enabled,
+                    LastUpdated = x.LastUpdated,
+                }).ToList(),
             });
         }
 
