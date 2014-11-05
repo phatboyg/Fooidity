@@ -43,10 +43,12 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SolutionVersion.cs">
+      <Link>Properties\SolutionVersion.cs</Link>
+    </Compile>
     <Compile Include="ApplicationHubProvider.cs" />
     <Compile Include="CodeSwitchEvaluationApplicationReporter.cs" />
     <Compile Include="FooidityClient.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fooidity\Fooidity.csproj">
