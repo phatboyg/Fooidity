@@ -59,6 +59,7 @@ task :copy4 => [:build4] do
   copyOutputFiles File.join(props[:src], "Fooidity/bin/Release"), "Fooidity.{dll,pdb,xml}", File.join(props[:output], 'net-4.5')
   copyOutputFiles File.join(props[:src], "Fooidity.AutofacIntegration/bin/Release"), "Fooidity.AutofacIntegration.{dll,pdb,xml}", File.join(props[:output], 'net-4.5')
   copyOutputFiles File.join(props[:src], "Fooidity.AzureIntegration/bin/Release"), "Fooidity.AzureIntegration.{dll,pdb,xml}", File.join(props[:output], 'net-4.5')
+  copyOutputFiles File.join(props[:src], "Fooidity.MassTransitIntegration/bin/Release"), "Fooidity.MassTransitIntegration.{dll,pdb,xml}", File.join(props[:output], 'net-4.5')
 end
 
 desc "Only compiles the application."
@@ -125,6 +126,7 @@ task :nuget => [:versioning, :create_nuspec] do
   sh "#{props[:nuget]} pack #{props[:artifacts]}/Fooidity.nuspec /Symbols /OutputDirectory #{props[:artifacts]}"
   sh "#{props[:nuget]} pack #{props[:artifacts]}/Fooidity.Autofac.nuspec /Symbols /OutputDirectory #{props[:artifacts]}"
   sh "#{props[:nuget]} pack #{props[:artifacts]}/Fooidity.AzureIntegration.nuspec /Symbols /OutputDirectory #{props[:artifacts]}"
+  sh "#{props[:nuget]} pack #{props[:artifacts]}/Fooidity.MassTransitIntegration.nuspec /Symbols /OutputDirectory #{props[:artifacts]}"
 end
 
 nuspec :create_nuspec do |nuspec|
@@ -178,6 +180,24 @@ nuspec :create_nuspec do |nuspec|
   nuspec.output_file = File.join(props[:artifacts], 'Fooidity.AzureIntegration.nuspec')
   add_files File.join(props[:output]), 'Fooidity.AzureIntegration.{dll,pdb,xml}', nuspec
   nuspec.file(File.join(props[:src], "Fooidity.AzureIntegration\\**\\*.cs").gsub("/","\\"), "src")
+end
+
+nuspec :create_nuspec do |nuspec|
+  nuspec.id = 'Fooidity.MassTransitIntegration'
+  nuspec.version = NUGET_VERSION
+  nuspec.authors = ['Chris Patterson']
+  nuspec.summary = 'Fooidity integration with MassTransit'
+  nuspec.description = 'Adds support for MassTransit consumer factory and saga repository resolution'
+  nuspec.title = 'Fooidity.MassTransitIntegration'
+  nuspec.project_url = 'http://github.com/phatboyg/Fooidity'
+  nuspec.language = "en-US"
+  nuspec.license_url = "http://www.apache.org/licenses/LICENSE-2.0"
+  nuspec.require_license_acceptance
+  nuspec.dependency "Fooidity", NUGET_VERSION
+  nuspec.dependency "MassTransit", "2.9.8"
+  nuspec.output_file = File.join(props[:artifacts], 'Fooidity.MassTransitIntegration.nuspec')
+  add_files File.join(props[:output]), 'Fooidity.MassTransitIntegration.{dll,pdb,xml}', nuspec
+  nuspec.file(File.join(props[:src], "Fooidity.MassTransitIntegration\\**\\*.cs").gsub("/","\\"), "src")
 end
 
 def project_outputs(props)

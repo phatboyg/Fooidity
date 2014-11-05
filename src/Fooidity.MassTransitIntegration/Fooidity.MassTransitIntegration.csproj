@@ -50,6 +50,7 @@
       <Link>Properties\SolutionVersion.cs</Link>
     </Compile>
     <Compile Include="ContextConsumerFactory.cs" />
+    <Compile Include="ContextSagaRepository.cs" />
     <Compile Include="UpdateCodeFeatureCacheConsumer.cs" />
     <Compile Include="UpdateContextFeatureCacheConsumer.cs" />
   </ItemGroup>
