@@ -1,7 +1,7 @@
 namespace Fooidity.Management.AzureIntegration
 {
     public class DefaultAzureManagementSettings :
-        AzureManagementSettings
+        IAzureManagementSettings
     {
         public string UserApplicationIndexTableName
         {
@@ -26,6 +26,11 @@ namespace Fooidity.Management.AzureIntegration
         public string ApplicationCodeFeatureStateTableName
         {
             get { return "appCodeFeatureState"; }
+        }
+
+        public string ApplicationContextTableName
+        {
+            get { return "appContext"; }
         }
 
         public string ApplicationTableName

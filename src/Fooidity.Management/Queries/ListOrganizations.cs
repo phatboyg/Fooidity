@@ -1,7 +1,13 @@
 ﻿namespace Fooidity.Management.Queries
 {
-    public interface ListOrganizations
+    public class ListOrganizations :
+        IListOrganizations
     {
-        string UserId { get; }
+        public ListOrganizations(string userId)
+        {
+            UserId = userId;
+        }
+
+        public string UserId { get; set; }
     }
 }

@@ -1,6 +1,5 @@
 ﻿namespace Fooidity.Management.Web.Controllers
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
@@ -17,13 +16,13 @@
     public class OrganizationController :
         Controller
     {
-        readonly ICommandHandler<CreateOrganization, Organization> _createOrganization;
-        readonly IQueryHandler<GetOrganization, Organization> _getOrganization;
-        readonly IQueryHandler<ListOrganizations, IEnumerable<Organization>> _listOrganizations;
+        readonly ICommandHandler<ICreateOrganization, IOrganization> _createOrganization;
+        readonly IQueryHandler<IGetOrganization, IOrganization> _getOrganization;
+        readonly IQueryHandler<IListOrganizations, IEnumerable<IOrganization>> _listOrganizations;
 
-        public OrganizationController(ICommandHandler<CreateOrganization, Organization> createOrganization,
-            IQueryHandler<GetOrganization, Organization> getOrganization,
-            IQueryHandler<ListOrganizations, IEnumerable<Organization>> listOrganizations)
+        public OrganizationController(ICommandHandler<ICreateOrganization, IOrganization> createOrganization,
+            IQueryHandler<IGetOrganization, IOrganization> getOrganization,
+            IQueryHandler<IListOrganizations, IEnumerable<IOrganization>> listOrganizations)
         {
             _createOrganization = createOrganization;
             _getOrganization = getOrganization;
@@ -32,25 +31,25 @@
 
         public async Task<ActionResult> Index(CancellationToken cancellationToken)
         {
-            IEnumerable<Organization> results =
-                await _listOrganizations.Execute(new ListOrganizationsQuery(User.Identity.GetUserId()), cancellationToken);
+            IEnumerable<IOrganization> results =
+                await _listOrganizations.Execute(new ListOrganizations(User.Identity.GetUserId()), cancellationToken);
 
             return View(results.Select(x => new OrganizationViewModel
             {
-                Id = x.Id,
-                Name = x.Name,
+                Id = x.OrganizationId,
+                Name = x.OrganizationName,
             }));
         }
 
         public async Task<ActionResult> Details(string id, CancellationToken cancellationToken)
         {
-            Organization organization =
-                await _getOrganization.Execute(new GetOrganizationQuery(User.Identity.GetUserId(), id), cancellationToken);
+            IOrganization organization =
+                await _getOrganization.Execute(new GetOrganization(User.Identity.GetUserId(), id), cancellationToken);
 
             return View(new OrganizationViewModel
             {
-                Id = organization.Id,
-                Name = organization.Name,
+                Id = organization.OrganizationId,
+                Name = organization.OrganizationName,
                 CreatedByUserId = organization.CreatedByUserId,
             });
         }
@@ -65,94 +64,14 @@
         {
             if (ModelState.IsValid)
             {
-                var command = new CreateOrganizationCommand(model.Name, User.Identity.GetUserId());
+                var command = new CreateOrganization(User.Identity.GetUserId(), model.Name);
 
-                Organization organization = await _createOrganization.Execute(command, cancellationToken);
+                IOrganization organization = await _createOrganization.Execute(command, cancellationToken);
 
-                return RedirectToAction("Details", new {id = organization.Id});
+                return RedirectToAction("Details", new {id = organization.OrganizationId});
             }
 
             return View();
-        }
-
-
-        class CreateOrganizationCommand :
-            CreateOrganization
-        {
-            readonly Guid _commandId;
-            readonly string _organizationName;
-            readonly DateTime _timestamp;
-            readonly string _userId;
-
-            public CreateOrganizationCommand(string organizationName, string userId)
-            {
-                _organizationName = organizationName;
-                _userId = userId;
-
-                _commandId = Guid.NewGuid();
-                _timestamp = DateTime.UtcNow;
-            }
-
-            public Guid CommandId
-            {
-                get { return _commandId; }
-            }
-
-            public DateTime Timestamp
-            {
-                get { return _timestamp; }
-            }
-
-            public string UserId
-            {
-                get { return _userId; }
-            }
-
-            public string OrganizationName
-            {
-                get { return _organizationName; }
-            }
-        }
-
-
-        class GetOrganizationQuery :
-            GetOrganization
-        {
-            readonly string _organizationId;
-            readonly string _userId;
-
-            public GetOrganizationQuery(string userId, string organizationId)
-            {
-                _userId = userId;
-                _organizationId = organizationId;
-            }
-
-            public string UserId
-            {
-                get { return _userId; }
-            }
-
-            public string OrganizationId
-            {
-                get { return _organizationId; }
-            }
-        }
-
-
-        class ListOrganizationsQuery :
-            ListOrganizations
-        {
-            readonly string _userId;
-
-            public ListOrganizationsQuery(string userId)
-            {
-                _userId = userId;
-            }
-
-            public string UserId
-            {
-                get { return _userId; }
-            }
         }
     }
 }

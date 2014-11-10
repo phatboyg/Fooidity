@@ -3,16 +3,22 @@
     using System;
 
 
-    public interface CreateApplicationKey
+    public class CreateApplicationKey :
+        ICreateApplicationKey
     {
-        Guid CommandId { get; }
+        public CreateApplicationKey(string userId, string organizationId, string applicationId, DateTime timestamp, Guid commandId)
+        {
+            UserId = userId;
+            OrganizationId = organizationId;
+            ApplicationId = applicationId;
+            Timestamp = timestamp;
+            CommandId = commandId;
+        }
 
-        DateTime Timestamp { get; }
-
-        string UserId { get; }
-
-        string OrganizationId { get; }
-
-        string ApplicationId { get; }
+        public Guid CommandId { get; set; }
+        public DateTime Timestamp { get; set; }
+        public string UserId { get; set; }
+        public string OrganizationId { get; set; }
+        public string ApplicationId { get; set; }
     }
 }

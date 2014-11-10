@@ -8,7 +8,7 @@
     {
         [Display(Name = "Code Feature Id")]
         public CodeFeatureId CodeFeatureId { get; set; }
-        
+
         public bool Enabled { get; set; }
 
         [Display(Name = "Updated")]

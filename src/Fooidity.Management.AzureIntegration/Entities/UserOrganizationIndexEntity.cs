@@ -2,16 +2,19 @@ namespace Fooidity.Management.AzureIntegration.Entities
 {
     using System;
     using Microsoft.WindowsAzure.Storage.Table;
+    using Models;
 
 
     public class UserOrganizationIndexEntity :
-        TableEntity
+        TableEntity,
+        IOrganization
     {
         public UserOrganizationIndexEntity()
         {
         }
 
-        public UserOrganizationIndexEntity(DateTime timestamp, string userId, string organizationId, string organizationName, bool active)
+        public UserOrganizationIndexEntity(DateTime timestamp, string userId, string organizationId, string organizationName,
+            string createdByUserId, bool active)
         {
             if (userId == null)
                 throw new ArgumentNullException("userId");
@@ -20,6 +23,7 @@ namespace Fooidity.Management.AzureIntegration.Entities
 
             Active = active;
             OrganizationName = organizationName;
+            CreatedByUserId = createdByUserId;
             OrganizationId = organizationId;
             UserId = userId;
 
@@ -28,9 +32,10 @@ namespace Fooidity.Management.AzureIntegration.Entities
             Timestamp = timestamp;
         }
 
-        public string OrganizationId { get; set; }
         public string UserId { get; set; }
-        public string OrganizationName { get; set; }
         public bool Active { get; set; }
+        public string OrganizationId { get; set; }
+        public string OrganizationName { get; set; }
+        public string CreatedByUserId { get; set; }
     }
 }

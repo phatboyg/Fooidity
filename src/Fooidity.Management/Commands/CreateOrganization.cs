@@ -3,19 +3,21 @@
     using System;
 
 
-    public interface CreateOrganization
+    public class CreateOrganization :
+        ICreateOrganization
     {
-        Guid CommandId { get; }
-        DateTime Timestamp { get; }
+        public CreateOrganization(string userId, string organizationName)
+        {
+            CommandId = Guid.NewGuid();
+            Timestamp = DateTime.UtcNow;
 
-        /// <summary>
-        /// The user creating the application
-        /// </summary>
-        string UserId { get; }
+            UserId = userId;
+            OrganizationName = organizationName;
+        }
 
-        /// <summary>
-        /// The organization in which the application is being created
-        /// </summary>
-        string OrganizationName { get; }
+        public Guid CommandId { get; set; }
+        public DateTime Timestamp { get; set; }
+        public string UserId { get; set; }
+        public string OrganizationName { get; set; }
     }
 }

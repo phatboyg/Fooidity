@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Threading;
     using System.Threading.Tasks;
     using AzureIntegration.Exceptions;
     using Commands;
@@ -17,17 +16,20 @@
         Hub
     {
         static readonly ConnectionIdAppKeyDictionary _appKeys = new ConnectionIdAppKeyDictionary();
-        readonly IQueryHandler<GetApplicationKey, OrganizationApplicationKey> _getApplicationKey;
+        readonly IQueryHandler<IGetApplicationByKey, IOrganizationApplicationKey> _getApplicationKey;
         readonly IQueryHandler<IListApplicationCodeFeatures, IEnumerable<ICodeFeatureState>> _listApplicationCodeFeatures;
-        readonly ICommandHandler<RegisterCodeFeature> _registerCodeFeature;
+        readonly ICommandHandler<IRegisterApplicationContext> _registerApplicationContext;
+        readonly ICommandHandler<IRegisterCodeFeature> _registerCodeFeature;
 
-        public ApplicationHub(IQueryHandler<GetApplicationKey, OrganizationApplicationKey> getApplicationKey,
-            ICommandHandler<RegisterCodeFeature> registerCodeFeature,
-            IQueryHandler<IListApplicationCodeFeatures, IEnumerable<ICodeFeatureState>> listApplicationCodeFeatures)
+        public ApplicationHub(IQueryHandler<IGetApplicationByKey, IOrganizationApplicationKey> getApplicationKey,
+            ICommandHandler<IRegisterCodeFeature> registerCodeFeature,
+            IQueryHandler<IListApplicationCodeFeatures, IEnumerable<ICodeFeatureState>> listApplicationCodeFeatures,
+            ICommandHandler<IRegisterApplicationContext> registerApplicationContext)
         {
             _getApplicationKey = getApplicationKey;
             _registerCodeFeature = registerCodeFeature;
             _listApplicationCodeFeatures = listApplicationCodeFeatures;
+            _registerApplicationContext = registerApplicationContext;
         }
 
         public override async Task OnConnected()
@@ -41,7 +43,7 @@
 
             try
             {
-                OrganizationApplicationKey application = await _getApplicationKey.Execute(new GetApplicationKeyQuery(appKey));
+                IOrganizationApplicationKey application = await _getApplicationKey.Execute(new GetApplicationByKey(appKey));
 
                 await Groups.Add(Context.ConnectionId, application.ApplicationId);
 
@@ -57,7 +59,7 @@
 
         public async Task<IEnumerable<CodeFeatureState>> GetCodeFeatureStates()
         {
-            OrganizationApplicationKey application;
+            IOrganizationApplicationKey application;
             if (_appKeys.TryGetAppKey(Context.ConnectionId, out application))
             {
                 IEnumerable<ICodeFeatureState> codeFeatureStates =
@@ -71,60 +73,25 @@
 
         public override async Task OnDisconnected(bool stopCalled)
         {
-            OrganizationApplicationKey application;
+            IOrganizationApplicationKey application;
             if (_appKeys.TryRemove(Context.ConnectionId, out application))
-            {
                 Groups.Remove(Context.ConnectionId, application.ApplicationId);
-            }
 
             await base.OnDisconnected(stopCalled);
         }
 
         public async Task OnCodeSwitchEvaluated(CodeSwitchEvaluated message)
         {
-            OrganizationApplicationKey application;
+            IOrganizationApplicationKey application;
             if (_appKeys.TryGetAppKey(Context.ConnectionId, out application))
-                await _registerCodeFeature.Execute(new RegisterCodeFeatureCommand(application.ApplicationId, message.CodeFeatureId));
-        }
-
-
-        class GetApplicationKeyQuery :
-            GetApplicationKey
-        {
-            readonly string _key;
-
-            public GetApplicationKeyQuery(string key)
             {
-                _key = key;
-            }
+                await _registerCodeFeature.Execute(new RegisterCodeFeature(application.ApplicationId, message.CodeFeatureId));
 
-            public string Key
-            {
-                get { return _key; }
-            }
-        }
-
-
-        class RegisterCodeFeatureCommand :
-            RegisterCodeFeature
-        {
-            string _applicationId;
-            string _codeFeatureId;
-
-            public RegisterCodeFeatureCommand(string applicationId, Uri codeFeatureId)
-            {
-                _applicationId = applicationId;
-                _codeFeatureId = codeFeatureId.ToString();
-            }
-
-            public string ApplicationId
-            {
-                get { return _applicationId; }
-            }
-
-            public string CodeFeatureId
-            {
-                get { return _codeFeatureId; }
+                if (message.ContextId != null)
+                {
+                    var registerApplicationContext = new RegisterApplicationContext(application.ApplicationId, message.ContextId.ToString());
+                    await _registerApplicationContext.Execute(registerApplicationContext);
+                }
             }
         }
     }

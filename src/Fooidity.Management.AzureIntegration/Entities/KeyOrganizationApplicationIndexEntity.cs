@@ -7,7 +7,7 @@
 
     public class KeyOrganizationApplicationIndexEntity :
         TableEntity,
-        OrganizationApplicationKey
+        IOrganizationApplicationKey
     {
         public KeyOrganizationApplicationIndexEntity()
         {

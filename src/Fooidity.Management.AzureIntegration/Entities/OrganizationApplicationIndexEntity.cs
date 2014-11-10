@@ -7,7 +7,7 @@ namespace Fooidity.Management.AzureIntegration.Entities
 
     public class OrganizationApplicationIndexEntity :
         TableEntity,
-        OrganizationApplication
+        IOrganizationApplication
     {
         public OrganizationApplicationIndexEntity()
         {

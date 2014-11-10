@@ -1,0 +1,99 @@
+﻿@model Fooidity.Management.Web.Models.CodeFeatureDetailViewModel
+
+@{
+    ViewBag.Title = "Code Feature Detail";
+}
+
+<h2>Code Feature Detail</h2>
+<div>
+    <h4>Code Feature</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Name
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CodeFeatureId.Name)
+        </dd>
+
+        <dt>
+            Namespace
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CodeFeatureId.Namespace)
+        </dd>
+
+        <dt>
+            Assembly
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CodeFeatureId.Assembly)
+        </dd>
+    </dl>
+
+    <h4>Application</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ApplicationId)
+        </dt>
+
+        <dd>
+            <code>@Html.DisplayFor(model => model.ApplicationId)</code>
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ApplicationName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ApplicationName)
+        </dd>
+    </dl>
+
+    <h4>Current State</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CurrentState.Enabled)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CurrentState.Enabled)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CurrentState.LastUpdated)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CurrentState.LastUpdated)
+        </dd>
+    </dl>
+
+    <h4>State History</h4>
+    <table class="table">
+        <tr>
+            <th>
+                Enabled
+            </th>
+            <th>
+                Timestamp (UTC)
+            </th>
+        </tr>
+
+        @foreach (var item in Model.StateHistory.OrderByDescending(x => x.LastUpdated))
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Enabled)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastUpdated)
+                </td>
+            </tr>
+        }
+    </table>
+</div>

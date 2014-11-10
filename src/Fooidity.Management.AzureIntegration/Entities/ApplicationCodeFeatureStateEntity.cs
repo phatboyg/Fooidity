@@ -31,24 +31,9 @@
 
             CommandId = commandId;
 
-            PartitionKey = string.Join(SeparatorString,
-                ApplicationId,
-                CodeFeatureId);
+            PartitionKey = FormatPartitionKey(ApplicationId, CodeFeatureId);
             RowKey = timestamp.ToDescendingTimestamp();
             Timestamp = timestamp;
-        }
-
-        public void SetCurrent()
-        {
-            PartitionKey = GetCurrentPartitionKey(ApplicationId);
-            RowKey = CodeFeatureId;
-        }
-
-        public static string GetCurrentPartitionKey(string applicationId)
-        {
-            return string.Join(SeparatorString,
-                applicationId,
-                "Current");
         }
 
         /// <summary>
@@ -70,5 +55,25 @@
         /// The command-id associated with this state change
         /// </summary>
         public Guid? CommandId { get; set; }
+
+        public static string FormatPartitionKey(string applicationId, string codeFeatureId)
+        {
+            return string.Join(SeparatorString,
+                applicationId,
+                codeFeatureId);
+        }
+
+        public void SetCurrent()
+        {
+            PartitionKey = GetCurrentPartitionKey(ApplicationId);
+            RowKey = CodeFeatureId;
+        }
+
+        public static string GetCurrentPartitionKey(string applicationId)
+        {
+            return string.Join(SeparatorString,
+                applicationId,
+                "Current");
+        }
     }
 }

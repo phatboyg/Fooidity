@@ -7,8 +7,8 @@
     using Autofac.Integration.Mvc;
     using Autofac.Integration.WebApi;
     using AzureIntegration;
-    using AzureIntegration.Commands;
-    using AzureIntegration.Queries;
+    using AzureIntegration.CommandHandlers;
+    using AzureIntegration.QueryHandlers;
     using AzureIntegration.UserStore;
     using Commands;
     using Contracts;
@@ -51,37 +51,40 @@
                 .As<ICommandHandler<UpdateCodeFeatureState>>();
 
             builder.RegisterType<QueryCodeFeatureStateQueryHandler>()
-                .As<IQueryHandler<QueryCodeFeatureState, IEnumerable<CodeFeatureStateModelDoDie>>>();
+                .As<IQueryHandler<QueryCodeFeatureState, IEnumerable<ICodeFeatureState>>>();
 
             builder.RegisterType<ListApplicationsQueryHandler>()
-                .As<IQueryHandler<ListApplications, IEnumerable<UserOrganizationApplication>>>();
+                .As<IQueryHandler<IListApplications, IEnumerable<IUserOrganizationApplication>>>();
 
             builder.RegisterType<ListOrganizationsQueryHandler>()
-                .As<IQueryHandler<ListOrganizations, IEnumerable<Organization>>>();
+                .As<IQueryHandler<IListOrganizations, IEnumerable<IOrganization>>>();
 
             builder.RegisterType<GetOrganizationQueryHandler>()
-                .As<IQueryHandler<GetOrganization, Organization>>();
+                .As<IQueryHandler<IGetOrganization, IOrganization>>();
 
             builder.RegisterType<GetApplicationQueryHandler>()
-                .As<IQueryHandler<GetApplication, UserOrganizationApplication>>();
+                .As<IQueryHandler<IGetApplication, IUserOrganizationApplication>>();
 
             builder.RegisterType<CreateOrganizationCommandHandler>()
-                .As<ICommandHandler<CreateOrganization, Organization>>();
+                .As<ICommandHandler<ICreateOrganization, IOrganization>>();
 
             builder.RegisterType<CreateApplicationCommandHandler>()
-                .As<ICommandHandler<CreateApplication, UserOrganizationApplication>>();
+                .As<ICommandHandler<ICreateApplication, IUserOrganizationApplication>>();
 
             builder.RegisterType<CreateApplicationKeyCommandHandler>()
-                .As<ICommandHandler<CreateApplicationKey, OrganizationApplicationKey>>();
+                .As<ICommandHandler<ICreateApplicationKey, IOrganizationApplicationKey>>();
 
             builder.RegisterType<ListApplicationKeysQueryHandler>()
-                .As<IQueryHandler<ListApplicationKeys, IEnumerable<OrganizationApplicationKey>>>();
+                .As<IQueryHandler<IListApplicationKeys, IEnumerable<IOrganizationApplicationKey>>>();
 
             builder.RegisterType<GetApplicationKeyQueryHandler>()
-                .As<IQueryHandler<GetApplicationKey, OrganizationApplicationKey>>();
+                .As<IQueryHandler<IGetApplicationByKey, IOrganizationApplicationKey>>();
 
             builder.RegisterType<RegisterCodeFeatureCommandHandler>()
-                .As<ICommandHandler<RegisterCodeFeature>>();
+                .As<ICommandHandler<IRegisterCodeFeature>>();
+
+            builder.RegisterType<RegisterApplicationContextCommandHandler>()
+                .As<ICommandHandler<IRegisterApplicationContext>>();
 
             builder.RegisterType<UpdateApplicationCodeFeatureStateCommandHandler>()
                 .As<ICommandHandler<IUpdateApplicationCodeFeatureState>>();
@@ -89,13 +92,16 @@
             builder.RegisterType<ListApplicationCodeFeaturesQueryHandler>()
                 .As<IQueryHandler<IListApplicationCodeFeatures, IEnumerable<ICodeFeatureState>>>();
 
+            builder.RegisterType<GetCodeFeatureDetailQueryHandler>()
+                .As<IQueryHandler<IGetCodeFeatureDetail, ICodeFeatureDetail>>();
+
             builder.RegisterType<ApplicationHubEventHandler>()
                 .As<IEventHandler<IApplicationCodeFeatureStateUpdated>>();
 
             builder.RegisterType<ApplicationHub>();
 
             builder.RegisterType<DefaultAzureManagementSettings>()
-                .As<AzureManagementSettings>()
+                .As<IAzureManagementSettings>()
                 .SingleInstance();
 
             return builder.Build();

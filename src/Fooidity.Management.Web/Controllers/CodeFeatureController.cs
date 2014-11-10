@@ -1,127 +1,55 @@
 ﻿namespace Fooidity.Management.Web.Controllers
 {
-    using System;
+    using System.Linq;
+    using System.Threading;
     using System.Threading.Tasks;
-    using System.Web.Http;
+    using System.Web.Mvc;
+    using Management.Models;
+    using Microsoft.AspNet.Identity;
     using Models;
+    using Queries;
 
 
-    /// <summary>
-    /// Features identify code that is switched
-    /// </summary>
-    [RoutePrefix("api/feature")]
+    [Authorize]
     public class CodeFeatureController :
-        ApiController
+        Controller
     {
-        readonly ICommandHandler<UpdateCodeFeatureState> _updateCommandHandler;
+        readonly IQueryHandler<IGetCodeFeatureDetail, ICodeFeatureDetail> _getCodeFeatureDetail;
 
-        public CodeFeatureController(ICommandHandler<UpdateCodeFeatureState> updateCommandHandler)
+        public CodeFeatureController(IQueryHandler<IGetCodeFeatureDetail, ICodeFeatureDetail> getCodeFeatureDetail)
         {
-            _updateCommandHandler = updateCommandHandler;
+            _getCodeFeatureDetail = getCodeFeatureDetail;
         }
 
-        [HttpPost]
-        [Route("{codeFeatureId}/enable")]
-        public async Task<CodeFeatureModel> Enable(string codeFeatureId)
+        public async Task<ActionResult> Details(ManageCodeFeatureViewModel model, CancellationToken cancellationToken)
         {
-            var updateCommand = new UpdateCommand(codeFeatureId, true);
-
-            await _updateCommandHandler.Execute(updateCommand);
-
-            return new CodeFeatureModel
+            if (ModelState.IsValid)
             {
-                CodeFeatureId = updateCommand.CodeFeatureId,
-                Enabled = updateCommand.Enabled,
-            };
+                var getCodeFeatureDetail = new GetCodeFeatureDetail(User.Identity.GetUserId(), model.ApplicationId, model.CodeFeatureId);
+
+                ICodeFeatureDetail detail = await _getCodeFeatureDetail.Execute(getCodeFeatureDetail, cancellationToken);
+
+                return View(new CodeFeatureDetailViewModel
+                {
+                    ApplicationId = detail.ApplicationId,
+                    ApplicationName = detail.ApplicationName,
+                    CodeFeatureId = detail.CodeFeatureId,
+                    CurrentState = new CodeFeatureStateViewModel
+                    {
+                        CodeFeatureId = new CodeFeatureId(detail.CurrentState.CodeFeatureId),
+                        Enabled = detail.CurrentState.Enabled,
+                        LastUpdated = detail.CurrentState.LastUpdated
+                    },
+                    StateHistory = detail.StateHistory.Select(x => new CodeFeatureStateViewModel
+                    {
+                        CodeFeatureId = new CodeFeatureId(x.CodeFeatureId),
+                        Enabled = x.Enabled,
+                        LastUpdated = x.LastUpdated
+                    }).ToArray(),
+                });
+            }
+
+            return RedirectToAction("Index", "Application");
         }
-
-        [HttpPost]
-        [Route("{codeFeatureId}/disable")]
-        public async Task<CodeFeatureModel> Disable(string codeFeatureId)
-        {
-            var updateCommand = new UpdateCommand(codeFeatureId, false);
-
-            await _updateCommandHandler.Execute(updateCommand);
-
-            return new CodeFeatureModel
-            {
-                CodeFeatureId = updateCommand.CodeFeatureId,
-                Enabled = updateCommand.Enabled,
-            };
-        }
-
-
-        class UpdateCommand :
-            UpdateCodeFeatureState
-        {
-            readonly CodeFeatureId _codeFeatureId;
-            readonly Guid _commandId;
-            readonly bool _enabled;
-            readonly DateTime _timestamp;
-            Uri _organizationId;
-            Uri _environmentId;
-
-            public UpdateCommand(string codeFeatureId, bool enabled)
-            {
-                _codeFeatureId = new CodeFeatureId(codeFeatureId);
-                _enabled = enabled;
-
-                _commandId = Guid.NewGuid();
-                _timestamp = DateTime.UtcNow;
-            }
-
-            public Guid CommandId
-            {
-                get { return _commandId; }
-            }
-
-            public DateTime Timestamp
-            {
-                get { return _timestamp; }
-            }
-
-            public CodeFeatureId CodeFeatureId
-            {
-                get { return _codeFeatureId; }
-            }
-
-            public bool Enabled
-            {
-                get { return _enabled; }
-            }
-
-            public Uri OrganizationId
-            {
-                get { return _organizationId; }
-            }
-
-            public Uri EnvironmentId
-            {
-                get { return _environmentId; }
-            }
-        }
-
-
-//        public IEnumerable<CodeFeatureModel> Get()
-//        {
-//            return new[] {new CodeFeatureModel {CodeFeatureId = CodeFeatureMetadata<Feature_NewScreen>.Id}};
-//        }
-//
-//        public CodeFeatureModel Get(string id)
-//        {
-//            return new CodeFeatureModel {CodeFeatureId = new Uri(id)};
-//        }
-//
-//        public void Post([FromBody] CodeFeatureModel feature)
-//        {
-//        }
-//
-//        public void Put(string id, [FromBody] CodeFeatureModel feature)
-//        {
-//        }
-//
-//        public void Delete(string id)
-//        {
-//        }
     }
 }

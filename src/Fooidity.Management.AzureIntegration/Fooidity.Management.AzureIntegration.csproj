@@ -70,12 +70,16 @@
     <Compile Include="..\SolutionVersion.cs">
       <Link>Properties\SolutionVersion.cs</Link>
     </Compile>
-    <Compile Include="AzureManagementSettings.cs" />
-    <Compile Include="Commands\CreateApplicationCommandHandler.cs" />
-    <Compile Include="Commands\CreateApplicationKeyCommandHandler.cs" />
-    <Compile Include="Commands\CreateOrganizationCommandHandler.cs" />
-    <Compile Include="Commands\RegisterCodeFeatureCommandHandler.cs" />
-    <Compile Include="Commands\UpdateApplicationCodeFeatureStateCommandHandler.cs" />
+    <Compile Include="CommandHandlers\RegisterApplicationContextCommandHandler.cs" />
+    <Compile Include="Entities\ApplicationContextCodeFeatureStateEntity.cs" />
+    <Compile Include="Entities\ApplicationContextEntity.cs" />
+    <Compile Include="Exceptions\FeatureNotFoundException.cs" />
+    <Compile Include="IAzureManagementSettings.cs" />
+    <Compile Include="CommandHandlers\CreateApplicationCommandHandler.cs" />
+    <Compile Include="CommandHandlers\CreateApplicationKeyCommandHandler.cs" />
+    <Compile Include="CommandHandlers\CreateOrganizationCommandHandler.cs" />
+    <Compile Include="CommandHandlers\RegisterCodeFeatureCommandHandler.cs" />
+    <Compile Include="CommandHandlers\UpdateApplicationCodeFeatureStateCommandHandler.cs" />
     <Compile Include="DefaultAzureManagementSettings.cs" />
     <Compile Include="Entities\ApplicationCodeFeatureEntity.cs" />
     <Compile Include="Entities\ApplicationCodeFeatureStateEntity.cs" />
@@ -91,13 +95,14 @@
     <Compile Include="Exceptions\DuplicateEmailException.cs" />
     <Compile Include="Exceptions\DuplicateUsernameException.cs" />
     <Compile Include="Exceptions\OrganizationNotFoundException.cs" />
-    <Compile Include="Queries\ApplicationKeyQuery.cs" />
-    <Compile Include="Queries\GetApplicationQueryHandler.cs" />
-    <Compile Include="Queries\GetOrganizationQueryHandler.cs" />
-    <Compile Include="Queries\ListApplicationCodeFeaturesQueryHandler.cs" />
-    <Compile Include="Queries\ListApplicationKeysQueryHandler.cs" />
-    <Compile Include="Queries\ListApplicationsQueryHandler.cs" />
-    <Compile Include="Queries\ListOrganizationsQueryHandler.cs" />
+    <Compile Include="QueryHandlers\GetApplicationKeyQueryHandler.cs" />
+    <Compile Include="QueryHandlers\GetApplicationQueryHandler.cs" />
+    <Compile Include="QueryHandlers\GetCodeFeatureDetailQueryHandler.cs" />
+    <Compile Include="QueryHandlers\GetOrganizationQueryHandler.cs" />
+    <Compile Include="QueryHandlers\ListApplicationCodeFeaturesQueryHandler.cs" />
+    <Compile Include="QueryHandlers\ListApplicationKeysQueryHandler.cs" />
+    <Compile Include="QueryHandlers\ListApplicationsQueryHandler.cs" />
+    <Compile Include="QueryHandlers\ListOrganizationsQueryHandler.cs" />
     <Compile Include="QueryCodeFeatureStateQueryHandler.cs" />
     <Compile Include="UpdateCodeFeatureStateCommandHandler.cs" />
     <Compile Include="UserStore\Encoding\Base32BinaryEncodingFormatter.cs" />

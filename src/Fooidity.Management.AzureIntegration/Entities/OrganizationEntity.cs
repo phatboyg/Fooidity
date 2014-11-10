@@ -9,7 +9,7 @@
 
     public class OrganizationEntity :
         TableEntity,
-        Organization
+        IOrganization
     {
         public OrganizationEntity()
         {
@@ -17,17 +17,17 @@
 
         public OrganizationEntity(string createdByUserId, string organizationName, DateTime timestamp)
         {
-            Id = Guid.NewGuid().ToByteArray().ToBase32();
+            OrganizationId = Guid.NewGuid().ToByteArray().ToBase32();
             CreatedByUserId = createdByUserId;
-            Name = organizationName;
+            OrganizationName = organizationName;
 
-            PartitionKey = Id;
+            PartitionKey = OrganizationId;
             RowKey = timestamp.ToDescendingTimestamp();
             Timestamp = timestamp;
         }
 
-        public string Id { get; set; }
-        public string Name { get; set; }
+        public string OrganizationId { get; set; }
+        public string OrganizationName { get; set; }
         public string CreatedByUserId { get; set; }
     }
 }

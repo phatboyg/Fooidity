@@ -6,8 +6,9 @@
     using System.Threading;
     using System.Threading.Tasks;
     using System.Web.Mvc;
-    using Management.Models;
+    using Fooidity.Contracts;
     using Models;
+
 
     /// <summary>
     /// This controller is for managing local code features only, and is not part of the Azure property.
@@ -16,10 +17,10 @@
     public class FeaturesController :
         Controller
     {
-        readonly IQueryHandler<QueryCodeFeatureState, IEnumerable<CodeFeatureStateModelDoDie>> _queryHandler;
+        readonly IQueryHandler<QueryCodeFeatureState, IEnumerable<ICodeFeatureState>> _queryHandler;
         readonly ICommandHandler<UpdateCodeFeatureState> _updateHandler;
 
-        public FeaturesController(IQueryHandler<QueryCodeFeatureState, IEnumerable<CodeFeatureStateModelDoDie>> queryHandler,
+        public FeaturesController(IQueryHandler<QueryCodeFeatureState, IEnumerable<ICodeFeatureState>> queryHandler,
             ICommandHandler<UpdateCodeFeatureState> updateHandler)
         {
             _queryHandler = queryHandler;
@@ -28,11 +29,11 @@
 
         public async Task<ActionResult> Index(CancellationToken cancellationToken = default(CancellationToken))
         {
-            IEnumerable<CodeFeatureStateModelDoDie> results = await _queryHandler.Execute(new Query(), cancellationToken);
+            IEnumerable<ICodeFeatureState> results = await _queryHandler.Execute(new Query(), cancellationToken);
 
             return View(results.Select(x => new CodeFeatureStateViewModel
             {
-                CodeFeatureId = x.CodeFeatureId,
+                CodeFeatureId = new CodeFeatureId(x.CodeFeatureId),
                 Enabled = x.Enabled,
                 LastUpdated = x.LastUpdated,
             }));
@@ -61,7 +62,6 @@
             return Redirect("Index");
         }
 
-
         public ActionResult Details()
         {
             return View("Details", new CodeFeatureStateViewModel());
@@ -81,8 +81,6 @@
             readonly Guid _commandId;
             readonly bool _enabled;
             readonly DateTime _timestamp;
-            Uri _organizationId;
-            Uri _environmentId;
 
             public UpdateCommand(CodeFeatureId codeFeatureId, bool enabled)
             {
@@ -111,16 +109,6 @@
             public bool Enabled
             {
                 get { return _enabled; }
-            }
-
-            public Uri OrganizationId
-            {
-                get { return _organizationId; }
-            }
-
-            public Uri EnvironmentId
-            {
-                get { return _environmentId; }
             }
         }
     }

@@ -1,7 +1,13 @@
 namespace Fooidity.Management.Queries
 {
-    public interface ListApplications
+    public class ListApplications :
+        IListApplications
     {
-        string UserId { get; }
+        public ListApplications(string userId)
+        {
+            UserId = userId;
+        }
+
+        public string UserId { get; set; }
     }
 }

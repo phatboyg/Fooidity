@@ -3,16 +3,22 @@
     using System;
 
 
-    public interface CreateApplication
+    public class CreateApplication :
+        ICreateApplication
     {
-        Guid CommandId { get; }
+        public CreateApplication(string userId, string organizationId, string applicationName, DateTime timestamp, Guid commandId)
+        {
+            UserId = userId;
+            OrganizationId = organizationId;
+            ApplicationName = applicationName;
+            Timestamp = timestamp;
+            CommandId = commandId;
+        }
 
-        DateTime Timestamp { get; }
-
-        string UserId { get; }
-
-        string OrganizationId { get; }
-
-        string ApplicationName { get; }
+        public Guid CommandId { get; set; }
+        public DateTime Timestamp { get; set; }
+        public string UserId { get; set; }
+        public string OrganizationId { get; set; }
+        public string ApplicationName { get; set; }
     }
 }

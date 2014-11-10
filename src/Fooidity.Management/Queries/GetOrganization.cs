@@ -1,8 +1,15 @@
 ﻿namespace Fooidity.Management.Queries
 {
-    public interface GetOrganization
+    public class GetOrganization :
+        IGetOrganization
     {
-        string UserId { get; }
-        string OrganizationId { get; }
+        public GetOrganization(string userId, string organizationId)
+        {
+            OrganizationId = organizationId;
+            UserId = userId;
+        }
+
+        public string UserId { get; set; }
+        public string OrganizationId { get; set; }
     }
 }

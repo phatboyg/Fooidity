@@ -7,7 +7,7 @@ namespace Fooidity.Management.AzureIntegration.Entities
 
     public class UserApplicationIndexEntity :
         TableEntity,
-        UserOrganizationApplication
+        IUserOrganizationApplication
     {
         public UserApplicationIndexEntity()
         {

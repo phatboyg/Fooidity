@@ -2,7 +2,6 @@ namespace Fooidity.AzureIntegration
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics;
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
@@ -19,38 +18,44 @@ namespace Fooidity.AzureIntegration
             return ExecuteQueryAsync(table, query, x => x, cancellationToken);
         }
 
+        public static Task<IEnumerable<TResult>> ExecutePartitionKeyQueryAsync<TResult>(this CloudTable table, string partitionKey,
+            CancellationToken cancellationToken = default(CancellationToken))
+            where TResult : class, ITableEntity, new()
+        {
+            if (table == null)
+                throw new ArgumentNullException("table");
+            if (partitionKey == null)
+                throw new ArgumentNullException("partitionKey");
+
+            TableQuery<TResult> query = new TableQuery<TResult>()
+                .Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, partitionKey));
+
+            return ExecuteQueryAsync(table, query, cancellationToken);
+        }
+
         public static async Task<IEnumerable<TResult>> ExecuteQueryAsync<TQuery, TResult>(this CloudTable table, TableQuery<TQuery> query,
             Func<TQuery, TResult> selector, CancellationToken cancellationToken = default(CancellationToken))
             where TQuery : class, ITableEntity, new()
         {
-            try
+            var results = new List<TResult>();
+
+            TableContinuationToken token = null;
+            var options = new TableRequestOptions();
+            var context = new OperationContext
             {
-                var results = new List<TResult>();
-
-                TableContinuationToken token = null;
-                var options = new TableRequestOptions();
-                var context = new OperationContext
-                {
-                    ClientRequestID = Guid.NewGuid().ToString(),
-                };
-                do
-                {
-                    TableQuerySegment<TQuery> result = await table.ExecuteQuerySegmentedAsync(query, token, options, context, cancellationToken);
-
-                    results.AddRange(result.Select(selector));
-
-                    token = result.ContinuationToken;
-                }
-                while (token != null);
-
-                return results;
-            }
-            catch (Exception ex)
+                ClientRequestID = Guid.NewGuid().ToString(),
+            };
+            do
             {
-                Trace.TraceError(ex.Message);
+                TableQuerySegment<TQuery> result = await table.ExecuteQuerySegmentedAsync(query, token, options, context, cancellationToken);
 
-                throw;
+                results.AddRange(result.Select(selector));
+
+                token = result.ContinuationToken;
             }
+            while (token != null);
+
+            return results;
         }
     }
 }

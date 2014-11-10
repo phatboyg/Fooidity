@@ -219,9 +219,10 @@
     <Compile Include="App_Start\WebAppContainer.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ApplicationController.cs" />
+    <Compile Include="Controllers\CodeFeatureController.cs" />
     <Compile Include="Controllers\FeaturesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\CodeFeatureController.cs" />
+    <Compile Include="Controllers\CodeFeatureApiController.cs" />
     <Compile Include="Controllers\OrganizationController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -232,6 +233,7 @@
     <Compile Include="Logging\UnhandledExceptionLogger.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationViewModel.cs" />
+    <Compile Include="Models\CodeFeatureDetailViewModel.cs" />
     <Compile Include="Models\CodeFeatureModel.cs" />
     <Compile Include="Models\CodeFeatureStateViewModel.cs" />
     <Compile Include="Models\CreateApplicationKeyViewModel.cs" />
@@ -239,6 +241,7 @@
     <Compile Include="Models\ExternalLoginListViewModel.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
+    <Compile Include="Models\ManageCodeFeatureViewModel.cs" />
     <Compile Include="Models\ManageUserViewModel.cs" />
     <Compile Include="Models\OrganizationViewModel.cs" />
     <Compile Include="Models\RegisterViewModel.cs" />
@@ -291,6 +294,7 @@
     <Content Include="Views\Organization\Create.cshtml" />
     <Content Include="Views\Organization\Details.cshtml" />
     <Content Include="Views\Features\Details.cshtml" />
+    <Content Include="Views\CodeFeature\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fooidity.AutofacIntegration\Fooidity.AutofacIntegration.csproj">

@@ -83,15 +83,8 @@
         {
             <tr>
                 <td>
+                    @Html.ActionLink(item.CodeFeatureId.Name, "Details", "CodeFeature", new { applicationId = Model.Id, codeFeatureId = item.CodeFeatureId }, new { })
                     <dl class="dl-horizontal">
-                        <dt>
-                            Name
-                        </dt>
-
-                        <dd>
-                            @Html.DisplayFor(modelItem => item.CodeFeatureId.Name)
-                        </dd>
-
                         <dt>
                             Namespace
                         </dt>
