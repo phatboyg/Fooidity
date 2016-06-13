@@ -30,6 +30,9 @@ src/packages/**/*
 docs/build/**/*
 
 .DS_Store
+.fake
+.vs
+src/Backup
 
 TestResult.xml
 submit.xml

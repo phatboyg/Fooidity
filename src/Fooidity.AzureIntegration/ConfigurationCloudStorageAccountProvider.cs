@@ -1,7 +1,7 @@
 ﻿namespace Fooidity.AzureIntegration
 {
     using System;
-    using Microsoft.WindowsAzure;
+    using Microsoft.Azure;
     using Microsoft.WindowsAzure.Storage;
 
 

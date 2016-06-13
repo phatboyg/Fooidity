@@ -1,12 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fooidity", "Fooidity\Fooidity.csproj", "{E752A7E0-0D9E-4225-9BBA-8CFF8A963545}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fooidity.Tests", "Fooidity.Tests\Fooidity.Tests.csproj", "{B3AB9EFD-3F3F-4778-AD78-BFDE5561E22F}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{D5EEDD08-456D-448F-9168-1D86BCE0291A}"
 	ProjectSection(SolutionItems) = preProject
 		.nuget\NuGet.Config = .nuget\NuGet.Config
@@ -15,11 +11,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{D5EEDD
 		.nuget\packages.config = .nuget\packages.config
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fooidity", "Fooidity\Fooidity.csproj", "{E752A7E0-0D9E-4225-9BBA-8CFF8A963545}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fooidity.Tests", "Fooidity.Tests\Fooidity.Tests.csproj", "{B3AB9EFD-3F3F-4778-AD78-BFDE5561E22F}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fooidity.AutofacIntegration", "Fooidity.AutofacIntegration\Fooidity.AutofacIntegration.csproj", "{9A495BBF-D575-4C4E-BD7D-52E5926D180D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fooidity.ContainerTests", "Fooidity.ContainerTests\Fooidity.ContainerTests.csproj", "{5A83A994-64DE-4218-ACBC-7B64ADB6951A}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fooidity.MassTransitIntegration", "Fooidity.MassTransitIntegration\Fooidity.MassTransitIntegration.csproj", "{99028725-9165-452F-9C7C-8F61D0946260}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fooidity.Management.Web", "Fooidity.Management.Web\Fooidity.Management.Web.csproj", "{C4FDFF40-F330-49EB-A64E-51DB54F1FEEA}"
 EndProject
@@ -72,12 +70,6 @@ Global
 		{5A83A994-64DE-4218-ACBC-7B64ADB6951A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5A83A994-64DE-4218-ACBC-7B64ADB6951A}.ReleaseBuild|Any CPU.ActiveCfg = Release|Any CPU
 		{5A83A994-64DE-4218-ACBC-7B64ADB6951A}.ReleaseBuild|Any CPU.Build.0 = Release|Any CPU
-		{99028725-9165-452F-9C7C-8F61D0946260}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{99028725-9165-452F-9C7C-8F61D0946260}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{99028725-9165-452F-9C7C-8F61D0946260}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{99028725-9165-452F-9C7C-8F61D0946260}.Release|Any CPU.Build.0 = Release|Any CPU
-		{99028725-9165-452F-9C7C-8F61D0946260}.ReleaseBuild|Any CPU.ActiveCfg = Release|Any CPU
-		{99028725-9165-452F-9C7C-8F61D0946260}.ReleaseBuild|Any CPU.Build.0 = Release|Any CPU
 		{C4FDFF40-F330-49EB-A64E-51DB54F1FEEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C4FDFF40-F330-49EB-A64E-51DB54F1FEEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C4FDFF40-F330-49EB-A64E-51DB54F1FEEA}.Release|Any CPU.ActiveCfg = Release|Any CPU

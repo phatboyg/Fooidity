@@ -4,8 +4,6 @@
     using System.Collections.Generic;
     using Magnum.Extensions;
     using MassTransit;
-    using MassTransit.Exceptions;
-    using MassTransit.Pipeline;
 
 
     /// <summary>

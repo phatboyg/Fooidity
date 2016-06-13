@@ -5,10 +5,10 @@
     using AzureIntegration.UserStore;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.Owin;
+    using Microsoft.Azure;
     using Microsoft.Owin;
     using Microsoft.Owin.Security.Cookies;
     using Microsoft.Owin.Security.OAuth;
-    using Microsoft.WindowsAzure;
     using Models;
     using Owin;
     using Owin.Security.Providers.GitHub;
@@ -58,7 +58,7 @@
             var gitHubOptions = new GitHubAuthenticationOptions
             {
                 ClientId = CloudConfigurationManager.GetSetting("GitHub.ClientId"),
-                ClientSecret = CloudConfigurationManager.GetSetting("GitHub.ClientSecret"),
+                ClientSecret = CloudConfigurationManager.GetSetting("GitHub.ClientSecret")
             };
 
             app.UseGitHubAuthentication(gitHubOptions);
